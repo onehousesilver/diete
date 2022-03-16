@@ -44,7 +44,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .bttn-unite.bttn-success{
     border-radius: 10px;
     width: 300px;
