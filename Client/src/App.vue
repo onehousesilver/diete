@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <div>diète</div>
     <router-view/>
   </div>
 </template>
