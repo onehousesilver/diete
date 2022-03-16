@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>메인설명</h1>
+    <div class="main-description">
+      
+    </div>
   </div>
 </template>
 
