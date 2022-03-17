@@ -6,6 +6,7 @@ import LoginView from "../views/LoginView.vue";
 import MenuView from "../views/MenuView.vue";
 import RecordView from "../views/RecordView.vue";
 import SearchView from "../views/SearchView.vue";
+import PocketView from "../views/PocketView.vue";
 
 Vue.use(VueRouter);
 
@@ -34,6 +35,11 @@ const routes = [
     path: "/search",
     name: "search",
     component: SearchView,
+  },
+  {
+    path: "/pocket",
+    name: "pocket",
+    component: PocketView,
   },
   {
     path: "/record",
