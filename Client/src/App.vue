@@ -9,12 +9,12 @@
       </div>
       <div class="menu">
         <div class="login-join" v-if="!isLogin">
-            <button
-              class="bttn-unite bttn-md bttn-success login-btn"
-              @click="isLogin = true"
-            >
-              로그인
-            </button>
+          <button
+            class="bttn-unite bttn-md bttn-success login-btn"
+            @click="goToLogin"
+          >
+            로그인
+          </button>
           <router-link :to="{ name: 'join' }">
             <button class="bttn-unite bttn-md bttn-success join-btn">
               회원가입
@@ -34,12 +34,12 @@
           <router-link :to="{ name: 'record' }"
             ><div>나의기록</div>
           </router-link>
-            <button
-              class="bttn-unite bttn-md bttn-success logout-btn"
-              @click="isLogin === false"
-            >
-              로그아웃
-            </button>
+          <button
+            class="bttn-unite bttn-md bttn-success logout-btn"
+            @click="goToLogout"
+          >
+            로그아웃
+          </button>
         </div>
       </div>
     </div>
@@ -57,9 +57,17 @@ export default {
   },
   methods: {
     goToHome() {
-      this.$router.push({ name: 'home' }).catch(() => {})
-    }
-  }
+      this.$router.push({ name: "home" }).catch(() => {});
+    },
+    goToLogin() {
+      this.$router.push({ name: "login" });
+      this.isLogin = true;
+    },
+    goToLogout() {
+      this.$router.push({ name: "home" });
+      this.isLogin = false;
+    },
+  },
 };
 </script>
 
