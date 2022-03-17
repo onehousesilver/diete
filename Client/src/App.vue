@@ -2,7 +2,7 @@
   <div id="app">
     <!-- nav바 -->
     <div class="nav">
-      <div class="logo" @click="$router.push({ name: 'home' }).catch(() => {})">
+      <div class="logo" @click="goToHome">
         <span class="di" style="color: #2bc0af">di</span>
         <span class="e" style="color: #25ab9b">è</span>
         <span class="te" style="color: #219285">te</span>
@@ -55,6 +55,11 @@ export default {
       isLogin: false,
     };
   },
+  methods: {
+    goToHome() {
+      this.$router.push({ name: 'home' }).catch(() => {})
+    }
+  }
 };
 </script>
 
