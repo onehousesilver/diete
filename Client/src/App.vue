@@ -93,7 +93,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 8vh;
   margin: 0 auto;
   background-color: #fff;
 }

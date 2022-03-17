@@ -12,7 +12,7 @@
             <router-link :to="{ name: 'menu' }">
               <div>음식추천</div>
               <span>나에게 꼭 맞는 식단을 추천해드립니다.</span>
-              <!-- <img src="../../assets/recommend-card.svg" alt=""/> -->
+              <img src="../../assets/recommend-card.svg" alt=""/>
             </router-link>
           </div>
 
@@ -20,7 +20,7 @@
             <router-link :to="{ name: 'search' }">
               <div>음식검색</div>
               <span>어떤 음식이든 검색해보세요!</span>
-              <!-- <img src="../../assets/search-card.svg" alt="" /> -->
+              <img src="../../assets/search-card.svg" alt="" />
             </router-link>
           </div>
 
@@ -28,7 +28,7 @@
             <router-link :to="{ name: 'record' }">
               <div>나의기록</div>
               <span>내 기록을 남겨보세요.</span>
-              <!-- <img src="../../assets/record-card.svg" alt=""/> -->
+              <img src="../../assets/record-card.svg" alt=""/>
             </router-link>
           </div>
         </div>
@@ -49,21 +49,6 @@ export default {
 </script>
 
 <style scoped>
-/* @media screen and (max-width: 1350px) {
-  .main-section-login .main-title,
-  .main-section-login .main-sub-title {
-    display: flex;
-    justify-content: center;
-  }
-  .card-section {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .card-section .menu-recommend-card {
-    height: 400px;
-  }
-} */
 
 #login {
   margin: 0 100px;
@@ -73,23 +58,23 @@ a {
   height: 100%;
 }
 .main-section-login .main-title {
-  font-size: 30px;
+  font-size: 3rem;
   font-weight: 700;
-  margin-top: 30px;
+  margin-top: 1.875rem;
 }
 .main-section-login .main-sub-title {
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 1.5rem;
 }
 
 .card-section {
   display: flex;
-  font-size: 30px;
+  font-size: 2rem;
   justify-items: center;
+  margin-top: 1.875rem;
 }
 .card-section span {
   display: block;
-  font-size: 14px;
+  font-size: 1rem;
   margin-left: 20px;
 }
 .card-section div {
@@ -98,33 +83,27 @@ a {
   font-weight: 700;
 }
 
-/* .card-section .menu-recommend-card,
-.card-section .menu-search-card,
-.card-section .menu-record-card {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  margin: 5px;
-  width: calc(100% / 3);
-  border: solid #25ab9b 2px;
-  border-radius: 20px;
-  cursor: pointer;
-} */
-
 .card-section .menu-recommend-card {
   display: flex;
   flex-direction: column;
   padding: 10px;
   margin: 5px;
   width: calc(100% / 3);
+  height: 40vh;
   border: solid #25ab9b 2px;
   border-radius: 20px;
   cursor: pointer;
-  background-size: 75%;
-  background-position-x: 100%;
-  background-position-y: 80%;
-  background-repeat: no-repeat;
-  background-image: url("../../assets/recommend-card.svg");
+}
+.card-section .menu-recommend-card a{
+  position: relative;
+}
+.card-section .menu-recommend-card img{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  max-width: 100%;
+  max-height: 75%;
 }
 .card-section .menu-search-card {
   display: flex;
@@ -132,15 +111,22 @@ a {
   padding: 10px;
   margin: 5px;
   width: calc(100% / 3);
-  height: 400px;
+  height: 40vh;
   border: solid #25ab9b 2px;
   border-radius: 20px;
   cursor: pointer;
-  background-size: 60%;
-  background-position-x: 100%;
-  background-position-y: 80%;
-  background-repeat: no-repeat;
-  background-image: url("../../assets/search-card.svg");
+}
+.card-section .menu-search-card a{
+  position: relative;
+}
+.card-section .menu-search-card img{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  max-width: 100%;
+  max-height: 75%;
+  object-fit: cover;
 }
 .card-section .menu-record-card {
   display: flex;
@@ -148,15 +134,21 @@ a {
   padding: 10px;
   margin: 5px;
   width: calc(100% / 3);
-  height: 400px;
+  height: 40vh;
   border: solid #25ab9b 2px;
   border-radius: 20px;
   cursor: pointer;
-  background-size: 60%;
-  background-position-x: 100%;
-  background-position-y: 80%;
-  background-repeat: no-repeat;
-  background-image: url("../../assets/record-card.svg");
+}
+.card-section .menu-record-card a{
+  position: relative;
+}
+.card-section .menu-record-card img{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  max-width: 100%;
+  max-height: 75%;
 }
 
 /* .card-section .menu-recommend-card img {

@@ -19,7 +19,7 @@ export default {};
 
 <style>
 .banner {
-  height: 250px;
+  height: 30vh;
   display: flex;
   flex-direction: column;
   align-items: center;
