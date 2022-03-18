@@ -24,9 +24,9 @@
 <script>
 export default {
   props: {
-    MainText:String,
-    SubText:String,
-  }
+    MainText: String,
+    SubText: String,
+  },
 };
 </script>
 
@@ -37,7 +37,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url("../../assets/bannerimg.png");
+  background-image: url("../../assets/banner.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
