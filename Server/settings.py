@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'records',
 
     # Third party apps
-    # 'djangorestframework',
     
     # Django apps
     'django.contrib.admin',
@@ -123,7 +122,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+# 
+AUTH_USER_MODEL = 'users.User'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
