@@ -2,24 +2,37 @@
   <div>
     <div class="banner">
       <div class="banner-head">
-        <span class="di" style="color: #2bc0af">di</span>
-        <span class="e" style="color: #25ab9b">è</span>
-        <span class="te" style="color: #219285">te</span>
-      </div>
-      <div class="banner-sub-head">
-        <span>개인별 맞춤형 식단과 음식을 추천해드립니다.</span>
+        <div v-if="!MainText" class="default-text">
+          <span class="di" style="color: #2bc0af">di</span>
+          <span class="e" style="color: #25ab9b">è</span>
+          <span class="te" style="color: #219285">te</span>
+          <div class="banner-sub-head">
+            <span>개인별 맞춤형 식단과 음식을 추천해드립니다.</span>
+          </div>
+        </div>
+        <div v-else class="present-text">
+          {{ MainText }}
+          <div class="banner-sub-head">
+            <span>{{ SubText }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    MainText:String,
+    SubText:String,
+  }
+};
 </script>
 
 <style>
 .banner {
-  height: 30vh;
+  height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,12 +43,13 @@ export default {};
   background-repeat: no-repeat;
 }
 .banner .banner-head {
-  font-size: 60px;
+  text-align: center;
+  font-size: 3rem;
   font-weight: 700;
 }
 
 .banner .banner-sub-head {
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #333;
 }
 </style>
