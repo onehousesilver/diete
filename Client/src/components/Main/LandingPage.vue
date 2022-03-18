@@ -5,14 +5,24 @@
     <div id="logout" v-if="isLogin">
       <!-- top -->
       <section class="top-section">
-        <div class="top-title">diète</div>
-        <div class="top-title">오늘 어떤 음식을 드시고 싶으신가요?</div>
         <div class="top-title">
-          당신은 하루 칼로리 권장량을 준수하고 계신가요?
+          <div class="title">
+            <span class="di" style="color: #2bc0af">di</span>
+            <span class="e" style="color: #25ab9b">è</span>
+            <span class="te" style="color: #219285">te</span>
+            <span> 시작하기</span>
+          </div>
+          <div class="text">
+            <div>
+              빅데이터를 이용하여
+              <br />
+              음식 추천 서비스와 맞춤형 식단관리 서비스를 제공합니다.
+              <br />
+              또한, 건강한 식습관을 지향하고 <br />
+              사용자가 선호하는 음식을 추천해드립니다.
+            </div>
+          </div>
         </div>
-        <div class="top-title">내 식단에 대한 분석이 필요하신가요?</div>
-        <div class="top-title">내가 먹은 음식에 대한 자세한 정보와</div>
-        <div class="top-title">어쩌고저쩌고를 할 수 있습니다.</div>
       </section>
 
       <!-- middle -->
@@ -77,14 +87,15 @@
                 alt=""
                 class="recommend_page back-to-position to-right delay-1"
               />
-            </div>
-            <div class="more back-to-position to-right delay-2">
-              <button
-                class="bttn-unite bttn-md bttn-success start-btn"
-                @click="goToJoin"
-              >
-                시작하기
-              </button>
+
+              <div class="more back-to-position to-right delay-2">
+                <button
+                  class="bttn-unite bttn-md bttn-success start-btn"
+                  @click="goToJoin"
+                >
+                  시작하기
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -127,7 +138,7 @@
 </template>
 
 <script>
-import goToTop from "../../js/goToTop.js";
+import scroll from "../../js/scroll.js";
 
 export default {
   name: "MainDescription",
@@ -140,10 +151,10 @@ export default {
   // created 될 때 test 실행
   methods: {
     test() {
-      goToTop();
+      scroll();
     },
     goToJoin() {
-      // signup으로 감
+      this.$router.push({ name: "join" });
     },
   },
   mounted() {
@@ -154,34 +165,44 @@ export default {
 
 <style scoped>
 /* Logout 랜딩 페이지 */
-#logout {
-  /* margin: 0 6.25rem; */
-}
+
 .top-section {
-  height: 700px;
+  height: 80vh;
   background-image: url("../../assets/main_logout/person.gif");
-  background-size: contain;
+  background-size: 50rem;
   background-repeat: no-repeat;
+  background-position: right;
+  color: #333;
 }
 .top-section .top-title {
-  font-size: 50px;
-  text-align: center;
+  height: 31.25rem;
+  text-align: left;
+  margin-left: 21.875rem;
+}
+.top-section .top-title .title {
+  padding-top: 10.625rem;
+  font-size: 4.375rem;
+  font-weight: 700;
+}
+.top-section .top-title .text {
+  margin-top: 1.25rem;
+  font-size: 2.188rem;
 }
 
 .middle-section .inner {
   position: relative;
-  height: 400px;
+  height: 40vh;
 }
 .middle-section .inner .recommend_page {
   display: block;
-  width: 600px;
-  margin-left: 300px;
+  width: 37.5rem;
+  margin-left: 18.75rem;
 }
 
 .middle-section .text-group {
   position: absolute;
-  top: 100px;
-  right: 200px;
+  top: 6.25rem;
+  right: 12.5rem;
 }
 
 .middle-section .text-group .description {
@@ -194,34 +215,88 @@ export default {
 }
 .middle-section2 .inner {
   position: relative;
-  height: 400px;
+  height: 40vh;
 }
 .middle-section2 .inner .my_page {
   width: 600px;
   display: block;
-  margin-left: 300px;
+  text-align: left;
+  margin-top: 6.25rem;
+  margin-left: auto;
+  margin-right: 15.625rem;
 }
 
 .middle-section2 .text-group {
   position: absolute;
-  top: 100px;
-  right: 200px;
+  top: 6.25rem;
+  left: 31.25rem;
 }
 
 .middle-section2 .text-group .description {
   display: block;
 }
 
+/* bottom */
 .bottom-section {
-  height: 800px;
+  background-image: url("../../assets/main_logout/main_bg2.png");
   background-attachment: fixed;
   background-color: #eaf7ee;
-  background-image: url("../../assets/main_logout/main_bg2.png");
   background-position: right;
   background-repeat: no-repeat;
-  background-position-x: 900px;
+  background-position-x: 56.25rem;
+  background-size: 87.5rem;
+}
+.bottom-section .inner {
+  padding: 6.25rem 0;
+}
+.bottom-section .text-group {
+  width: 22.625rem;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-left: 35.625rem;
 }
 
+.bottom-section .text-group .title {
+  margin-bottom: 2.5rem;
+}
+.bottom-section .text-group .description {
+  margin-bottom: 2.5rem;
+}
+.bottom-section .start-btn {
+  margin-top: 1.25rem;
+  margin-right: 1.875rem;
+  width: 18.75rem;
+  height: 3.125rem;
+  border-radius: 10px;
+}
+/*BACK TO POSITION*/
+.back-to-position {
+  opacity: 0;
+  transition: 1s;
+}
+.back-to-position.to-right {
+  transform: translateX(-150px);
+}
+.back-to-position.to-left {
+  transform: translateX(150px);
+}
+.show .back-to-position {
+  opacity: 1;
+  transform: translateX(0);
+}
+.show .back-to-position.delay-0 {
+  transition-delay: 0s;
+}
+.show .back-to-position.delay-1 {
+  transition-delay: 0.3s;
+}
+.show .back-to-position.delay-2 {
+  transition-delay: 0.6s;
+}
+.show .back-to-position.delay-3 {
+  transition-delay: 0.9s;
+}
 /* Login 랜딩 페이지 */
 #login {
   margin: 0 6.25rem;
