@@ -24,6 +24,7 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
+
 #app {
   font-family: "Roboto", "MinSans-Regular";
   -webkit-font-smoothing: antialiased;

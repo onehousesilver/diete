@@ -9,18 +9,19 @@
           <div class="title">
             <span class="di" style="color: #2bc0af">di</span>
             <span class="e" style="color: #25ab9b">è</span>
-            <span class="te" style="color: #219285">te</span>
-            <span> 시작하기</span>
+            <span class="te" style="color: #219285">te </span>
+            <b>시작하기</b>
           </div>
           <div class="text">
-            <div>
-              빅데이터를 이용하여
+            <section>
+              <b class="text-highlight">빅데이터</b>를 이용하여
               <br />
-              음식 추천 서비스와 맞춤형 식단관리 서비스를 제공합니다.
+              <b>음식 추천 서비스</b>와 <b>맞춤형 식단관리 서비스</b>를
+              제공합니다.
               <br />
-              또한, 건강한 식습관을 지향하고 <br />
-              사용자가 선호하는 음식을 추천해드립니다.
-            </div>
+              또한, <b>건강한 식습관을 지향</b>하고 <br />
+              <b>사용자가 선호하는 음식을 추천</b>해드립니다.
+            </section>
           </div>
         </div>
       </section>
@@ -80,12 +81,12 @@
               <img
                 src="../../assets/main_logout/bottom_title_bold.png"
                 alt=""
-                class="recommend_page back-to-position to-right delay-0"
+                class="title back-to-position to-right delay-0"
               />
               <img
                 src="../../assets/main_logout/bottom_description.png"
                 alt=""
-                class="recommend_page back-to-position to-right delay-1"
+                class="text back-to-position to-right delay-1"
               />
 
               <div class="more back-to-position to-right delay-2">
@@ -164,15 +165,19 @@ export default {
 </script>
 
 <style scoped>
+.text-highlight {
+  background: linear-gradient(to top, #b7fef6 50%, transparent 50%);
+}
 /* Logout 랜딩 페이지 */
 
 .top-section {
   height: 80vh;
   background-image: url("../../assets/main_logout/person.gif");
-  background-size: 50rem;
+  background-size: 60rem;
   background-repeat: no-repeat;
   background-position: right;
   color: #333;
+  background-color: #f7fcff;
 }
 .top-section .top-title {
   height: 31.25rem;
@@ -258,10 +263,7 @@ export default {
 }
 
 .bottom-section .text-group .title {
-  margin-bottom: 2.5rem;
-}
-.bottom-section .text-group .description {
-  margin-bottom: 2.5rem;
+  margin-bottom: -50px;
 }
 .bottom-section .start-btn {
   margin-top: 1.25rem;
