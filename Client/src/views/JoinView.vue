@@ -1,0 +1,51 @@
+<template>
+  <div>
+    <BannerPage 
+      MainText="회원가입" 
+      SubText="diète가 추천하는 다양한 식단을 받아보세요" 
+    />
+    <JoinFirstStep 
+      v-if="currentStep===0"
+      @nextStep="nextStep"
+    />
+    <JoinSecondStep
+      v-else-if="currentStep===1"
+      @completedForm="sendFormData"
+    />
+  </div>
+</template>
+
+<script>
+import BannerPage from '@/components/Main/BannerPage.vue'
+import JoinFirstStep from '@/components/Join/JoinFirstStep.vue'
+import JoinSecondStep from '../../../Client/src/components/Join/JoinSecondStep.vue'
+
+export default {
+  name: 'JoinView',
+  components: {
+    BannerPage,
+    JoinFirstStep,
+    JoinSecondStep
+  },
+  data() {
+    return {
+      currentStep: 0,
+    }
+  },
+  methods: {
+    nextStep(formData) {
+      this.currentStep ++;
+      console.log(formData)
+    },
+    sendFormData(emitData) {
+      console.log(emitData)
+      // this.$router.push({ name: 'login' }).catch(() => {})
+    }
+  }
+
+}
+</script>
+
+<style scoped>
+
+</style>
