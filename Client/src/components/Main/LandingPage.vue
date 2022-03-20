@@ -5,15 +5,15 @@
     <div id="logout" v-if="isLogin">
       <!-- top -->
       <section class="top-section">
-        <div class="top-title">
-          <div class="title">
-            <span class="di" style="color: #2bc0af">di</span>
-            <span class="e" style="color: #25ab9b">è</span>
-            <span class="te" style="color: #219285">te </span>
-            <b>시작하기</b>
-          </div>
-          <div class="text">
-            <section>
+        <div class="inner">
+          <div class="text-group">
+            <div class="title">
+              <span class="di" style="color: #2bc0af">di</span>
+              <span class="e" style="color: #25ab9b">è</span>
+              <span class="te" style="color: #219285">te </span>
+              <b>시작하기</b>
+            </div>
+            <div class="description">
               <b class="text-highlight">빅데이터</b>를 이용하여
               <br />
               <b>음식 추천 서비스</b>와 <b>맞춤형 식단관리 서비스</b>를
@@ -21,7 +21,7 @@
               <br />
               또한, <b>건강한 식습관을 지향</b>하고 <br />
               <b>사용자가 선호하는 음식을 추천</b>해드립니다.
-            </section>
+            </div>
           </div>
         </div>
       </section>
@@ -171,43 +171,54 @@ export default {
 /* Logout 랜딩 페이지 */
 
 .top-section {
-  height: 80vh;
-  background-image: url("../../assets/main_logout/person.gif");
-  background-size: 60rem;
-  background-repeat: no-repeat;
-  background-position: right;
-  color: #333;
-  background-color: #f7fcff;
-}
-.top-section .top-title {
-  height: 31.25rem;
-  text-align: left;
-  margin-left: 21.875rem;
-}
-.top-section .top-title .title {
-  padding-top: 10.625rem;
-  font-size: 4.375rem;
-  font-weight: 700;
-}
-.top-section .top-title .text {
-  margin-top: 1.25rem;
-  font-size: 2.188rem;
+    background-color: #fdfefe;
+    height: 75vh;
+    background-image: url(http://localhost:8080/img/walk.0fe61dd3.gif);
+    background-size: 60rem;
+    background-repeat: no-repeat;
+    background-position: right;
+    color: #333;
 }
 
+.top-section .inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 1200px;
+  height: 700px;
+  margin: 0 auto;
+}
+.top-section .text-group .title {
+  position: relative;
+  font-size: 4.375rem;
+  font-weight: 700;
+  bottom: 50px;
+}
+.top-section .text-group .description {
+  font-size: 2rem;
+  position: relative;
+  top: 20px;
+}
+
+/* middle */
 .middle-section .inner {
   position: relative;
   height: 40vh;
+  width: 1100px;
+  margin: 0 auto;
 }
 .middle-section .inner .recommend_page {
   display: block;
+  position: absolute;
   width: 37.5rem;
-  margin-left: 18.75rem;
+  left: -100px;
 }
 
 .middle-section .text-group {
   position: absolute;
   top: 6.25rem;
-  right: 12.5rem;
+  left: 37.5rem;
 }
 
 .middle-section .text-group .description {
@@ -217,24 +228,26 @@ export default {
 /* middle-sction2 */
 .middle-section2 {
   background-image: url("../../assets/main_logout/main_bg.png");
+  height: 700px;
 }
 .middle-section2 .inner {
   position: relative;
   height: 40vh;
+  width: 1100px;
+  margin: 0 auto;
+  top: 150px;
 }
 .middle-section2 .inner .my_page {
-  width: 600px;
   display: block;
-  text-align: left;
-  margin-top: 6.25rem;
-  margin-left: auto;
-  margin-right: 15.625rem;
+  position: absolute;
+  width: 37.5rem;
+  right: -90px;
 }
 
 .middle-section2 .text-group {
   position: absolute;
   top: 6.25rem;
-  left: 31.25rem;
+  left: -100px;
 }
 
 .middle-section2 .text-group .description {
@@ -249,7 +262,7 @@ export default {
   background-position: right;
   background-repeat: no-repeat;
   background-position-x: 56.25rem;
-  background-size: 87.5rem;
+  background-size: cover;
 }
 .bottom-section .inner {
   padding: 6.25rem 0;
@@ -263,7 +276,12 @@ export default {
 }
 
 .bottom-section .text-group .title {
-  margin-bottom: -50px;
+  margin-bottom: -40px;
+  position: relative;
+  left: 30px;
+}
+.bottom-section .text-group .text {
+  padding-left: 60px;
 }
 .bottom-section .start-btn {
   margin-top: 1.25rem;
@@ -272,6 +290,7 @@ export default {
   height: 3.125rem;
   border-radius: 10px;
 }
+
 /*BACK TO POSITION*/
 .back-to-position {
   opacity: 0;
