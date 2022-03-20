@@ -1,8 +1,10 @@
 <template>
   <div id="body">
     <!-- 비회원일 때 랜딩 페이지 -->
-
-    <div id="logout" v-if="isLogin">
+    <div id="logout" v-if="isLogin == false">
+      <div id="to-top">
+        <div class="material-icons" @click="toTop">arrow_upward</div>
+      </div>
       <!-- top -->
       <section class="top-section">
         <div class="inner">
@@ -23,6 +25,7 @@
               <b>사용자가 선호하는 음식을 추천</b>해드립니다.
             </div>
           </div>
+          <img src="../../assets/main_logout/main_landing.gif" alt="" />
         </div>
       </section>
 
@@ -76,27 +79,30 @@
       <!-- bottom -->
       <section class="bottom-section scroll-spy">
         <div class="inner">
-          <div>
-            <div class="text-group">
-              <img
-                src="../../assets/main_logout/bottom_title_bold.png"
-                alt=""
-                class="title back-to-position to-right delay-0"
-              />
-              <img
-                src="../../assets/main_logout/bottom_description.png"
-                alt=""
-                class="text back-to-position to-right delay-1"
-              />
+          <img
+            class="bottom-bg"
+            src="../../assets/main_logout/walk.gif"
+            alt=""
+          />
+          <div class="text-group">
+            <img
+              src="../../assets/main_logout/bottom_title_bold.png"
+              alt=""
+              class="title back-to-position to-right delay-0"
+            />
+            <img
+              src="../../assets/main_logout/bottom_description.png"
+              alt=""
+              class="text back-to-position to-right delay-1"
+            />
 
-              <div class="more back-to-position to-right delay-2">
-                <button
-                  class="bttn-unite bttn-md bttn-success start-btn"
-                  @click="goToJoin"
-                >
-                  시작하기
-                </button>
-              </div>
+            <div class="more back-to-position to-right delay-2">
+              <button
+                class="bttn-unite bttn-md bttn-success start-btn"
+                @click="goToJoin"
+              >
+                시작하기
+              </button>
             </div>
           </div>
         </div>
@@ -145,7 +151,7 @@ export default {
   name: "MainDescription",
   data: function () {
     return {
-      isLogin: true,
+      isLogin: false,
     };
   },
   // test를 필요한 이벤트에 넣음
@@ -157,6 +163,12 @@ export default {
     goToJoin() {
       this.$router.push({ name: "join" });
     },
+    toTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
   },
   mounted() {
     this.test();
@@ -165,19 +177,30 @@ export default {
 </script>
 
 <style scoped>
+#to-top {
+  width: 50px;
+  height: 50px;
+  background-color: #25ab9b;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+}
 .text-highlight {
   background: linear-gradient(to top, #b7fef6 50%, transparent 50%);
 }
 /* Logout 랜딩 페이지 */
 
 .top-section {
-    background-color: #fdfefe;
-    height: 75vh;
-    background-image: url(http://localhost:8080/img/walk.0fe61dd3.gif);
-    background-size: 60rem;
-    background-repeat: no-repeat;
-    background-position: right;
-    color: #333;
+  background-color: #fdfefe;
+  height: 75vh;
+  color: #333;
 }
 
 .top-section .inner {
@@ -185,34 +208,42 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 1200px;
-  height: 700px;
+  width: 75rem;
+  height: 43.75rem;
   margin: 0 auto;
 }
+
 .top-section .text-group .title {
   position: relative;
   font-size: 4.375rem;
   font-weight: 700;
-  bottom: 50px;
+  bottom: 3.125rem;
+}
+.top-section .inner img {
+  display: block;
+  position: absolute;
+  width: 43.5rem;
+  right: -11.625rem;
 }
 .top-section .text-group .description {
   font-size: 2rem;
   position: relative;
-  top: 20px;
+  top: 1.25rem;
+  z-index: 1;
 }
 
 /* middle */
 .middle-section .inner {
   position: relative;
   height: 40vh;
-  width: 1100px;
+  width: 68.75rem;
   margin: 0 auto;
 }
 .middle-section .inner .recommend_page {
   display: block;
   position: absolute;
   width: 37.5rem;
-  left: -100px;
+  left: -6.25rem;
 }
 
 .middle-section .text-group {
@@ -228,26 +259,26 @@ export default {
 /* middle-sction2 */
 .middle-section2 {
   background-image: url("../../assets/main_logout/main_bg.png");
-  height: 700px;
+  height: 43.75rem;
 }
 .middle-section2 .inner {
   position: relative;
   height: 40vh;
-  width: 1100px;
+  width: 68.75rem;
   margin: 0 auto;
-  top: 150px;
+  top: 9.375rem;
 }
 .middle-section2 .inner .my_page {
   display: block;
   position: absolute;
   width: 37.5rem;
-  right: -90px;
+  right: -5.625rem;
 }
 
 .middle-section2 .text-group {
   position: absolute;
   top: 6.25rem;
-  left: -100px;
+  left: -6.25rem;
 }
 
 .middle-section2 .text-group .description {
@@ -255,40 +286,41 @@ export default {
 }
 
 /* bottom */
-.bottom-section {
-  background-image: url("../../assets/main_logout/main_bg2.png");
-  background-attachment: fixed;
-  background-color: #eaf7ee;
-  background-position: right;
-  background-repeat: no-repeat;
-  background-position-x: 56.25rem;
-  background-size: cover;
-}
+
 .bottom-section .inner {
-  padding: 6.25rem 0;
+  position: relative;
+  height: 40vh;
+  width: 68.75rem;
+  margin: 0 auto;
+  top: 3.375rem;
+}
+.bottom-section .inner .bottom-bg {
+  display: block;
+  position: absolute;
+  width: 56.5rem;
+  right: -10.625rem;
 }
 .bottom-section .text-group {
   width: 22.625rem;
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
-  margin-left: 35.625rem;
+  position: relative;
+  left: 9.375rem;
 }
 
 .bottom-section .text-group .title {
-  margin-bottom: -40px;
+  margin-bottom: -2.5rem;
   position: relative;
-  left: 30px;
-}
-.bottom-section .text-group .text {
-  padding-left: 60px;
+  left: 1.875rem;
 }
 .bottom-section .start-btn {
   margin-top: 1.25rem;
   margin-right: 1.875rem;
+  margin-bottom: 1.875rem;
   width: 18.75rem;
   height: 3.125rem;
-  border-radius: 10px;
+  border-radius: 0.625rem;
 }
 
 /*BACK TO POSITION*/
