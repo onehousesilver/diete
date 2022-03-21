@@ -1,16 +1,18 @@
 from django.db import models
 import datetime
+from django.conf import settings
 
 class Menu(models.Model):
+    # 회원번호를 외래키로 받아옴
+    userId = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # 날짜 - 사용자가 식단을 먹은 날짜
     date = models.DateField(default=datetime.date.today)
     # 식사시간 - 아침, 점심, 저녁 // 0, 1, 2
     mealTime = models.IntegerField(default=0)
+    
 
 
 class Food(models.Model):
-
-    # MenuToFood테이블과 1:n으로 연결 필요
 
     # 음식 이름
     foodName= models.CharField(max_length=100)
@@ -39,8 +41,11 @@ class Food(models.Model):
 
 class MenuToFood(models.Model):
     
-    # Menu테이블과 n:1으로 연결 필요
-    # Food테이블과 n:1으로 연결 필요
+    # Menu테이블과 n:1으로 연결 필요, 식단 번호를 외래키로 받아옴
+    menuId = models.ForeignKey(Menu, on_delete=models.CASCADE)
+
+    # Food테이블과 n:1으로 연결 필요, 음식 번호를 외래키로 받아옴
+    foodId = models.ForeignKey(Food, on_delete=models.CASCADE)
     
     # 수량 - 해당 음식의 수량
     amount = models.IntegerField(default=0)
