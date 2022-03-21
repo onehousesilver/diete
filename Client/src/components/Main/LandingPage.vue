@@ -26,6 +26,11 @@
             </div>
           </div>
           <img src="../../assets/main_logout/main_landing.gif" alt="" />
+          <div class="scroll-container">
+            <div class="scroll-bar"></div>
+            <div class="scroll-bar"></div>
+            <div class="scroll-bar"></div>
+          </div>
         </div>
       </section>
 
@@ -141,12 +146,12 @@
         </div>
       </div>
     </div>
+    
   </div>
 </template>
 
 <script>
 import scroll from "../../js/scroll.js";
-
 export default {
   name: "MainDescription",
   data: function () {
@@ -454,5 +459,63 @@ a {
   bottom: 0;
   max-width: 100%;
   max-height: 75%;
+}
+
+.scroll-bar {
+  position: absolute;
+  width: 3rem;
+  height: 8px;
+  left: 50%;
+  bottom: 5rem;
+  opacity: 0;
+  transform: scale3d(0.5, 0.5, 0.5);
+  animation: move 3s ease-out infinite;
+}
+
+.scroll-bar:first-child {
+  animation: move 3s ease-out 1s infinite;
+}
+
+.scroll-bar:nth-child(2) {
+  animation: move 3s ease-out 2s infinite;
+}
+
+.scroll-bar:before,
+.scroll-bar:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  background: #aaa;
+}
+
+.scroll-bar:before {
+  left: 0;
+  transform: skew(0deg, 30deg);
+}
+
+.scroll-bar:after {
+  right: 0;
+  width: 50%;
+  transform: skew(0deg, -30deg);
+}
+
+@keyframes move {
+  25% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+    transform: translateY(2rem);
+  }
+  67% {
+    opacity: 1;
+    transform: translateY(3rem);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(4rem) scale3d(0.5, 0.5, 0.5);
+  }
 }
 </style>

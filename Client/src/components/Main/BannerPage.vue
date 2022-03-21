@@ -44,12 +44,12 @@ export default {
 }
 .banner .banner-head {
   text-align: center;
-  font-size: 3rem;
+  font-size: 3vw;
   font-weight: 700;
 }
 
 .banner .banner-sub-head {
-  font-size: 1.125rem;
+  font-size: 1.2vw;
   color: #333;
 }
 </style>
