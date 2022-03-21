@@ -1,13 +1,13 @@
 <template>
   <div class="home">
     <BannerPage />
-    <MainDescription/>
+    <MainDescription />
   </div>
 </template>
 
 <script>
 import BannerPage from "@/components/Main/BannerPage.vue";
-import MainDescription from '@/components/Main/MainDescription.vue';
+import MainDescription from "@/components/Main/LandingPage.vue";
 
 export default {
   name: "HomeView",
@@ -18,4 +18,4 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style></style>
