@@ -20,6 +20,22 @@ export default function scroll() {
       }
     }, 200)
   );
+
+  const scrollEl = document.querySelector('.scroll-container');
+  window.addEventListener(
+    "scroll",
+    _.throttle(function () {
+      if (window.scrollY > 200) {
+        gsap.to(scrollEl, 0.2, {
+          opacity: 0,
+        });
+      } else {
+        gsap.to(scrollEl, 0.2, {
+          opacity: 1,
+        });
+      }
+    }, 200)
+  )
   const spyEls = document.querySelectorAll("section.scroll-spy");
   // 요소들 반복 처리!
   spyEls.forEach(function (spyEl) {
