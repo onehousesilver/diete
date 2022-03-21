@@ -1,50 +1,42 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import JoinView from "../views/JoinView.vue";
-import LoginView from "../views/LoginView.vue";
-import MenuView from "../views/MenuView.vue";
-import RecordView from "../views/RecordView.vue";
-import SearchView from "../views/SearchView.vue";
-import PocketView from "../views/PocketView.vue";
-
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: () => import("../views/HomeView.vue"),
   },
   {
     path: "/join",
     name: "join",
-    component: JoinView,
+    component: () => import("../views/JoinView.vue"),
   },
   {
     path: "/login",
     name: "login",
-    component: LoginView,
+    component: () => import("../views/LoginView.vue"),
   },
   {
     path: "/menu",
     name: "menu",
-    component: MenuView,
+    component: () => import("../views/MenuRecommendation/ChooseMeal.vue"),
   },
   {
     path: "/search",
     name: "search",
-    component: SearchView,
+    component: () => import("../views/SearchView.vue"),
   },
   {
     path: "/pocket",
     name: "pocket",
-    component: PocketView,
+    component: () => import("../views/PocketView.vue"),
   },
   {
     path: "/record",
     name: "record",
-    component: RecordView,
+    component: () => import("../views/RecordView.vue"),
   },
 ];
 
