@@ -29,17 +29,19 @@ export default {
   },
   data() {
     return {
-      currentStep: 0,
+      currentStep: 0, // 
     }
   },
   methods: {
+    // step 2로 이동
     nextStep(formData) {
       this.currentStep ++;
       console.log(formData)
     },
+    // 회원가입 완료 (api요청)
     sendFormData(emitData) {
       console.log(emitData)
-      // this.$router.push({ name: 'login' }).catch(() => {})
+      this.$router.push({ name: 'login' }).catch(() => {})
     }
   }
 

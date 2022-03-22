@@ -19,9 +19,14 @@ const routes = [
     component: () => import("../views/LoginView.vue"),
   },
   {
-    path: "/menu",
-    name: "menu",
+    path: "/menu/choose",
+    name: "ChooseMeal",
     component: () => import("../views/MenuRecommendation/ChooseMeal.vue"),
+  },
+  {
+    path: "/menu/recommendation",
+    name: "RecommendMeal",
+    component: () => import("../views/MenuRecommendation/RecommendMeal.vue"),
   },
   {
     path: "/search",

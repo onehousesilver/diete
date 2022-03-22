@@ -121,7 +121,7 @@
         <div class="main-sub-title">오늘 하루도 건강하게 시작해보세요!</div>
         <div class="card-section">
           <div class="menu-recommend-card">
-            <router-link :to="{ name: 'menu' }">
+            <router-link :to="{ name: 'ChooseMeal' }">
               <div>음식추천</div>
               <span>나에게 꼭 맞는 식단을 추천해드립니다.</span>
               <img src="../../assets/recommend-card.svg" alt="" />
