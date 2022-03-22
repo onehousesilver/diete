@@ -14,8 +14,8 @@ urlpatterns = [
     #  path('login/', views.login),
     
     # 아이디 중복 확인
-    path('id/<int:userId>/', views.check_id),
+    path('id/<int:username>/', views.check_id),
     
     # 회원정보 업데이트
-    path('update/<int:userId>/', views.update_user_info),
+    path('update/', views.update_user_info),
 ]
