@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BannerPage MainText="로그인" SubText="diète의 다양한 기능을 사용해 보세요." />
+    <BannerBar MainText="로그인" SubText="diète의 다양한 기능을 사용해 보세요." />
     <div class="login-container">
       <div class="group">
         <input 
@@ -46,12 +46,12 @@
 </template>
 
 <script>
-import BannerPage from '@/components/Main/BannerPage.vue'
+import BannerBar from '@/components/Main/BannerBar.vue'
 
 export default {
   name: 'LoginView',
   components: {
-    BannerPage
+    BannerBar
   },
   data() {
     return {
