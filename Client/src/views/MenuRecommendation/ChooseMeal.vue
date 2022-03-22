@@ -1,11 +1,11 @@
 <template>
   <div>
-    <BannerPage MainText="음식추천" SubText="" />
+    <BannerBar MainText="음식추천" SubText="" />
     <h1>추천받을 끼니를 선택해 주세요</h1>
     <div class="choose-container">
       <section id="bre" @click="chooseMeal">
         <h2>아침</h2>
-        <img :src="require('@/assets/menu_rec/breakfast_img1.png')" alt="">
+        <img :src="require('@/assets/menu_rec/breakfast_img.png')" alt="">
         <button id="bre-btn" class="bttn-unite bttn-md bttn-success choose-btn" @click="test">선택</button>
       </section>
       <section id="lun" @click="chooseMeal">
@@ -19,17 +19,17 @@
         <button id="din-btn" class="bttn-unite bttn-md bttn-success choose-btn" @click="test">선택</button>
       </section>
     </div>
-    <button class="bttn-unite bttn-md bttn-success next-btn">선택</button>
+    <!-- <button class="bttn-unite bttn-md bttn-success next-btn">선택</button> -->
   </div>
 </template>
 
 <script>
-import BannerPage from '@/components/Main/BannerPage.vue'
+import BannerBar from '@/components/Main/BannerBar.vue'
 import $ from 'jquery'
 export default {
   name: 'MenuView',
   components: {
-    BannerPage
+    BannerBar
   },
   data() {
     return {
@@ -42,14 +42,12 @@ export default {
     },
     chooseMeal(e) {
       if(this.selectedMeal){
-        const prevSectionEl = document.querySelector(`#${this.selectedMeal}`);
-        prevSectionEl.classList.remove('select');
+        $(`#${this.selectedMeal}`).removeClass('select');
+        $(`#${this.selectedMeal}-btn`).removeClass('select');
       }
       this.selectedMeal = e.target.id ? e.target.id : e.target.offsetParent.id;
-      const nextSectionEl = document.querySelector(`#${this.selectedMeal}`);
-      nextSectionEl.classList.add('select');
-
-      $(`#${this.selectedMeal}-btn`).click();
+      $(`#${this.selectedMeal}`).addClass('select');
+      $(`#${this.selectedMeal}-btn`).addClass('select');
     }
   }
 }
@@ -64,6 +62,17 @@ export default {
   width: 15vw;
   height: 5vh;
   border-radius: 0.625rem;
+  animation: none;
+}
+.bttn-unite.bttn-success:after
+.bttn-unite.bttn-success:before {
+  background: #25ab9b;
+  color: #fff;
+  
+}
+.choose-btn.select {
+  background: #25ab9b;
+  color: #fff;
 }
 h1 {
   text-align: center;

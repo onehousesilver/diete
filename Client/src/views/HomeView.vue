@@ -1,18 +1,18 @@
 <template>
   <div class="home">
-    <BannerPage />
+    <BannerBar />
     <MainDescription />
   </div>
 </template>
 
 <script>
-import BannerPage from "@/components/Main/BannerPage.vue";
+import BannerBar from "@/components/Main/BannerBar.vue";
 import MainDescription from "@/components/Main/LandingPage.vue";
 
 export default {
   name: "HomeView",
   components: {
-    BannerPage,
+    BannerBar,
     MainDescription,
   },
 };

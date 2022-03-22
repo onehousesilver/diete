@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BannerPage 
+    <BannerBar 
       MainText="회원가입" 
       SubText="diète가 추천하는 다양한 식단을 받아보세요" 
     />
@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import BannerPage from '@/components/Main/BannerPage.vue'
+import BannerBar from '@/components/Main/BannerBar.vue'
 import JoinFirstStep from '@/components/Join/JoinFirstStep.vue'
 import JoinSecondStep from '../../../Client/src/components/Join/JoinSecondStep.vue'
 
 export default {
   name: 'JoinView',
   components: {
-    BannerPage,
+    BannerBar,
     JoinFirstStep,
     JoinSecondStep
   },
