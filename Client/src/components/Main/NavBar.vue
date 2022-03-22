@@ -20,7 +20,7 @@
           >
         </div>
         <div class="menu-items" v-else>
-          <router-link :to="{ name: 'menu' }">
+          <router-link :to="{ name: 'ChooseMeal' }">
             <div>음식추천</div>
           </router-link>
           <router-link :to="{ name: 'search' }"

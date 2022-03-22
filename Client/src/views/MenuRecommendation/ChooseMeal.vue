@@ -1,33 +1,40 @@
 <template>
   <div>
+    <!-- Banner -->
     <BannerBar MainText="음식추천" SubText="" />
     <h1>추천받을 끼니를 선택해 주세요</h1>
     <div class="choose-container">
       <section id="bre" @click="chooseMeal">
         <h2>아침</h2>
-        <img :src="require('@/assets/menu_rec/breakfast_img.png')" alt="">
-        <button id="bre-btn" class="bttn-unite bttn-md bttn-success choose-btn" @click="test">선택</button>
+        <img :src="require('@/assets/menu_rec/breakfast_img.png')" alt="예시이미지-아침">
+        <button id="bre-btn" class="bttn-unite bttn-md bttn-success btn-group" @click="chooseMeal">선택</button>
       </section>
       <section id="lun" @click="chooseMeal">
         <h2>점심</h2>
-        <img :src="require('@/assets/menu_rec/lunch_img.png')" alt="">
-        <button id="lun-btn" class="bttn-unite bttn-md bttn-success choose-btn" @click="test">선택</button>
+        <img :src="require('@/assets/menu_rec/lunch_img.png')" alt="예시이미지-점심">
+        <button id="lun-btn" class="bttn-unite bttn-md bttn-success btn-group" @click="chooseMeal">선택</button>
       </section>
       <section id="din" @click="chooseMeal">
         <h2>저녁</h2>
-        <img :src="require('@/assets/menu_rec/dinner_img.png')" alt="">
-        <button id="din-btn" class="bttn-unite bttn-md bttn-success choose-btn" @click="test">선택</button>
+        <img :src="require('@/assets/menu_rec/dinner_img.png')" alt="예시이미지-저녁">
+        <button id="din-btn" class="bttn-unite bttn-md bttn-success btn-group" @click="chooseMeal">선택</button>
       </section>
     </div>
-    <!-- <button class="bttn-unite bttn-md bttn-success next-btn">선택</button> -->
+    <button 
+      class="bttn-unite bttn-md bttn-success btn-group"
+      @click="nextStep"
+    >
+      추천받기
+    </button>
   </div>
 </template>
 
 <script>
 import BannerBar from '@/components/Main/BannerBar.vue'
 import $ from 'jquery'
+
 export default {
-  name: 'MenuView',
+  name: 'ChooseMeal',
   components: {
     BannerBar
   },
@@ -37,24 +44,30 @@ export default {
     }
   },
   methods: {
-    test() {
-      console.log('zz')
-    },
+    // 끼니 선택 메서드. 
     chooseMeal(e) {
-      if(this.selectedMeal){
+      // 이미 선택된 섹션이 있을 때 
+      if(this.selectedMeal)
+      {
+        // 기존에 선택된 섹션 선택 해제(클래스 제거)
         $(`#${this.selectedMeal}`).removeClass('select');
         $(`#${this.selectedMeal}-btn`).removeClass('select');
       }
-      this.selectedMeal = e.target.id ? e.target.id : e.target.offsetParent.id;
+      // 부모요소에 id가 지정되어 있다면(버튼을 클릭했을 때) 부모요소의 id, 없다면(버튼 이외의 섹션을 클릭했을 때) 자기 자신의 id 저장 
+      this.selectedMeal = e.target.offsetParent.id ? e.target.offsetParent.id : e.target.id;
+      // 섹션 선택(클래스 추가)
       $(`#${this.selectedMeal}`).addClass('select');
       $(`#${this.selectedMeal}-btn`).addClass('select');
+    },
+    nextStep() {
+      this.$router.push({ path: '/menu/recommendation' })
     }
   }
 }
 </script>
 
 <style scoped>
-.choose-btn {
+.btn-group  {
   position: absolute;
   bottom: 2vh;
   left: 50%;
@@ -64,13 +77,13 @@ export default {
   border-radius: 0.625rem;
   animation: none;
 }
-.bttn-unite.bttn-success:after
-.bttn-unite.bttn-success:before {
-  background: #25ab9b;
-  color: #fff;
-  
+.bttn-unite.bttn-success:before{
+  background: #25AB9B;
 }
-.choose-btn.select {
+.bttn-unite.bttn-success:after{
+  background: #25AB9B;
+}
+.btn-group.select {
   background: #25ab9b;
   color: #fff;
 }
