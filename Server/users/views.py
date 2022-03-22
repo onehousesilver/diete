@@ -2,11 +2,12 @@
 from django.http import HttpResponse  
 from django.http.response import JsonResponse
 from django.contrib.auth import get_user_model
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import  status
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserProfileSerializer
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 # 회원 가입
 @api_view(['POST'])
@@ -35,10 +36,17 @@ def check_id(response, userId):
     return JsonResponse(data)
 
 # 회원 정보 수정
-def update_user_info(request, userId):
-    print(userId)
-    return HttpResponse("Hello, world. update_user_info!")
+@api_view(['PUT'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def update_user_info(request):
+    
+    User = get_user_model()
 
-# 로그인
-# def login(request):
-#     return HttpResponse("Hello, world. login!")
+    # if request.user.username != request.data.get('username') and User.objects.filter(username=request.data.get('username')).exists():
+    #         return Response({'error': '일치하는 닉네임이 존재합니다.'}, status=status.HTTP_400_BAD_REQUEST)
+    serializer = UserProfileSerializer(request.user, data=request.data)
+
+    if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)

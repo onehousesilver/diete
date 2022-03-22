@@ -8,3 +8,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('username','password', 'name', 'birthDate', 'height', 'weight', 'activity', 'gender', 'preference', 'kcal',)
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    # reviews = ReviewSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('password','height', 'weight', 'activity')
