@@ -22,9 +22,7 @@ def search_foods(request, keyword):
         serializer = FoodSerializer(food, read_only=True, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
-    # food = FoodSerializer(many=True, read_only=True, data = keyword)
-    # food = FoodSerializer(many=True, read_only=True, data = keyword)
-        return Response({f'{keyword}와 일치하는 음식이 없습니다.'},status=status.HTTP_204_NO_CONTENT)
+        return Response({f'{keyword}와(과) 일치하는 음식이 없습니다.'},status=status.HTTP_204_NO_CONTENT)
 
 # 음식 검색 후 카테고리로 분류된 리스트
 # 프론트에서 받아온 String을
@@ -40,6 +38,4 @@ def search_foods_category(request, keyword, category):
         serializer = FoodSerializer(food, read_only=True, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     else:
-    # food = FoodSerializer(many=True, read_only=True, data = keyword)
-    # food = FoodSerializer(many=True, read_only=True, data = keyword)
-        return Response({f'{category}의 {keyword}와 일치하는 음식이 없습니다.'},status=status.HTTP_204_NO_CONTENT)
+        return Response({f'{category}의 {keyword}와(과) 일치하는 음식이 없습니다.'},status=status.HTTP_204_NO_CONTENT)
