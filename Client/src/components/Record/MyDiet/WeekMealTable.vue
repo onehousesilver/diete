@@ -1,104 +1,102 @@
 <template>
-  <div>
-    <div class="week-calendar">
-      <!-- 수정버튼 -->
-      <span class="material-icons settings" @click="editMealTable">
-        settings
-      </span>
-      <div class="card">
-        <div class="meal-time">
-          <div>아침</div>
-          <div>점심</div>
-          <div>저녁</div>
+  <div class="week-calendar">
+    <!-- 수정버튼 -->
+    <span class="material-icons settings" @click="editMealTable">
+      settings
+    </span>
+    <div class="card">
+      <div class="meal-time">
+        <div>아침</div>
+        <div>점심</div>
+        <div>저녁</div>
+      </div>
+      <div class="monday">
+        <div class="text">월</div>
+        <div class="meal-table-el">
+          <span>밥</span>
+          <span>카레</span>
+          <span>배추김치</span>
         </div>
-        <div class="monday">
-          <div class="text">월</div>
-          <div class="meal-table-el">
-            <span>밥</span>
-            <span>카레</span>
-            <span>배추김치</span>
-          </div>
-          <div class="meal-table-el">
-            <span>밥</span>
-            <span>돈까스</span>
-            <span>샐러드</span>
-            <span>각종소스</span>
-            <span>콜라</span>
-          </div>
-          <div class="meal-table-el">
-            <span
-              >식단이 <br />
-              없어요!</span
-            >
-          </div>
+        <div class="meal-table-el">
+          <span>밥</span>
+          <span>돈까스</span>
+          <span>샐러드</span>
+          <span>각종소스</span>
+          <span>콜라</span>
         </div>
-        <div class="tuesday">
-          <div class="text">화</div>
-          <div class="meal-table-el">
-            <span
-              >식단이 <br />
-              없어요!</span
-            >
-          </div>
-          <div class="meal-table-el">식단 1개</div>
-          <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">
+          <span
+            >식단이 <br />
+            없어요!</span
+          >
         </div>
-        <div class="wednesday">
-          <div class="text">수</div>
-          <div class="meal-table-el">
-            <span
-              >식단이 <br />
-              없어요!</span
-            >
-          </div>
-          <div class="meal-table-el">식단 1개</div>
-          <div class="meal-table-el">식단 1개</div>
+      </div>
+      <div class="tuesday">
+        <div class="text">화</div>
+        <div class="meal-table-el">
+          <span
+            >식단이 <br />
+            없어요!</span
+          >
         </div>
-        <div class="thursday">
-          <div class="text">목</div>
-          <div class="meal-table-el">
-            <span
-              >식단이 <br />
-              없어요!</span
-            >
-          </div>
-          <div class="meal-table-el">식단 1개</div>
-          <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">식단 1개</div>
+      </div>
+      <div class="wednesday">
+        <div class="text">수</div>
+        <div class="meal-table-el">
+          <span
+            >식단이 <br />
+            없어요!</span
+          >
         </div>
-        <div class="friday">
-          <div class="text">금</div>
-          <div class="meal-table-el">
-            <span
-              >식단이 <br />
-              없어요!</span
-            >
-          </div>
-          <div class="meal-table-el">식단 1개</div>
-          <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">식단 1개</div>
+      </div>
+      <div class="thursday">
+        <div class="text">목</div>
+        <div class="meal-table-el">
+          <span
+            >식단이 <br />
+            없어요!</span
+          >
         </div>
-        <div class="saturday">
-          <div class="text">토</div>
-          <div class="meal-table-el">
-            <span
-              >식단이 <br />
-              없어요!</span
-            >
-          </div>
-          <div class="meal-table-el">식단 1개</div>
-          <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">식단 1개</div>
+      </div>
+      <div class="friday">
+        <div class="text">금</div>
+        <div class="meal-table-el">
+          <span
+            >식단이 <br />
+            없어요!</span
+          >
         </div>
-        <div class="sunday">
-          <div class="text">일</div>
-          <div class="meal-table-el">
-            <span>식빵</span>
-            <span>버터</span>
-            <span>크림스프</span>
-            <span>딸기잼</span>
-            <span>우유</span>
-          </div>
-          <div class="meal-table-el">식단 1개</div>
-          <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">식단 1개</div>
+      </div>
+      <div class="saturday">
+        <div class="text">토</div>
+        <div class="meal-table-el">
+          <span
+            >식단이 <br />
+            없어요!</span
+          >
         </div>
+        <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">식단 1개</div>
+      </div>
+      <div class="sunday">
+        <div class="text">일</div>
+        <div class="meal-table-el">
+          <span>식빵</span>
+          <span>버터</span>
+          <span>크림스프</span>
+          <span>딸기잼</span>
+          <span>우유</span>
+        </div>
+        <div class="meal-table-el">식단 1개</div>
+        <div class="meal-table-el">식단 1개</div>
       </div>
     </div>
   </div>

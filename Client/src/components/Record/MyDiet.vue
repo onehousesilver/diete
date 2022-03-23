@@ -12,10 +12,10 @@
     />
 
     <div class="body">
-      <DayBarChart v-if="current == true" @goToDay="goToDay" />
-      <WeekBarChart v-else-if="current == false" @goToWeek="goToWeek" />
-      <WeekMealTable v-if="current == false" @goToWeek="goToWeek" />
-      <DayMealTable v-else-if="current == true" @goToWeek="goToWeek" />
+      <DayBarChart v-if="current" @goToDay="goToDay" />
+      <WeekBarChart v-else @goToWeek="goToWeek" />
+      <WeekMealTable v-if="!current" @goToWeek="goToWeek" />
+      <DayMealTable v-else @goToWeek="goToWeek" />
     </div>
   </div>
 </template>

@@ -18,6 +18,8 @@ Vue.use(ToggleButton);
 import vueMoment from "vue-moment";
 Vue.use(vueMoment);
 
+//vueuse/motion
+
 new Vue({
   router,
   store,
