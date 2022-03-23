@@ -66,9 +66,9 @@ def join(request):
 # ID 중복체크
 @api_view(['GET'])
 @permission_classes([AllowAny])
-def check_id(response, userId):
+def check_id(response, username):
     User = get_user_model()
-    data = {'isUnique': not User.objects.filter(userId=userId).exists()}
+    data = {'isUnique': not User.objects.filter(username=username).exists()}
     return JsonResponse(data)
 
 # 회원 정보 수정
