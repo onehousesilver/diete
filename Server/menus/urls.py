@@ -9,7 +9,7 @@ urlpatterns = [
     path('recommendation/<int:userId>/<int:pageNo>/',views.recommend_foods),
     
     # 음식상세조회
-    path('<int:menuId>/', views.food_detail),
+    path('<int:foodId>/', views.food_detail),
 
     # 추가메뉴조회
     path('submenu/<int:menuId>/', views.sub_foods),

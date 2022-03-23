@@ -48,4 +48,4 @@ class MenuToFood(models.Model):
     foodId = models.ForeignKey(Food, on_delete=models.CASCADE)
     
     # 수량 - 해당 음식의 수량
-    amount = models.IntegerField(default=0)
+    amount = models.IntegerField(default=1)
