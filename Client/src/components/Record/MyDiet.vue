@@ -1,97 +1,69 @@
 <template>
   <div>
-    <div class="week-chart">
-      <div id="chart">
-        <ApexChart
-          type="bar"
-          height="500"
-          width="800"
-          :options="chartOptions"
-          :series="series"
-        ></ApexChart>
-      </div>
+    <toggle-button
+      class="toggle-btn"
+      :value="true"
+      :labels="{ checked: 'Day', unchecked: 'Week' }"
+      :color="{ checked: '#00a488', unchecked: '#77be8e' }"
+      :width="85"
+      :height="28"
+      :font-size="16"
+      @change="onChangeToggle"
+    />
+
+    <div class="body">
+      <DayBarChart v-if="current == true" @goToDay="goToDay" />
+      <WeekBarChart v-else-if="current == false" @goToWeek="goToWeek" />
+      <WeekMealTable v-if="current == false" @goToWeek="goToWeek" />
+      <DayMealTable v-else-if="current == true" @goToWeek="goToWeek" />
     </div>
   </div>
 </template>
 
 <script>
+import DayBarChart from "./MyDiet/DayBarChart.vue";
+import DayMealTable from "./MyDiet/DayMealTable.vue";
+import WeekBarChart from "./MyDiet/WeekBarChart.vue";
+import WeekMealTable from "./MyDiet/WeekMealTable.vue";
 export default {
   name: "MyDiet",
+  components: {
+    DayBarChart,
+    WeekBarChart,
+    WeekMealTable,
+    DayMealTable,
+  },
   data() {
     return {
-      series: [
-        {
-          name: "탄수화물",
-          data: [300, 400, 700, 614, 851, 564, 700],
-        },
-        {
-          name: "지방",
-          data: [300, 851, 614, 564, 400, 300, 300],
-        },
-        {
-          name: "단백질",
-          data: [851, 300, 564, 300, 700, 614, 400],
-        },
-        {
-          name: "총당류",
-          data: [60, 100, 112, 88, 66, 99, 44],
-        },
-      ],
-      chartOptions: {
-        chart: {
-          type: "bar",
-          height: 400,
-          stacked: true,
-        },
-        plotOptions: {
-          bar: {
-            horizontal: true,
-          },
-        },
-        stroke: {
-          width: 1,
-          colors: ["#fff"],
-        },
-        // title: {
-        //   text: "WEEK",
-        // },
-        xaxis: {
-          categories: ["월", "화", "수", "목", "금", "토", "일"],
-          labels: {
-            formatter: function (val) {
-              return val + "Kcal";
-            },
-          },
-        },
-        yaxis: {
-          title: {
-            text: undefined,
-          },
-        },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return val + "Kcal";
-            },
-          },
-        },
-        fill: {
-          opacity: 1,
-        },
-        legend: {
-          position: "top",
-          horizontalAlign: "left",
-          offsetX: 40,
-        },
-      },
+      current: true,
     };
+  },
+  methods: {
+    onChangeToggle() {
+      if (this.current == true) {
+        this.goToWeek();
+      } else {
+        this.goToDay();
+      }
+    },
+
+    goToWeek() {
+      this.current = false;
+    },
+    goToDay() {
+      this.current = true;
+    },
   },
 };
 </script>
 
 <style>
-.week-chart {
-  position: relative;
-  left: 200px;
+.toggle-btn {
+  left: 8%;
+  bottom: 40px;
+}
+.body {
+  display: flex;
+  justify-content: space-evenly;
 }
 </style>

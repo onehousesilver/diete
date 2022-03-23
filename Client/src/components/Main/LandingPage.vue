@@ -156,7 +156,7 @@ export default {
   name: "MainDescription",
   data: function () {
     return {
-      isLogin: false,
+      isLogin: true,
     };
   },
   // test를 필요한 이벤트에 넣음

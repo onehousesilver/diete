@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="charts">
-      <BarChart />
-      <DonutsChart />
+      <AnalysisBarChart />
+      <AnlysisDonutsChart />
     </div>
     <div class="text-box">
       <h1>탄수화물 섭취량이 많습니다!</h1>
@@ -12,11 +12,14 @@
 </template>
 
 <script>
-import BarChart from "./BarChart.vue";
-import DonutsChart from "./DonutsChart.vue";
+import AnalysisBarChart from "./MyAnalysis/AnalysisBarChart.vue";
+import AnlysisDonutsChart from "./MyAnalysis/AnlysisDonutsChart.vue";
 export default {
-  components: { DonutsChart, BarChart },
   name: "MyAnalysis",
+  components: {
+    AnlysisDonutsChart,
+    AnalysisBarChart,
+  },
   data() {
     return {};
   },
