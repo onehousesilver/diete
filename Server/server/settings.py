@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # Third party apps
     'rest_framework',
+    'corsheaders',
     
     # Django apps
     'django.contrib.admin',
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -152,3 +154,7 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
     'JWT_PAYLOAD_HANDLER' : 'users.utils.jwt_payload_handler',
 }
+
+#cors
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
