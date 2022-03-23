@@ -14,18 +14,54 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 @permission_classes([AllowAny])
 def join(request):
     password = request.data.get('password')
-    # password_confirmation = request.data.get('passwordConfirmation')
-    
-    # if password != password_confirmation:
-    #     return Response({'error' :'비밀번호가 일치하지 않습니다.'}, status = status.HTTP_400_BAD_REQUEST)
-    
     serializer = UserSerializer(data=request.data)
     
     if serializer.is_valid(raise_exception=True):
+    # 키 몸무게 성별을 고려한 kcal 계산
+        H = int(request.data.get('height'))
+        W = int(request.data.get('weight'))
+        a = int(request.data.get('activity'))
+        g = int(request.data.get('gender'))
+        # 활동량이 적을 경우(ACTIVITY = 0)
+        if a == 0:
+            # 남자인 경우(GENDER = 0)
+            if g == 0:
+                avgKg = (H/100)**2 * 22
+                kcal = avgKg * 27
+                print(avgKg)
+                print(kcal)
+
+            # 여자인 경우(GENDER = 1)    
+            elif g == 1:
+                avgKg = (H/100)**2 * 21
+                kcal = avgKg * 27
+               
+        # 활동량이 보통일 경우(ACTIVITY = 0)        
+        elif a == 1:
+            if g == 0:
+                avgKg = (H/100)**2 * 22
+                kcal = avgKg * 33
+            elif g == 1:
+                avgKg = (H/100)**2 * 21
+                kcal = avgKg * 33
+
+        # 활동량이 많을 경우(ACTIVITY = 2)
+        elif a == 2:
+            if g == 0:
+                avgKg = (H/100)**2 * 22
+                kcal = avgKg * 38
+            elif g == 1:
+                avgKg = (H/100)**2 * 21
+                kcal = avgKg * 38
+        
         user = serializer.save()
         user.set_password(password)
+        user.kcal = kcal
         user.save()
+    # 선호 식단을 골랐을 떄 들어가는 식단
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 
 # ID 중복체크
 @api_view(['GET'])

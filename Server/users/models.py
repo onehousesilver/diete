@@ -16,13 +16,13 @@ class User(AbstractUser):
     # 사용자의 몸무게 0.0kg ~ 999.9kg
     weight = models.DecimalField(max_digits=4, decimal_places=1, default=50)
     # 사용자의 활동량 0, 1, 2 // 활동 - , 활동 0 , 활동 +
-    activity = models.IntegerField(default=50)
+    activity = models.IntegerField(default=0)
     # 사용자의 성별 0 : 남자, 1 : 여자
     gender = models.IntegerField(default=1)
     # 사용자의 선호 식단 0, 1, 2
     preference = models.IntegerField(default=0)
     # 사용자의 권장 칼로리
-    kcal = models.IntegerField(default=1800)
+    kcal = models.IntegerField(default=1500)
 
     # USERNAME_FIELD = 'userId'
 
