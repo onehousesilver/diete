@@ -26,7 +26,7 @@ export default {
 }
 
 #app {
-  font-family: "Roboto", "MinSans-Regular";
+  font-family: "MinSans-Regular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.4;

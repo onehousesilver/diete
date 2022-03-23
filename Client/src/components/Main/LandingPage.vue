@@ -156,13 +156,13 @@ export default {
   name: "MainDescription",
   data: function () {
     return {
-      isLogin: false,
+      isLogin: true,
     };
   },
   // test를 필요한 이벤트에 넣음
   // created 될 때 test 실행
   methods: {
-    test() {
+    startScrollEvent() {
       scroll();
     },
     goToJoin() {
@@ -176,7 +176,7 @@ export default {
     },
   },
   mounted() {
-    this.test();
+    this.startScrollEvent();
   },
 };
 </script>
