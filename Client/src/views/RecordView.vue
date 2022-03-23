@@ -17,8 +17,8 @@
         </button>
       </div>
     </div>
-    <MyDiet v-if="current == true" @goMyAnalysis="goMyAnalysis" />
-    <MyAnalysis v-else-if="current == false" @goMyDiet="goMyDiet" />
+    <MyDiet v-if="current" @goMyAnalysis="goMyAnalysis" />
+    <MyAnalysis v-else @goMyDiet="goMyDiet" />
   </div>
 </template>
 

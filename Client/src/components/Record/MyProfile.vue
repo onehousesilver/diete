@@ -13,7 +13,7 @@
                   alt="프로필사진"
                 />
               </div>
-              <div v-else-if="userForm.userGender == 1">
+              <div v-else>
                 <img
                   src="../../assets/profile/female_profile.svg"
                   class="thumb-profile"
@@ -29,16 +29,16 @@
               <!-- 프로필 편집 버튼 -->
               <button
                 class="bttn-unite bttn-md bttn-success edit-btn"
-                v-if="edit == false"
+                v-show="!edit"
                 @click="editProfile"
               >
                 프로필 편집
               </button>
               <!-- 프로필 수정 완료 버튼 -->
               <button
-                v-if="edit == true"
                 class="bttn-unite bttn-md bttn-success edit-done-btn"
-                @click="doneProfile"
+                v-show="edit"
+                @click="editProfile"
               >
                 편집완료
               </button>
@@ -56,10 +56,8 @@
               <li class="my-info">
                 <!-- 키, 수정가능(숫자만 가능) -->
                 <span class="my-info-tit">키</span><br />
-                <strong v-if="edit == false"
-                  >{{ userForm.userHeight }} cm</strong
-                >
-                <strong v-else-if="edit == true"
+                <strong v-if="!edit">{{ userForm.userHeight }} cm</strong>
+                <strong v-else
                   ><input
                     type="number"
                     value="value"
@@ -71,10 +69,8 @@
               <li class="my-info">
                 <!-- 몸무게, 수정가능(숫자만 가능) -->
                 <span class="my-info-tit">몸무게</span><br />
-                <strong v-if="edit == false"
-                  >{{ userForm.userWeight }} kg</strong
-                >
-                <strong v-else-if="edit == true"
+                <strong v-if="!edit">{{ userForm.userWeight }} kg</strong>
+                <strong v-else
                   ><input
                     type="number"
                     value="value"
@@ -97,16 +93,14 @@
                   </div>
                   <!-- 활동량 설명 이미지 -->
                   <img
-                    v-show="showImgflag == true"
+                    v-show="showImgflag"
                     class="user-activity-img"
                     src="../../assets/profile/user_activity_box.png"
                     alt="" /></span
                 ><br />
                 <!-- 활동량 수정 선택창 -->
-                <strong v-if="edit == false">{{
-                  userForm.userActivity
-                }}</strong>
-                <strong v-else-if="edit == true"
+                <strong v-if="!edit">{{ userForm.userActivity }}</strong>
+                <strong v-else
                   ><select name="" id="">
                     <option value="" disabled>활동량을 선택해주세요</option>
                     <option value="적음">적음</option>
@@ -150,11 +144,9 @@ export default {
     openMessage() {
       this.$emit("openMessage");
     },
+    // 프로필 편집 버튼
     editProfile() {
-      this.edit = true;
-    },
-    doneProfile() {
-      this.edit = false;
+      this.edit = !this.edit;
     },
     // 활동량에 대한 정보 보여주기
     showImg() {
