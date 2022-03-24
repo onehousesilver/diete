@@ -3,9 +3,14 @@
     <div class="banner">
       <div class="banner-head">
         <div v-if="!MainText" class="default-text">
-          <span class="di" style="color: #2bc0af">di</span>
-          <span class="e" style="color: #25ab9b">è</span>
-          <span class="te" style="color: #219285">te</span>
+          <div v-if="!isLogin">
+            <div class="my-text">diète</div>
+          </div>
+          <div v-else>
+            <span class="di" style="color: #2bc0af">di</span>
+            <span class="e" style="color: #25ab9b">è</span>
+            <span class="te" style="color: #219285">te</span>
+          </div>
           <div class="banner-sub-head">
             <span>개인별 맞춤형 식단과 음식을 추천해드립니다.</span>
           </div>
@@ -22,11 +27,46 @@
 </template>
 
 <script>
+import TextScramble from '@/js/bannerani.js'
+// import { mapState } from 'vuex'
 export default {
   props: {
     MainText: String,
-    SubText: String,
+    SubText: String
   },
+  methods: {
+    textAnimation() {
+      const phrases = [
+        '식단',
+        '饮食',
+        'Diät',
+        'dieta',
+        'しょくじ',
+        'diet',
+        'diète',
+      ]
+
+      const el = document.querySelector('.my-text')
+      const fx = new TextScramble(el)
+
+      let counter = 0
+      const next = () => {
+        fx.setText(phrases[counter]).then(() => {
+          setTimeout(next, 1000)
+        })
+        counter = (counter + 1) % phrases.length
+      }
+      next()
+    }
+  },
+  mounted() {
+    if (!this.isLogin){
+      this.textAnimation()
+    }
+  },
+  computed: {
+    isLogin(){ return this.$store.getters.isLogin }
+  }
 };
 </script>
 

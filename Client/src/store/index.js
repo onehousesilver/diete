@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
+import jwt_decode from 'jwt-decode'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -10,13 +11,22 @@ export default new Vuex.Store({
     myMenu: {
 
     },
+
     // 로그인 여부
     isLogin: false,
-    // JWT.payload
+
+    // JWT
     userToken: null,
+    // JWT.payload
+    userInfo: null,
   },
   getters: {
-
+    isLogin(state) {
+      return state.isLogin;
+    },
+    getUserInfo(state) {
+      return state.userInfo;
+    }
   },
   mutations: {
     // 장바구니 갱신
@@ -25,9 +35,10 @@ export default new Vuex.Store({
     },
     // 로그인
     SET_LOGIN: function(state, token) {
+      let decoded_token = jwt_decode(token)
       // * Token decoding 필요
       state.userToken = token;
-
+      state.userInfo = decoded_token;
       state.isLogin = true;
       localStorage.setItem('userToken', token);
     },
@@ -36,6 +47,7 @@ export default new Vuex.Store({
       // user state 초기화
       state.userToken = null;
       state.isLogin = false;
+      state.userInfo = null;
       // 로컬스토리지에 저장된 토큰 제거
       localStorage.removeItem('userToken');
       // 페이지 새로고침
@@ -51,6 +63,9 @@ export default new Vuex.Store({
       // 전달받은 토큰을 commit
       commit("SET_LOGIN", token);
     },
+    removeUserToken: function({ commit }){
+      commit("SET_LOGOUT")
+    }
   },
   modules: {
   }
