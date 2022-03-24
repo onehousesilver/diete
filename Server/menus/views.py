@@ -41,9 +41,10 @@ def decision_basket(request):
         # 사용자 모델
         user = get_object_or_404(get_user_model(), username=request.user.username)
         # request에서 menu 모델에 필요한 data 생성
+        # dateTime 추가
         menudata = { 
             "userId" : user.id,
-            "date" : datetime.now().date(),
+            "dateTime" : request.data["dateTime"],
             "mealTime" : request.data["mealTime"]
         }
         menuserializer = MenuSerializer(data=menudata)
@@ -75,4 +76,5 @@ def decision_basket(request):
             
         return Response({'create: 데이터가 생성되었습니다.'}, status=status.HTTP_201_CREATED)
         
-        
+    elif request.method == 'PUT':
+        pass

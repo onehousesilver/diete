@@ -6,7 +6,7 @@ class Menu(models.Model):
     # 회원번호를 외래키로 받아옴
     userId = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # 날짜 - 사용자가 식단을 먹은 날짜
-    date = models.DateField(default=datetime.date.today)
+    dateTime = models.DateField(default=datetime.date.today)
     # 식사시간 - 아침, 점심, 저녁 // 0, 1, 2
     mealTime = models.IntegerField(default=0)
     
