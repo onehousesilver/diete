@@ -1,7 +1,7 @@
 <template>
   <div id="body">
     <!-- 비회원일 때 랜딩 페이지 -->
-    <div id="logout" v-if="isLogin == false">
+    <div id="logout" v-if="!isLogin">
       <div id="to-top">
         <div class="material-icons" @click="toTop">arrow_upward</div>
       </div>
@@ -146,7 +146,6 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 
@@ -154,11 +153,6 @@
 import scroll from "../../js/scroll.js";
 export default {
   name: "MainDescription",
-  data: function () {
-    return {
-      isLogin: true,
-    };
-  },
   // test를 필요한 이벤트에 넣음
   // created 될 때 test 실행
   methods: {
@@ -178,6 +172,9 @@ export default {
   mounted() {
     this.startScrollEvent();
   },
+  computed: {
+    isLogin() { return this.$store.getters.isLogin }
+  }
 };
 </script>
 

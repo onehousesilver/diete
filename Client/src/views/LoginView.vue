@@ -47,6 +47,9 @@
 
 <script>
 import BannerBar from '@/components/Main/BannerBar.vue'
+import axios from 'axios'
+import { BASE_API_URL } from '@/config/config.js'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'LoginView',
@@ -60,9 +63,25 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'getUserToken',
+    ]),
     userLogin() {
-      this.userId=null
-      this.userPW=null
+      axios({
+        method: 'post',
+        url: `${BASE_API_URL}/user/api-token-auth/`,
+        data: {
+          'username': this.userId,
+          'password': this.userPW
+        }
+      })
+        .then(res => {
+          this.getUserToken(res.data.token)
+          this.$router.push({ name: 'home' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     goToJoin() {
       this.$router.push({ name: 'join' }).catch(() => {})

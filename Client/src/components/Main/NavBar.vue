@@ -44,26 +44,27 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'NavBar',
-  data: function () {
-    return {
-      isLogin: false,
-    };
-  },
   methods: {
+    ...mapActions([
+      'removeUserToken',
+    ]),
     goToHome() {
       this.$router.push({ name: "home" }).catch(() => {});
     },
     goToLogin() {
       this.$router.push({ name: "login" }).catch(() => {});
-      this.isLogin = true;
     },
     goToLogout() {
-      this.$router.push({ name: "home" });
-      this.isLogin = false;
+      this.$router.push({ name: "home" }).catch(() => {});
+      this.removeUserToken();
     },
   },
+  computed: {
+    isLogin() { return this.$store.getters.isLogin }
+  }
 }
 </script>
 
@@ -75,6 +76,11 @@ a {
 }
 
 .nav {
+  position: sticky;
+  top:0;
+  z-index: 2;
+  opacity: 0.8;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -106,7 +112,10 @@ a {
   font-size: 0.875rem;
   width: 6.25rem;
 }
-
+.bttn-unite.bttn-success:after,
+.bttn-unite.bttn-success:before{
+  background: #25AB9B;
+}
 .nav .menu .menu-items {
   display: flex;
   align-items: center;

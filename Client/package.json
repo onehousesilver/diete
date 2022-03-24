@@ -9,10 +9,13 @@
   },
   "dependencies": {
     "apexcharts": "^3.33.2",
+    "axios": "^0.26.1",
     "core-js": "^3.8.3",
     "gsap": "^3.9.1",
     "jquery": "^3.6.0",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
+    "password-validator": "^5.2.1",
     "scrollmagic": "^2.0.8",
     "vue": "^2.6.14",
     "vue-apexcharts": "^1.6.2",

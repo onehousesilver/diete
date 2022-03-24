@@ -21,7 +21,7 @@
                 />
               </div>
             </div>
-
+            {{ userInfo }}
             <div class="profile-info-wrap">
               안녕하세요.
               <!-- 유저 이름 -->
@@ -153,6 +153,9 @@ export default {
       this.showImgflag = !this.showImgflag;
     },
   },
+  computed: {
+    userInfo() { return this.$store.getters.getUserInfo}
+  }
 };
 </script>
 
