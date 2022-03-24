@@ -21,21 +21,21 @@ class Food(models.Model):
     # 식품 상세분류
     foodDetailCategory = models.CharField(max_length=100)
     # 1회 제공량 - 157
-    servingSize = models.IntegerField(default = 1)
+    servingSize = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # 열량 - 소수점 아래 8자리까지, 최대 999.~
-    foodKcal =models.DecimalField(max_digits=10, decimal_places=1, default=0)
+    foodKcal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # 당류 (총당류[단위 : g]) 최대 99
-    sugar = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+    sugar = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # 탄수화물
-    carbohydrate = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+    carbohydrate = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # 단백질
-    protein = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+    protein = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # 지방
-    fat = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+    fat = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # 콜레스테롤
-    cholesterol = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+    cholesterol = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # 총 포화지방산
-    fattyAcid = models.DecimalField(max_digits=4, decimal_places=1, default=0)
+    fattyAcid = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     # 음식 이미지
     # image = models.CharField(default=200)
 
