@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from '../store'
 Vue.use(VueRouter);
 
 const routes = [
@@ -50,5 +51,28 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+
+  const isLogin = store.getters['isLogin']
+  
+ // requiresAuth 체크
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if(to.name === 'NewsFeed' && !isLogin) {
+      next('/login')
+    }
+    else if(to.name !== 'login' && to.name !== 'join') {
+      if(!isLogin) {
+        alert('로그인이 필요합니다')
+        next('/login')
+      }
+    }
+    else{
+      next('/login')
+    }
+  }
+  // requiresAuth가 false일 때 (권한이 필요 없는 페이지)
+  next()
+})
 
 export default router;

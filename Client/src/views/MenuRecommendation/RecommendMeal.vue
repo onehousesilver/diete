@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BannerBar MainText="음추" SubText="음추받아보세연" />
+    <BannerBar MainText="음식추천" SubText="음식추천SubText" />
     <SearchBar />
   </div>
 </template>

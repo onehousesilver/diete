@@ -1,7 +1,7 @@
 <template>
   <div class="search-bar">
     <h2>찾는 음식이 있으신가요 ?</h2>
-    <input type="text" v-model="keyword">
+    <input type="text" v-model="keyword" @keyup.enter="searchKeyword">
     <button 
       class="material-icons search-btn"
       @click="searchKeyword"
@@ -54,6 +54,7 @@ export default {
   border: none;
   font-size: 1vw;
   outline: none;
+  font-family: 'MinSans-Regular';
 }
 .search-bar input:focus {
   animation: input-focus .3s ease-in-out;
