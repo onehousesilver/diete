@@ -6,10 +6,14 @@
     />
     <JoinFirstStep 
       v-if="currentStep===0"
-      @nextStep="nextStep"
+      @nextStep="toSecondStep"
     />
     <JoinSecondStep
       v-else-if="currentStep===1"
+      @nextStep="toFinalStep"
+    />
+    <JoinFinalStep
+      v-else-if="currentStep===2"
       @completedForm="sendFormData"
     />
   </div>
@@ -18,29 +22,68 @@
 <script>
 import BannerBar from '@/components/Main/BannerBar.vue'
 import JoinFirstStep from '@/components/Join/JoinFirstStep.vue'
-import JoinSecondStep from '../../../Client/src/components/Join/JoinSecondStep.vue'
+import JoinSecondStep from '@/components/Join/JoinSecondStep.vue'
+import JoinFinalStep from '@/components/Join/JoinFinalStep.vue'
+import axios from 'axios'
+import { BASE_API_URL } from '@/config/config.js'
 
 export default {
   name: 'JoinView',
   components: {
     BannerBar,
     JoinFirstStep,
-    JoinSecondStep
+    JoinSecondStep,
+    JoinFinalStep
   },
   data() {
     return {
-      currentStep: 0, // 
+      currentStep: 0, // 현재 단계
+      // 회원가입 유저 데이터
+      userData: {
+        username: null, // ID
+        password: null, // PW
+        name: null, // 이름
+        birthDate: null, // 생년월일
+        height: null, // 키
+        weight: null, // 몸무게
+        activity: null, // 활동량(0: 적음, 1: 보통, 2: 많음)
+        gender: null, // 성별(0:남자, 1:여자)
+        preference: 1, // 선호식단 > 추후수정
+      }
     }
   },
   methods: {
     // step 2로 이동
-    nextStep(formData) {
-      this.currentStep ++;
-      console.log(formData)
+    toSecondStep(formData) {
+      this.currentStep = 1;
+      this.userData.username = formData.userId
+      this.userData.password = formData.userPw
+      this.userData.name = formData.userName
+      this.userData.birthDate = formData.userBirth
+    },
+    // step final로 이동
+    toFinalStep(formData){
+      this.currentStep = 2;
+      this.userData.height = formData.height
+      this.userData.weight = formData.weight
+      this.userData.activity = formData.activity
+      this.userData.gender = formData.gender
     },
     // 회원가입 완료 (api요청)
     sendFormData(emitData) {
       console.log(emitData)
+      // this.userData.preference = emitData.likeMenu // 추후에 추가
+      axios({
+        method: 'post',
+        url: `${BASE_API_URL}/user/join/`,
+        data: this.userData
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       this.$router.push({ name: 'login' }).catch(() => {})
     }
   }

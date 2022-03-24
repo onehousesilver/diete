@@ -1,3 +1,4 @@
-const BASE_API_URL = 'http://j6b104.p.ssafy.io:8000'
+const BASE_API_URL = 'https://j6b104.p.ssafy.io/api'
+// const BASE_API_URL = 'http://localhost:8000'
 
 export {BASE_API_URL};
