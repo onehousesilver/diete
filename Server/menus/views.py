@@ -41,28 +41,38 @@ def decision_basket(request):
         # 사용자 모델
         user = get_object_or_404(get_user_model(), username=request.user.username)
         # request에서 menu 모델에 필요한 data 생성
-        menudata = {
+        menudata = { 
             "userId" : user.id,
             "date" : datetime.now().date(),
             "mealTime" : request.data["mealTime"]
         }
         menuserializer = MenuSerializer(data=menudata)
-        if menuserializer.is_valid():
+        if menuserializer.is_valid(raise_exception=True):
             menuserializer.save()
             # menu에서 저장될 때 생성된 id 저장 (MenuToFood를 위해서)
             menuTempId = menuserializer.data["id"]
-
-        menus_amount = serializers.ListField(request.data["menus"])
-        print(menus_amount)
-        # for menu in menus_amount:
-        #     mtfdata = {
-        #         "foodId" : menu[0],
-        #         "menuId" : menuTempId,
-        #         "amount" : menu[1],
-        #     }
-        #     mtfserializer = MenuToFoodSerializer(data=mtfdata)
-        #     if mtfserializer.is_valid():
-        #         mtfserializer.save()
-        return Response(menuserializer.data)
-        # return Response({menuserializer.data, mtfserializer.data}, many=True)
-
+        else:
+            return Response({'error': 'menu 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        basket = request.data
+        # print(type(basket), basket) # dict
+        menus = basket.get("menus")
+        # print(type(menus), menus) # list
+        # print(type(menus[0]), menus[0]) # dict
+        # print(type(menus[0].get("foodId")), menus[0].get("foodId")) # int
+        # print(type(menus[0].get("amount")), menus[0].get("amount"))
+        for menu in menus:
+            basketdata = {
+                "menuId" : menuTempId,
+                "foodId" : menu.get("foodId"),
+                "amount" : menu.get("amount"),
+            }
+            mtfserializer = MenuToFoodSerializer(data=basketdata)
+            if mtfserializer.is_valid(raise_exception=True):
+                mtfserializer.save()
+            else: # 트랜젝션 묶어놓으면 좋을듯
+                return Response({'error': 'menuToFood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        return Response({'create: 데이터가 생성되었습니다.'}, status=status.HTTP_201_CREATED)
+        
+        
