@@ -16,4 +16,7 @@ urlpatterns = [
 
     # 장바구니최종 결정
     path('basket/', views.decision_basket),
+    
+    # 장바구니 수정
+    path('basket/<int:menuId>/', views.update_basket),
 ]

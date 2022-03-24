@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.http.response import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
@@ -32,8 +32,8 @@ def food_detail(request,foodId):
 def sub_foods(request,foodId):
     return HttpResponse("sub food")
     
-# 장바구니 최종 결정 + 식단수정
-@api_view(['POST', 'PUT'])
+# 장바구니 최종 결정
+@api_view(['POST'])
 @permission_classes([AllowAny])
 
 def decision_basket(request):
@@ -75,6 +75,35 @@ def decision_basket(request):
                 return Response({'error': 'menuToFood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({'create: 데이터가 생성되었습니다.'}, status=status.HTTP_201_CREATED)
-        
-    elif request.method == 'PUT':
-        pass
+
+# 장바구니 수정
+    
+@api_view(['PUT'])
+@permission_classes([AllowAny])
+
+def update_basket(request, menuId):
+    if request.method == 'PUT':
+        # 기존 MenuToFood에 있는 menuId인 data 삭제
+        menuList = get_list_or_404(MenuToFood, menuId=menuId)
+        for menu in menuList:
+            menu.delete()
+
+        basket = request.data
+        menus = basket.get("menus")
+        print(menus)
+
+        # request data에 있는 값들을 다시 MenuToFood에 DB 저장
+        for menu in menus:
+            basketdata = {
+                "menuId" : menuId,
+                "foodId" : menu.get("foodId"),
+                "amount" : menu.get("amount"),
+            }
+            mtfserializer = MenuToFoodSerializer(data=basketdata)
+            if mtfserializer.is_valid(raise_exception=True):
+                mtfserializer.save()
+            else: # 트랜젝션 묶어놓으면 좋을듯
+                return Response({'error': 'menuToFood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        return Response({'update: 데이터가 업데이트되었습니다.'}, status=status.HTTP_200_OK)
+
