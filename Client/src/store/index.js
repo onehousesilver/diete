@@ -26,6 +26,9 @@ export default new Vuex.Store({
     },
     getUserInfo(state) {
       return state.userInfo;
+    },
+    getUserToken(state) {
+      return state.userToken;
     }
   },
   mutations: {
@@ -50,9 +53,14 @@ export default new Vuex.Store({
       state.userInfo = null;
       // 로컬스토리지에 저장된 토큰 제거
       localStorage.removeItem('userToken');
-      // 페이지 새로고침
-      location.reload();
     },
+    // 권장칼로리 변경
+    SET_KCAL: function(state, data) {
+      state.userInfo.data.kcal = data.kcal;
+      state.userInfo.data.height = data.height;
+      state.userInfo.data.weight = data.weight;
+      state.userInfo.data.activity = data.activity;
+    }
   },
   actions: {
     myMenuUpdate: function({ commit }, menus) {
@@ -65,6 +73,9 @@ export default new Vuex.Store({
     },
     removeUserToken: function({ commit }){
       commit("SET_LOGOUT")
+    },
+    updateUserInfo: function({ commit }, data){
+      commit("SET_KCAL", data)
     }
   },
   modules: {

@@ -21,7 +21,6 @@
                 />
               </div>
             </div>
-            {{ userInfo }}
             <div class="profile-info-wrap">
               안녕하세요.
               <!-- 유저 이름 -->
@@ -59,11 +58,7 @@
                 <strong v-if="!edit">{{ userForm.userHeight }} cm</strong>
                 <strong v-else
                   ><input
-                    type="number"
-                    value="value"
-                    min="0"
-                    step="10"
-                    required
+                    type="text"
                     v-model="userForm.userHeight"
                 /></strong>
               </li>
@@ -73,11 +68,7 @@
                 <strong v-if="!edit">{{ userForm.userWeight }} kg</strong>
                 <strong v-else
                   ><input
-                    type="number"
-                    value="value"
-                    min="0"
-                    step="10"
-                    required
+                    type="text"
                     v-model="userForm.userWeight"
                 /></strong>
               </li>
@@ -103,8 +94,8 @@
                 <!-- 활동량 수정 선택창 -->
                 <strong v-if="!edit">{{ userForm.userActivity }}</strong>
                 <strong v-else
-                  ><select name="" id="">
-                    <option value="" disabled>활동량을 선택해주세요</option>
+                  ><select v-model="userForm.userActivity">
+                    <option disabled>활동량을 선택해주세요</option>
                     <option value="적음">적음</option>
                     <option value="보통">보통</option>
                     <option value="많음">많음</option>
@@ -120,6 +111,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapActions } from 'vuex'
+
 export default {
   name: "MyProfile",
   data() {
@@ -133,21 +127,23 @@ export default {
         // 0 남자 1 여자
         userGender: null,
         // 0 적음 1보통 2많음
-        userActivity: "적음",
+        userActivity: null,
       },
       edit: false,
       showImgflag: false,
     };
   },
   methods: {
+    ...mapActions([
+      'updateUserInfo'
+    ]),
     setToken: function () {
-      const token = localStorage.getItem("jwt");
+      const token = localStorage.getItem("userToken");
       const config = {
         Authorization: `JWT ${token}`,
       };
       return config;
     },
-
     goMyAnalysis() {
       this.$emit("goMyAnalysis");
     },
@@ -157,6 +153,28 @@ export default {
     // 프로필 편집 버튼
     editProfile() {
       this.edit = !this.edit;
+      this.$emit('editMode')
+      if(!this.edit) {
+        axios({
+          method: 'put',
+          url: `${process.env.VUE_APP_API_URL}/user/update/`,
+          data: {
+            'height': this.userForm.userHeight,
+            'weight': this.userForm.userWeight,
+            'activity': this.userForm.userActivity
+          },
+          headers: this.setToken()
+        })
+          .then(res => {
+            // kcal state 변경
+            this.updateUserInfo(res.data)
+            // 컴포넌트내의 data 변경
+            this.userForm.userKcal = res.data.kcal
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     },
     // 활동량에 대한 정보 보여주기
     showImg() {
@@ -164,14 +182,25 @@ export default {
     },
   },
   computed: {
-    userInfo() {
-      return this.$store.getters.getUserInfo;
-    },
+    userInfo() { return this.$store.getters.getUserInfo}
   },
+  mounted(){
+    this.userForm.userId = this.userInfo.data.username;
+    this.userForm.userName = this.userInfo.data.name;
+    this.userForm.userHeight = this.userInfo.data.height;
+    this.userForm.userWeight = this.userInfo.data.weight;
+    this.userForm.userKcal = this.userInfo.data.kcal;
+    this.userForm.userGender = this.userInfo.data.gender;
+    this.userForm.userActivity =  this.userInfo.data.activity;
+  }
 };
 </script>
 
 <style scoped>
+input {
+  outline: none;
+  font-family: 'MinSans-Regular';
+}
 #wrap {
   box-sizing: border-box;
   min-width: 20rem;

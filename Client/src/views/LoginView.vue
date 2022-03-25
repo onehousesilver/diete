@@ -20,6 +20,7 @@
           type="password" 
           id="userPW" 
           v-model="userPW"
+          @keyup.enter="userLogin"
         >
         <label for="userPW">비밀번호</label>
         <span class="highlight"></span>
@@ -48,7 +49,6 @@
 <script>
 import BannerBar from '@/components/Main/BannerBar.vue'
 import axios from 'axios'
-import { BASE_API_URL } from '@/config/config.js'
 import { mapActions } from 'vuex'
 
 export default {
@@ -69,7 +69,7 @@ export default {
     userLogin() {
       axios({
         method: 'post',
-        url: `${BASE_API_URL}/user/api-token-auth/`,
+        url: `${process.env.VUE_APP_API_URL}/user/api-token-auth/`,
         data: {
           'username': this.userId,
           'password': this.userPW
@@ -79,8 +79,9 @@ export default {
           this.getUserToken(res.data.token)
           this.$router.push({ name: 'home' })
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
+          alert('아이디/비밀번호를 확인해주세요')
+          // console.log(err)
         })
     },
     goToJoin() {
