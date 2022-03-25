@@ -8,6 +8,7 @@ Django==3.2.9
 django-cors-headers==3.11.0
 djangorestframework==3.12.4
 djangorestframework-jwt==1.11.0
+et-xmlfile==1.1.0
 fonttools==4.29.1
 idna==3.3
 inflection==0.5.1
@@ -18,6 +19,7 @@ MarkupSafe==2.0.1
 matplotlib==3.5.1
 mysqlclient==2.1.0
 numpy==1.22.2
+openpyxl==3.0.9
 packaging==21.3
 pandas==1.4.1
 Pillow==9.0.1
