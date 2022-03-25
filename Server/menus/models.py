@@ -14,6 +14,8 @@ class Menu(models.Model):
 
 class Food(models.Model):
 
+    # 상용제품
+    commercialFood = models.CharField(max_length=10)
     # 음식 이름
     foodName= models.CharField(max_length=100)
     # 식품 대분류
