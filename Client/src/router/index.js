@@ -35,9 +35,9 @@ const routes = [
     component: () => import("../views/SearchView.vue"),
   },
   {
-    path: "/pocket",
-    name: "pocket",
-    component: () => import("../views/PocketView.vue"),
+    path: "/basket",
+    name: "basket",
+    component: () => import("../views/BasketView.vue"),
   },
   {
     path: "/record",
