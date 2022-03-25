@@ -16,9 +16,13 @@ Vue.use(ToggleButton);
 
 // vueMoment
 import vueMoment from "vue-moment";
-Vue.use(vueMoment);
+import moment from "moment";
 
-//vueuse/motion
+moment.locale("ko");
+
+Vue.use(vueMoment, { moment });
+
+import "animate.css";
 
 new Vue({
   router,

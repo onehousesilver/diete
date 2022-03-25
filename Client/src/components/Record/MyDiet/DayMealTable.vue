@@ -1,17 +1,15 @@
 <template>
   <div>
     <div class="day-calendar">
+      <span id="month-text"></span>
       <div class="day">
         <!-- 전날로 넘어가는 버튼 -->
-        <span class="material-icons navigate" @click="goYesterDay">
-          navigate_before
-        </span>
+        <span class="material-icons navigate"> navigate_before </span>
         <!-- 오늘 날짜 -->
-        {{ $moment().format("M월 DD일") }}
+        <span id="today">{{ todayStr }}</span>
+
         <!-- 다음날로 넘어가는 버튼 -->
-        <span class="material-icons navigate" @click="goTomorrow">
-          navigate_next
-        </span>
+        <span class="material-icons navigate"> navigate_next </span>
         <!-- 수정버튼 -->
         <span class="material-icons settings" @click="editMealTable">
           settings
@@ -19,9 +17,11 @@
       </div>
       <div class="card">
         <div class="morning">
-          <div class="morning-text to-right-underline">아침</div>
+          <div class="morning-text animate__animated animate__fadeInUp">
+            아침
+          </div>
           <!-- 만약 데이터가 있으면 보여주고, 없으면 찾으러가기 버튼 활성화-->
-          <div class="meal-table-el">
+          <div class="meal-table-el animate__animated animate__zoomIn">
             <span> 식단이 없어요!</span>
             <button
               class="bttn-unite bttn-md bttn-success goToRecommend-btn"
@@ -32,22 +32,30 @@
           </div>
         </div>
         <div class="lunch">
-          <div class="lunch-text to-right-underline">점심</div>
-          <div class="meal-table-el">
+          <div
+            class="lunch-text to-right-underline animate__animated animate__fadeInUp"
+          >
+            점심
+          </div>
+          <div class="meal-table-el animate__animated animate__zoomIn">
             <span>밥</span>
             <span>소고기무국</span>
             <span>김치</span><br />
             <!-- 권장칼로리와 비교해서 색으로 위험여부 보여주기 -->
-            <span style="color: tomato">1500kcal</span>
+            <span class="color-change">{{ sumFoodKcal }} kcal</span>
           </div>
         </div>
         <div class="dinner">
-          <div class="dinner-text to-right-underline">저녁</div>
-          <div class="meal-table-el">
+          <div
+            class="dinner-text to-right-underline animate__animated animate__fadeInUp"
+          >
+            저녁
+          </div>
+          <div class="meal-table-el animate__animated animate__zoomIn">
             <span>밥</span>
             <span>소고기무국</span>
             <span>김치</span><br />
-            <span style="color: royalblue">1500kcal</span>
+            <span class="color-change">{{ sumFoodKcal }} kcal</span>
           </div>
         </div>
       </div>
@@ -56,17 +64,38 @@
 </template>
 
 <script>
+// import moment from "vue-moment";
 export default {
   name: "DayMealTable",
   data() {
     return {
+      userForm: {
+        userId: "tori",
+        userName: "채은",
+        userHeight: 200,
+        userWeight: 200,
+        userKcal: 2000,
+        // 0 남자 1 여자
+        userGender: 1,
+        // 0 적음 1보통 2많음
+        userActivity: "적음",
+      },
       editFlag: false,
+      show: true,
+      sumFoodKcal: 1000,
+      today: new Date(),
+      todayStr: "",
     };
   },
+  props: {
+    userKcal: Number,
+  },
   methods: {
-    goYesterDay() {},
     goPocket() {
       this.$router.push({ name: "menu" });
+    },
+    test() {
+      this.today = this.today.getDate();
     },
     editMealTable() {
       const editMeal = document.querySelectorAll(".meal-table-el");
@@ -83,36 +112,49 @@ export default {
       }
     },
   },
+  mounted() {
+    this.todayStr = `${this.today.getMonth() + 1}월 ${this.today.getDate()}일`;
+  },
 };
 </script>
 
 <style scoped>
 .day-calendar {
-  width: 800px;
+  width: 50rem;
   height: 100%;
-  /* border: 2px solid #25ab9b; */
-  border-radius: 20px;
+  border-radius: 1.25rem;
 }
 .day {
-  font-size: 24px;
+  font-size: 1.5rem;
   text-align: center;
-  margin-top: 20px;
-  margin-left: 30px;
+  margin-left: 1.875rem;
+  font-weight: 700;
+}
+
+#month-text {
+  font-size: 1.875rem;
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  margin-top: -1.25rem;
+  position: relative;
+  left: 45%;
   font-weight: 700;
 }
 .meal-table-el {
   width: calc(700px / 3);
   height: 300px;
-  border: 3px solid #25ab9b;
-  margin: 5px;
-  border-radius: 20px;
+  border: 0.188rem solid #25ab9b;
+  margin: 0.313rem;
+  border-radius: 1.25rem;
   position: relative;
-  top: 20px;
+  top: 1.25rem;
   text-align: center;
-  font-size: 20px;
+  font-size: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-weight: 700;
 }
 .meal-table-el.clicked {
   animation-name: vibration;
@@ -122,7 +164,12 @@ export default {
 .meal-table-el.clicked:hover {
   cursor: pointer;
 }
-
+.color-change.red {
+  color: red;
+}
+.color-change.blue {
+  color: blue;
+}
 .card {
   display: flex;
   justify-content: center;
@@ -133,22 +180,22 @@ export default {
 .morning-text,
 .lunch-text,
 .dinner-text {
-  font-size: 24px;
+  font-size: 1.5rem;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 1.875rem;
   font-weight: 700;
 }
 
 .goToRecommend-btn {
-  border-radius: 10px;
-  width: 100px;
-  font-size: 14px;
+  border-radius: 0.625rem;
+  width: 6.25rem;
+  font-size: 0.875rem;
   margin: 0 auto;
   position: relative;
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 .navigate {
-  font-size: 32px;
+  font-size: 2rems;
   vertical-align: bottom;
   color: #333;
 }
@@ -163,8 +210,9 @@ export default {
 
 .settings {
   position: relative;
-  font-size: 28px;
-  left: 240px;
+  font-size: 1.75rem;
+  left: 17rem;
+  bottom: 4.125rem;
   color: #333;
 }
 

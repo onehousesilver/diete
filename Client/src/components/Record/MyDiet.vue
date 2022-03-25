@@ -10,7 +10,6 @@
       :font-size="16"
       @change="onChangeToggle"
     />
-
     <div class="body">
       <DayBarChart v-if="current" @goToDay="goToDay" />
       <WeekBarChart v-else @goToWeek="goToWeek" />
@@ -59,11 +58,10 @@ export default {
 
 <style>
 .toggle-btn {
-  left: 8%;
-  bottom: 40px;
+  left: 83%;
 }
 .body {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 </style>

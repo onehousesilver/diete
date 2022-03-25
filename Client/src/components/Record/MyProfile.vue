@@ -64,6 +64,7 @@
                     min="0"
                     step="10"
                     required
+                    v-model="userForm.userHeight"
                 /></strong>
               </li>
               <li class="my-info">
@@ -77,6 +78,7 @@
                     min="0"
                     step="10"
                     required
+                    v-model="userForm.userWeight"
                 /></strong>
               </li>
               <li class="my-info">
@@ -123,13 +125,13 @@ export default {
   data() {
     return {
       userForm: {
-        userId: "tori",
-        userName: "채은",
-        userHeight: 200,
-        userWeight: 200,
-        userKcal: 2000,
+        userId: null,
+        userName: null,
+        userHeight: null,
+        userWeight: null,
+        userKcal: null,
         // 0 남자 1 여자
-        userGender: 1,
+        userGender: null,
         // 0 적음 1보통 2많음
         userActivity: "적음",
       },
@@ -138,6 +140,14 @@ export default {
     };
   },
   methods: {
+    setToken: function () {
+      const token = localStorage.getItem("jwt");
+      const config = {
+        Authorization: `JWT ${token}`,
+      };
+      return config;
+    },
+
     goMyAnalysis() {
       this.$emit("goMyAnalysis");
     },
@@ -154,16 +164,18 @@ export default {
     },
   },
   computed: {
-    userInfo() { return this.$store.getters.getUserInfo}
-  }
+    userInfo() {
+      return this.$store.getters.getUserInfo;
+    },
+  },
 };
 </script>
 
 <style scoped>
 #wrap {
   box-sizing: border-box;
-  min-width: 320px;
-  padding-top: 56px;
+  min-width: 20rem;
+  padding-top: 3.5rem;
 }
 #my-profile {
   box-sizing: border-box;
@@ -175,31 +187,26 @@ li {
   background: none;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 10px 10%;
+  padding: 0.625rem 10%;
 }
 .profile-wrap {
   float: left;
   width: 34%;
-  padding-left: 137px;
-  min-height: 120px;
   box-sizing: border-box;
   position: relative;
-  padding-left: 100px;
-  min-height: 84px;
+  padding-left: 6.25rem;
+  min-height: 5.25rem;
 }
 .profile-thumb-wrap {
-  width: 120px;
-  height: 120px;
   box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
-  width: 120px;
-  height: 120px;
+  width: 7.5rem;
+  height: 7.5rem;
 }
 .thumb-profile {
   box-sizing: border-box;
-  width: 100%;
   vertical-align: middle;
   border: 0;
   width: 100%;
@@ -207,10 +214,10 @@ li {
 .profile-info-wrap {
   box-sizing: border-box;
   color: #a1a4a8;
-  font-size: 14px;
-  padding: 24px 0 0;
-  padding-left: 60px;
-  font-size: 18px;
+  font-size: 0.875rem;
+  padding-top: 1.5rem;
+  padding-left: 3.75rem;
+  font-size: 1.125rem;
 }
 .profile-info-wrap:hover {
   text-decoration: none;
@@ -226,16 +233,16 @@ li {
   box-sizing: border-box;
 }
 .btn-profile-thumb {
-  width: 103px;
-  height: 28px;
-  font-size: 12px;
-  line-height: 26px;
-  letter-spacing: -0.6px;
+  width: 6.438rem;
+  height: 1.75rem;
+  font-size: 0.75rem;
+  line-height: 1.625rem;
+  letter-spacing: -0.038rem;
   box-sizing: border-box;
   display: block;
-  margin: 6px 0 0;
+  margin-top: 0.375rem;
   color: #b7b7b7;
-  border: 1px solid #dfdfdf;
+  border: 0.063rem solid #dfdfdf;
   text-align: center;
 }
 
@@ -254,22 +261,23 @@ label {
   float: left;
   width: 19%;
   margin: 0;
-  padding: 7px 0;
+  padding: 0.438rem 0;
   background: #ffffff;
-  border-right: 1px solid #eaeaea;
+  border-right: 0.063rem solid #eaeaea;
   text-align: center;
 }
 
 .help {
-  font-size: 18px;
+  font-size: 1.125rem;
   vertical-align: top;
 }
 .user-activity-img {
   position: absolute;
   box-shadow: 2px 2px 10px rgb(173, 173, 173);
-  border-radius: 10px;
-  top: 238px;
-  right: 58px;
+  border-radius: 0.625rem;
+  top: 12.813rem;
+  right: 3.625rem;
+  background-color: #fff;
 }
 
 .help:hover {
@@ -278,22 +286,22 @@ label {
 
 .my-info-tit {
   height: auto;
-  font-size: 14px;
-  letter-spacing: -0.3px;
+  font-size: 0.875rem;
+  letter-spacing: -0.019rem;
   display: block;
   color: #909397;
   box-sizing: border-box;
 }
 .my-info-txt {
-  margin: 2px 0 0;
-  font-size: 20px;
-  letter-spacing: -0.5px;
+  margin: 0.125rem 0 0;
+  font-size: 1.25rem;
+  letter-spacing: -0.031rem;
   color: #2f3338;
 }
 .my-info:nth-child(2n) {
   margin: 0 1% 1% 0;
   width: 19%;
-  padding: 7px 0;
+  padding: 0.438rem 0;
   background: #ffffff;
   border-right: 1px solid #eaeaea;
   text-align: center;
@@ -311,21 +319,21 @@ label {
   border-radius: 0;
 }
 .bttn-unite.bttn-md {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 input {
   border: solid 2px #25ab9b;
-  width: 150px;
-  height: 20px;
-  border-radius: 5px;
+  width: 9.375rem;
+  height: 1.25rem;
+  border-radius: 0.313rem;
   text-align: center;
 }
 select {
   border: solid 2px #25ab9b;
-  width: 150px;
-  height: 25px;
-  font-size: 14px;
+  width: 9.375rem;
+  height: 1.563rem;
+  font-size: 0.875rem;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 0.313rem;
 }
 </style>

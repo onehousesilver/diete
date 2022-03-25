@@ -1,6 +1,8 @@
 <template>
   <div class="week-calendar">
     <!-- 수정버튼 -->
+
+    <span class="today-week"> 3월 첫째주</span>
     <span class="material-icons settings" @click="editMealTable">
       settings
     </span>
@@ -11,7 +13,7 @@
         <div>저녁</div>
       </div>
       <div class="monday">
-        <div class="text">월</div>
+        <div class="text animate__animated animate__tada">월</div>
         <div class="meal-table-el">
           <span>밥</span>
           <span>카레</span>
@@ -32,7 +34,7 @@
         </div>
       </div>
       <div class="tuesday">
-        <div class="text">화</div>
+        <div class="text animate__animated animate__tada">화</div>
         <div class="meal-table-el">
           <span
             >식단이 <br />
@@ -43,7 +45,7 @@
         <div class="meal-table-el">식단 1개</div>
       </div>
       <div class="wednesday">
-        <div class="text">수</div>
+        <div class="text animate__animated animate__tada">수</div>
         <div class="meal-table-el">
           <span
             >식단이 <br />
@@ -54,7 +56,7 @@
         <div class="meal-table-el">식단 1개</div>
       </div>
       <div class="thursday">
-        <div class="text">목</div>
+        <div class="text animate__animated animate__tada">목</div>
         <div class="meal-table-el">
           <span
             >식단이 <br />
@@ -65,7 +67,7 @@
         <div class="meal-table-el">식단 1개</div>
       </div>
       <div class="friday">
-        <div class="text">금</div>
+        <div class="text animate__animated animate__tada">금</div>
         <div class="meal-table-el">
           <span
             >식단이 <br />
@@ -76,7 +78,7 @@
         <div class="meal-table-el">식단 1개</div>
       </div>
       <div class="saturday">
-        <div class="text">토</div>
+        <div class="text animate__animated animate__tada">토</div>
         <div class="meal-table-el">
           <span
             >식단이 <br />
@@ -87,7 +89,7 @@
         <div class="meal-table-el">식단 1개</div>
       </div>
       <div class="sunday">
-        <div class="text">일</div>
+        <div class="text animate__animated animate__tada">일</div>
         <div class="meal-table-el">
           <span>식빵</span>
           <span>버터</span>
@@ -126,28 +128,41 @@ export default {
         }
       }
     },
+    animationTada() {
+      const mealTableEl = document.querySelectorAll(".meal-table-el");
+      for (let j = 0; j < mealTableEl.length; j++) {
+        mealTableEl[j].className += " animate__animated animate__jello";
+      }
+    },
+  },
+  mounted() {
+    this.animationTada();
   },
 };
 </script>
 
 <style scoped>
 .week-calendar {
-  width: 800px;
+  width: 50rem;
   height: 100%;
-  border-radius: 20px;
+  border-radius: 1.25rem;
   text-align: center;
 }
 .meal-table-el {
   width: calc(600px / 7);
-  height: 120px;
-  border: 2px solid #25ab9b;
-  margin: 5px;
-  border-radius: 20px;
+  height: 7.5rem;
+  border: 0.125rem solid #25ab9b;
+  margin: 0.313rem;
+  border-radius: 1.25rem;
   position: relative;
   text-align: center;
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-content: center;
+  position: relative;
+  top: 2.063rem;
 }
 
 .meal-table-el.clicked {
@@ -164,27 +179,33 @@ export default {
   justify-content: center;
   align-items: center;
   align-content: center;
+  position: relative;
+  top: -0.625rem;
 }
 .meal-time {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 280px;
-  font-size: 20px;
+  height: 17.5rem;
+  font-size: 1.125rem;
   font-weight: 700;
-  margin: 0 12px;
+  margin: 0 0.75rem;
+  position: relative;
+  top: 2.75rem;
 }
 .text {
-  font-size: 20px;
+  font-size: 1.125rem;
   font-weight: 700;
+  position: relative;
+  top: 1.875rem;
 }
 .material-icons {
-  font-size: 28px;
+  font-size: 1.75rem;
   vertical-align: bottom;
   color: #333;
   position: relative;
-  left: 350px;
-  bottom: 20px;
+  left: 19.375rem;
+  bottom: 1.5rem;
 }
 .material-icons:hover {
   cursor: pointer;
@@ -195,7 +216,13 @@ export default {
   border-radius: 50%;
 }
 span {
-  font-size: 14px;
+  font-size: 0.875rem;
+}
+.today-week {
+  font-size: 1.375rem;
+  position: relative;
+  right: 33%;
+  font-weight: 700;
 }
 
 @keyframes vibration {
