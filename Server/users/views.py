@@ -20,10 +20,10 @@ def join(request):
     # 키 몸무게 성별을 고려한 kcal 계산
         H = int(request.data.get('height'))
         W = int(request.data.get('weight'))
-        a = int(request.data.get('activity'))
+        a = request.data.get('activity')
         g = int(request.data.get('gender'))
         # 활동량이 적을 경우(ACTIVITY = 0)
-        if a == 0:
+        if a == '적음':
             # 남자인 경우(GENDER = 0)
             if g == 0:
                 avgKg = (H/100)**2 * 22
@@ -37,7 +37,7 @@ def join(request):
                 kcal = avgKg * 27
                
         # 활동량이 보통일 경우(ACTIVITY = 0)        
-        elif a == 1:
+        elif a == '보통':
             if g == 0:
                 avgKg = (H/100)**2 * 22
                 kcal = avgKg * 33
@@ -46,7 +46,7 @@ def join(request):
                 kcal = avgKg * 33
 
         # 활동량이 많을 경우(ACTIVITY = 2)
-        elif a == 2:
+        elif a == '많음':
             if g == 0:
                 avgKg = (H/100)**2 * 22
                 kcal = avgKg * 38
