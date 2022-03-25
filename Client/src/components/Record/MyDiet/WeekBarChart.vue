@@ -92,6 +92,6 @@ export default {
 <style>
 .week-chart {
   display: flex;
-  left: 200px;
+  left: 12.5rem;
 }
 </style>

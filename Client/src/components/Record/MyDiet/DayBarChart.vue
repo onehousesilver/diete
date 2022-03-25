@@ -93,6 +93,6 @@ export default {
 .week-chart {
   display: flex;
   /* justify-content: center; */
-  left: 200px;
+  left: 12.5rem;
 }
 </style>

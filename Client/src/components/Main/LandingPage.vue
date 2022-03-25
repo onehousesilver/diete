@@ -153,8 +153,6 @@
 import scroll from "../../js/scroll.js";
 export default {
   name: "MainDescription",
-  // test를 필요한 이벤트에 넣음
-  // created 될 때 test 실행
   methods: {
     startScrollEvent() {
       scroll();
@@ -479,7 +477,7 @@ a {
 
 .scroll-bar:before,
 .scroll-bar:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   height: 100%;
