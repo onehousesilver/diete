@@ -58,7 +58,7 @@
                 <strong v-if="!edit">{{ userForm.userHeight }} cm</strong>
                 <strong v-else
                   ><input
-                    type="text"
+                    type="number"
                     v-model="userForm.userHeight"
                 /></strong>
               </li>
@@ -68,7 +68,7 @@
                 <strong v-if="!edit">{{ userForm.userWeight }} kg</strong>
                 <strong v-else
                   ><input
-                    type="text"
+                    type="number"
                     v-model="userForm.userWeight"
                 /></strong>
               </li>
