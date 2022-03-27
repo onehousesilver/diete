@@ -25,7 +25,6 @@ import JoinFirstStep from '@/components/Join/JoinFirstStep.vue'
 import JoinSecondStep from '@/components/Join/JoinSecondStep.vue'
 import JoinFinalStep from '@/components/Join/JoinFinalStep.vue'
 import axios from 'axios'
-import { BASE_API_URL } from '@/config/config.js'
 
 export default {
   name: 'JoinView',
@@ -75,7 +74,7 @@ export default {
       // this.userData.preference = emitData.likeMenu // 추후에 추가
       axios({
         method: 'post',
-        url: `${BASE_API_URL}/user/join/`,
+        url: `${process.env.VUE_APP_API_URL}/user/join/`,
         data: this.userData
       })
         .then(res => {

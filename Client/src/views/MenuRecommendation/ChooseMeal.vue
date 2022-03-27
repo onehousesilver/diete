@@ -1,23 +1,23 @@
 <template>
   <div>
     <!-- Banner -->
-    <BannerBar MainText="음식추천" SubText="" />
+    <BannerBar MainText="음식추천" SubText="SubText" />
     <h1>추천받을 끼니를 선택해 주세요</h1>
     <div class="choose-container">
-      <section id="bre" @click="chooseMeal">
+      <section id="breakfast" @click="chooseMeal">
         <h2>아침</h2>
         <img :src="require('@/assets/menu_rec/breakfast_img.png')" alt="예시이미지-아침">
-        <button id="bre-btn" class="bttn-unite bttn-md bttn-success btn-group" @click="chooseMeal">선택</button>
+        <button id="breakfast-btn" class="bttn-unite bttn-md bttn-success btn-group" @click="chooseMeal">선택</button>
       </section>
-      <section id="lun" @click="chooseMeal">
+      <section id="lunch" @click="chooseMeal">
         <h2>점심</h2>
         <img :src="require('@/assets/menu_rec/lunch_img.png')" alt="예시이미지-점심">
-        <button id="lun-btn" class="bttn-unite bttn-md bttn-success btn-group" @click="chooseMeal">선택</button>
+        <button id="lunch-btn" class="bttn-unite bttn-md bttn-success btn-group" @click="chooseMeal">선택</button>
       </section>
-      <section id="din" @click="chooseMeal">
+      <section id="dinner" @click="chooseMeal">
         <h2>저녁</h2>
         <img :src="require('@/assets/menu_rec/dinner_img.png')" alt="예시이미지-저녁">
-        <button id="din-btn" class="bttn-unite bttn-md bttn-success btn-group" @click="chooseMeal">선택</button>
+        <button id="dinner-btn" class="bttn-unite bttn-md bttn-success btn-group" @click="chooseMeal">선택</button>
       </section>
     </div>
     <button 
@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    // 끼니 선택 메서드. 
+    // 끼니 선택 메서드. 선택된 섹션의 style을 변경하고, 변수에 바인딩
     chooseMeal(e) {
       // 이미 선택된 섹션이 있을 때 
       if(this.selectedMeal)

@@ -134,7 +134,6 @@
 
 <script>
 import axios from 'axios'
-import { BASE_API_URL } from '@/config/config.js'
 export default {
   name: 'JoinFirstStep',
   data() {
@@ -192,13 +191,14 @@ export default {
         // 유효한 ID일때 서버에 중복체크 요청
         else {
         axios({
-          method: 'get',
-          url: `${BASE_API_URL}/user/id/${this.formData.userId}/`
+          method: 'get', 
+          url: `${process.env.VUE_APP_API_URL}/user/id/${this.formData.userId}/`,
         })
           .then((res) => {
             // 중복되지 않은 아이디 일때 유효성 검사 통과
             this.duplicateCheckFlag = res.data.isUnique ? 1 : 0
-            console.log(res)
+            // console.log(res)
+            
           })
           .catch(() => {})
         }
@@ -296,10 +296,11 @@ export default {
     height: 75%;
   }
   .next-btn {
-    width: 18.75rem;
     margin-bottom: 1.875rem;
-    position: relative;
-    width: 100%;
+    position: absolute;
+    width: calc(40vw - 2.2rem);
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   /* active state */

@@ -62,11 +62,11 @@
       </div>
       <div class="activity-btn">
         <span class="activity-title">활동량</span>
-        <input type="radio" id="activity-s" name="activity" value="0" class="btn__s" v-model="formData.activity">
+        <input type="radio" id="activity-s" name="activity" value="적음" class="btn__s" v-model="formData.activity">
         <label for="activity-s">적음</label>
-        <input type="radio" id="activity-m" name="activity" value="1" class="btn__m" v-model="formData.activity">
+        <input type="radio" id="activity-m" name="activity" value="보통" class="btn__m" v-model="formData.activity">
         <label for="activity-m">보통</label>
-        <input type="radio" id="activity-l" name="activity" value="2" class="btn__w" v-model="formData.activity">
+        <input type="radio" id="activity-l" name="activity" value="많음" class="btn__w" v-model="formData.activity">
         <label for="activity-l">많음</label>
         <div class="error-msg2" v-if="formData.activity" style="color:green">
           <span class="material-icons">check_circle</span>
@@ -146,10 +146,11 @@ export default {
     height: 75%;
   }
   .next-btn {
-    width: 18.75rem;
     margin-top: 10rem;
-    position: relative;
-    width: 40vw;
+    position: absolute;
+    width: calc(40vw - 2.2rem);
+    left: 50%;
+    transform: translatex(-50%);
   }
   input[type=radio] {
     display: none;
