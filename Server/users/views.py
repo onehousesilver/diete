@@ -25,7 +25,7 @@ def get_user_kcal(data, gender):
 
         # 여자인 경우(GENDER = 1)    
         elif gender == 1:
-            avgKg = (H/100)**2 * 21
+            avgKg = (H/100)**2 * 21 
             kcal = avgKg * 27
             
     # 활동량이 보통일 경우(ACTIVITY = 0)        
