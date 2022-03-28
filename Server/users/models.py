@@ -19,8 +19,8 @@ class User(AbstractUser):
     activity = models.CharField(default="보통", max_length=10)
     # 사용자의 성별 0 : 남자, 1 : 여자
     gender = models.IntegerField(default=1)
-    # 사용자의 선호 식단 0, 1, 2
-    preference = models.IntegerField(default=0)
+    # 사용자의 선호 식단 야채, 고기, 일반
+    preference = models.CharField(default="일반", max_length=10)
     # 사용자의 권장 칼로리
     kcal = models.IntegerField(default=1500)
 
