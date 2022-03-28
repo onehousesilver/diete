@@ -15,7 +15,7 @@
           settings
         </span>
       </div>
-      <div class="card">
+      <div class="menu-card">
         <div class="morning">
           <div class="morning-text animate__animated animate__fadeInUp">
             아침
@@ -170,7 +170,7 @@ export default {
 .color-change.blue {
   color: blue;
 }
-.card {
+.menu-card {
   display: flex;
   justify-content: center;
   align-items: center;

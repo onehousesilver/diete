@@ -74,8 +74,8 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // 비회원 접근 차단
     if(!isLogin) {
-      alert('로그인이 필요합니다')
-      next('/login')
+      // alert('로그인이 필요합니다')
+      // next('/login')
     }
   }
   // requiresAuth가 false일 때 (권한이 필요 없는 페이지)

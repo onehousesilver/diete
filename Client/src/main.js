@@ -19,9 +19,13 @@ import vueMoment from "vue-moment";
 import moment from "moment";
 
 moment.locale("ko");
-
 Vue.use(vueMoment, { moment });
 
+//modal
+import SweetModal from "sweet-modal-vue/src/plugin.js";
+Vue.use(SweetModal);
+
+// animate
 import "animate.css";
 
 new Vue({

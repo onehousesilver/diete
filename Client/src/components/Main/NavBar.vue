@@ -1,56 +1,48 @@
 <template>
   <div class="nav">
-      <div class="logo" @click="goToHome">
-        <span class="di" style="color: #2bc0af">di</span>
-        <span class="e" style="color: #25ab9b">è</span>
-        <span class="te" style="color: #219285">te</span>
+    <div class="logo" @click="goToHome">
+      <span class="di" style="color: #2bc0af">di</span>
+      <span class="e" style="color: #25ab9b">è</span>
+      <span class="te" style="color: #219285">te</span>
+    </div>
+    <div class="menu">
+      <div class="login-join" v-if="!isLogin">
+        <button
+          class="bttn-unite bttn-md bttn-success login-btn"
+          @click="goToLogin"
+        >
+          로그인
+        </button>
+        <router-link :to="{ name: 'join' }">
+          <button class="bttn-unite bttn-md bttn-success join-btn">
+            회원가입
+          </button></router-link
+        >
       </div>
-      <div class="menu">
-        <div class="login-join" v-if="!isLogin">
-          <button
-            class="bttn-unite bttn-md bttn-success login-btn"
-            @click="goToLogin"
-          >
-            로그인
-          </button>
-          <router-link :to="{ name: 'join' }">
-            <button class="bttn-unite bttn-md bttn-success join-btn">
-              회원가입
-            </button></router-link
-          >
-        </div>
-        <div class="menu-items" v-else>
-          <router-link :to="{ name: 'ChooseMeal' }">
-            <div>음식추천</div>
-          </router-link>
-          <router-link :to="{ name: 'search' }"
-            ><div>영양정보</div>
-          </router-link>
-          <router-link :to="{ name: 'pocket' }"
-            ><div>오늘한끼</div>
-          </router-link>
-          <router-link :to="{ name: 'record' }"
-            ><div>나의기록</div>
-          </router-link>
-          <button
-            class="bttn-unite bttn-md bttn-success logout-btn"
-            @click="goToLogout"
-          >
-            로그아웃
-          </button>
-        </div>
+      <div class="menu-items" v-else>
+        <router-link :to="{ name: 'ChooseMeal' }">
+          <div>음식추천</div>
+        </router-link>
+        <router-link :to="{ name: 'search' }"><div>영양정보</div> </router-link>
+        <router-link :to="{ name: 'pocket' }"><div>오늘한끼</div> </router-link>
+        <router-link :to="{ name: 'record' }"><div>나의기록</div> </router-link>
+        <button
+          class="bttn-unite bttn-md bttn-success logout-btn"
+          @click="goToLogout"
+        >
+          로그아웃
+        </button>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex";
 export default {
-  name: 'NavBar',
+  name: "NavBar",
   methods: {
-    ...mapActions([
-      'removeUserToken',
-    ]),
+    ...mapActions(["removeUserToken"]),
     goToHome() {
       this.$router.push({ name: "home" }).catch(() => {});
     },
@@ -63,13 +55,14 @@ export default {
     },
   },
   computed: {
-    isLogin() { return this.$store.getters.isLogin }
-  }
-}
+    isLogin() {
+      return this.$store.getters.isLogin;
+    },
+  },
+};
 </script>
 
 <style>
-
 a {
   text-decoration: none;
   color: black;
@@ -77,7 +70,7 @@ a {
 
 .nav {
   position: sticky;
-  top:0;
+  top: 0;
   z-index: 2;
   opacity: 0.8;
   width: 100%;
@@ -113,10 +106,11 @@ a {
   width: 6.25rem;
 }
 .bttn-unite.bttn-success:after,
-.bttn-unite.bttn-success:before{
-  background: #25AB9B;
+.bttn-unite.bttn-success:before {
+  background: #25ab9b;
 }
 .nav .menu .menu-items {
+  font-weight: 700;
   display: flex;
   align-items: center;
 }
