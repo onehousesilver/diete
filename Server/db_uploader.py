@@ -60,7 +60,7 @@ class XlsxParser():
                         elif type(cell.value) is not int:
                             f_value = round(float(cell.value), 2)
                         else:
-                            f_value = cell.value
+                            f_value = cell.value.strip()
                         food[table_properties[self.xls_index_to_values[cell.column]]] = f_value
                     except:
                         food[table_properties[self.xls_index_to_values[cell.column]]] = cell.value
@@ -89,19 +89,19 @@ def main():
 
     print("initializing db_uploader")
     xlsxParser = XlsxParser()
-    print("finished")
+    print("initializing finished")
 
     xlsxParser.match_Properties_To_Index()
 
     print("start input_datas")
     cnt, fail_cnt = xlsxParser.input_datas()
-    print("finished")
+    print("input_datas finished")
 
     print("-----------------result-----------------")
-    print("Successed :", (cnt-fail_cnt), ", Failed :", fail_cnt, ", Total :", cnt)
+    print("Successed :", (cnt), ", Failed :", fail_cnt, ", Total :", (cnt+fail_cnt))
     print("----------------------------------------")
 
-    print("finished db_uploader")
+    print("db_uploader finished")
 
 
 if __name__ == '__main__':
