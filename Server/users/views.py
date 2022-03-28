@@ -1,4 +1,5 @@
 # from django.shortcuts import render
+import imp
 from django.http import HttpResponse  
 from django.http.response import JsonResponse
 from django.contrib.auth import get_user_model
@@ -7,6 +8,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import  status
 from .serializers import UserSerializer, UserProfileSerializer
+from menus.serializers import MenuSerializer, MenuToFoodSerializer
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 # kcal 계산
@@ -52,6 +54,7 @@ def get_user_kcal(data, gender):
 def join(request):
     password = request.data.get('password')
     serializer = UserSerializer(data=request.data)
+    menuSerializer = MenuSerializer(data=request.data)
     
     if serializer.is_valid(raise_exception=True):
         user = serializer.save()
@@ -59,6 +62,45 @@ def join(request):
         user.kcal = get_user_kcal(request.data)
         user.save()
     # 선호 식단을 골랐을 떄 들어가는 식단
+        preference = request.data.get('preference')
+        #야채 선호 식단을 골랐을 경우
+        if preference == '야채':
+            menudata = { 
+            "userId" : user.id,
+            "dateTime" : request.data["dateTime"],
+            "mealTime" : request.data["mealTime"]
+            }
+            
+            menuSerializer = MenuSerializer(data=menudata)
+            if menuSerializer.is_valid(raise_exception=True) :
+                menuSerializer.save()
+                menuTempId = menuSerializer.data["id"]
+            else:
+                return Response({'error': 'menu 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            basket = request.data
+            menus = basket.get("menus")
+            
+            list = [6967, 6879, 7026, 7048, 7208, 7290, 7007, 6884, 7023, 7047, 7222, 5, 6967, 6886, 6925, 7073, 7190, 7116]
+            for i in list:
+                basketdata = {
+                    "menuId" : menuTempId,
+                    "foodId" : i,
+                    "amount" : menu.get("amount"),
+                }
+                mtfSerializer = MenuToFoodSerializer(data=basketdata)
+                if mtfSerializer.is_valid(raise_exception=True):
+                    mtfSerializer.save()
+                else:
+            return Response({'error' : 'menuToFood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # 고기 선호 식단을 골랐을 경우
+        elif preference == '야채':
+            print("야채")
+            
+        # 일반 식단을 골랐을 경우
+        elif preference == '일반':
+            print("일반")
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
