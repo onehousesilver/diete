@@ -10,7 +10,7 @@ class ImageUpdater():
 
         for f in files:
             img = Image.open(f)
-            img_resize = img.resize((512, 512))
+            img_resize = img.resize((1080, 720))
             title, ext = os.path.splitext(f)
             img_resize.save(title + ext)
     
