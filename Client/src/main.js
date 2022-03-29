@@ -25,6 +25,10 @@ Vue.use(vueMoment, { moment });
 import SweetModal from "sweet-modal-vue/src/plugin.js";
 Vue.use(SweetModal);
 
+// vue-awesome-swiper
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+Vue.use(VueAwesomeSwiper)
+
 // animate
 import "animate.css";
 

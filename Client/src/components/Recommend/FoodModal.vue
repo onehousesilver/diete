@@ -10,7 +10,7 @@
           />
           <div class="food-modal-text">
             <div class="food-modal-name">{{ foodData.foodName }}</div>
-            <div class="food-modal-kcal">200kcal</div>
+            <div class="food-modal-kcal">{{ foodData.foodKcal }}kcal</div>
             <div class="food-modal-g">1회제공량: 400g</div>
           </div>
           <div id="chart">
@@ -23,65 +23,57 @@
           </div>
         </section>
 
-        <section class="food-modal-bottom">
+        <section class="food-modal-bottom" @click="selectFood">
           <div class="inner">
             <div class="food-modal-bottom-text">이런 음식은 어때요?</div>
 
-            <div class="swiper-container">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <img
-                    src="../../assets/menu_rec/food_example_img.jpg"
-                    alt="음식예시사진"
-                    class="modal-bottom-img"
-                  />
-                </div>
-                <div class="swiper-slide">
-                  <img
-                    src="../../assets/menu_rec/food_example_img2.png"
-                    alt="음식예시사진"
-                    class="modal-bottom-img"
-                  />
-                </div>
-                <div class="swiper-slide">
-                  <img
-                    src="../../assets/menu_rec/food_example_img.jpg"
-                    alt="음식예시사진"
-                    class="modal-bottom-img"
-                  />
-                </div>
-                <div class="swiper-slide">
-                  <img
-                    src="../../assets/menu_rec/food_example_img.jpg"
-                    alt="음식예시사진"
-                    class="modal-bottom-img"
-                  />
-                </div>
-                <div class="swiper-slide">
-                  <img
-                    src="../../assets/menu_rec/food_example_img2.png"
-                    alt="음식예시사진"
-                    class="modal-bottom-img"
-                  />
-                </div>
-                <div class="swiper-slide">
-                  <img
-                    src="../../assets/menu_rec/food_example_img.jpg"
-                    alt="음식예시사진"
-                    class="modal-bottom-img"
-                  />
-                </div>
-              </div>
-            </div>
-
+            <swiper ref="mySwiper" :options="swiperOptions" class="my-swiper">
+              <swiper-slide>
+                <img
+                  src="../../assets/menu_rec/food_example_img.jpg"
+                  alt="음식예시사진"
+                  class="modal-bottom-img"
+                />
+              </swiper-slide>
+              <swiper-slide>
+                <img
+                  src="../../assets/menu_rec/food_example_img.jpg"
+                  alt="음식예시사진"
+                  class="modal-bottom-img"
+                />
+              </swiper-slide>
+              <swiper-slide>
+                <img
+                  src="../../assets/menu_rec/food_example_img.jpg"
+                  alt="음식예시사진"
+                  class="modal-bottom-img"
+                />
+              </swiper-slide>
+              <swiper-slide>
+                <img
+                  src="../../assets/menu_rec/food_example_img.jpg"
+                  alt="음식예시사진"
+                  class="modal-bottom-img"
+                />
+              </swiper-slide>
+              <swiper-slide>
+                <img
+                  src="../../assets/menu_rec/food_example_img2.png"
+                  alt="음식예시사진"
+                  class="modal-bottom-img"
+                />
+              </swiper-slide>
+            </swiper>
             <div class="swiper-prev">
               <span class="material-icons">arrow_back</span>
             </div>
             <div class="swiper-next">
               <span class="material-icons">arrow_forward</span>
             </div>
-
-            <button class="bttn-unite bttn-md bttn-success pocket-btn">
+            <button
+              class="bttn-unite bttn-md bttn-success pocket-btn"
+              @click="goToPocket"
+            >
               장바구니에 담기
             </button>
           </div>
@@ -92,7 +84,7 @@
 </template>
 
 <script>
-import swiper from "../../js/swiper";
+// import swiper from "../../js/swiper";
 export default {
   name: "FoodModal",
   props: {
@@ -101,6 +93,19 @@ export default {
   },
   data() {
     return {
+      // swiper
+      swiperOptions: {
+        loop: true,
+        observer: true,
+        observeParents: true,
+        slidesPerView: 4,
+        spaceBetween: 30,
+        setWrapperSize: true,
+        navigation: {
+          prevEl: ".swiper-prev",
+          nextEl: ".swiper-next",
+        },
+      },
       // Aepxchart,
       series: [
         {
@@ -141,14 +146,29 @@ export default {
           ],
         },
       },
+      selectFlag: false,
     };
   },
   methods: {
     showModal() {
       this.$refs.modal.open("main-modal");
     },
-    showSwiper() {
-      swiper();
+    goToPocket() {
+      this.$refs.modal.close("main-modal");
+    },
+    selectFood() {
+      const subRecommendFood = document.querySelectorAll(".modal-bottom-img");
+      if (this.selectFlag == true) {
+        this.selectFlag = false;
+        for (let i = 0; i < subRecommendFood.length; i++) {
+          subRecommendFood[i].classList.remove("clicked");
+        }
+      } else {
+        this.selectFlag = true;
+        for (let i = 0; i < subRecommendFood.length; i++) {
+          subRecommendFood[i].classList.add("clicked");
+        }
+      }
     },
   },
   watch: {
@@ -172,6 +192,7 @@ export default {
   padding: 20px;
   position: relative;
   top: 30px;
+  width: 100%;
 }
 .food-modal-bottom .swiper-wrapper {
   display: flex;
@@ -233,8 +254,8 @@ export default {
   overflow-x: hidden;
 }
 
-.swiper-container {
-  width: 100%;
+.my-swiper {
+  width: 50vw;
 }
 .swiper-prev,
 .swiper-next {
@@ -263,5 +284,23 @@ export default {
 .swiper-next:hover {
   background-color: rgb(255, 255, 255);
   color: rgb(0, 0, 0);
+}
+.swiper-container {
+  overflow: visible;
+}
+.swiper-slide {
+  opacity: 0.4;
+  transition: opacity 0.3s;
+}
+.swiper-slide-active,
+.swiper-slide-active + .swiper-slide,
+.swiper-slide-active + .swiper-slide + .swiper-slide,
+.swiper-slide-active + .swiper-slide + .swiper-slide + .swiper-slide {
+  opacity: 1;
+}
+
+/* 클래스 리스트 추가해서 수정 */
+.modal-bottom-img.clicked {
+  border: solid black 5px;
 }
 </style>
