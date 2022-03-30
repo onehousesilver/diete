@@ -23,6 +23,7 @@ moment.locale("ko");
 Vue.use(vueMoment, { moment });
 
 import "animate.css";
+import "hover.css";
 
 new Vue({
   router,
