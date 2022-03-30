@@ -6,7 +6,7 @@
     <span class="material-icons settings" @click="editMealTable">
       settings
     </span>
-    <div class="card">
+    <div class="my-card">
       <div class="meal-time">
         <div>아침</div>
         <div>점심</div>
@@ -174,7 +174,7 @@ export default {
 .meal-table-el.clicked:hover {
   cursor: pointer;
 }
-.card {
+.my-card {
   display: flex;
   justify-content: center;
   align-items: center;

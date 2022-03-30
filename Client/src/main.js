@@ -19,9 +19,17 @@ import vueMoment from "vue-moment";
 import moment from "moment";
 
 moment.locale("ko");
-
 Vue.use(vueMoment, { moment });
 
+//modal
+import SweetModal from "sweet-modal-vue/src/plugin.js";
+Vue.use(SweetModal);
+
+// vue-awesome-swiper
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+Vue.use(VueAwesomeSwiper)
+
+// animate
 import "animate.css";
 import "hover.css";
 
