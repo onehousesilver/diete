@@ -50,9 +50,10 @@ class XlsxParser():
             food = {}
             for cell in row:
                 if cell.column in self.xls_index_to_values.keys():
-                    
                     try:
-                        if cell.value == "-":
+                        if cell.value == None or cell.value == "None":
+                            f_value = -1
+                        elif cell.value == "-":
                             f_value = 0
                         elif "미만" in cell.value:
                             f_value = 0
