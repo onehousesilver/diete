@@ -150,7 +150,7 @@ h1 {
 .choose-container section img {
   display: block;
   width: 18vw;
-  height: 25vh;
+  height: 30vh;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);

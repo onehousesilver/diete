@@ -8,9 +8,9 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     // 현재 장바구니 정보
-    myMenu: {
-
-    },
+    myMenu: [
+      {}
+    ],
 
     // 로그인 여부
     isLogin: false,
@@ -29,12 +29,15 @@ export default new Vuex.Store({
     },
     getUserToken(state) {
       return state.userToken;
+    },
+    getMyMenu(state) {
+      return state.myMenu;
     }
   },
   mutations: {
     // 장바구니 갱신
     SET_MENU: function(state, menus) {
-      state.myMenu = menus;
+      state.myMenu.push(menus)
     },
     // 로그인
     SET_LOGIN: function(state, token) {
