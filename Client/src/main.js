@@ -31,6 +31,7 @@ Vue.use(VueAwesomeSwiper)
 
 // animate
 import "animate.css";
+import "hover.css";
 
 new Vue({
   router,
