@@ -31,4 +31,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.4;
 }
+input {
+  box-sizing: initial;
+}
+* {
+  background-repeat: repeat !important;
+}
 </style>
