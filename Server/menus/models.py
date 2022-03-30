@@ -41,6 +41,17 @@ class Food(models.Model):
     # 음식 이미지
     # image = models.CharField(default=200)
 
+    # 고기 여부
+    meat = models.IntegerField(default=-1)
+    # 채소 여부
+    vegetable = models.IntegerField(default=-1)
+    # 해산물 여부
+    seafood = models.IntegerField(default=-1)
+    # 맵기 여부
+    spicy = models.IntegerField(default=-1)
+    # 기름기 여부
+    oily = models.IntegerField(default=-1)
+
 class MenuToFood(models.Model):
     
     # Menu테이블과 n:1으로 연결 필요, 식단 번호를 외래키로 받아옴
