@@ -24,7 +24,7 @@
           <div>음식추천</div>
         </router-link>
         <router-link :to="{ name: 'search' }"><div>영양정보</div> </router-link>
-        <router-link :to="{ name: 'pocket' }"><div>오늘한끼</div> </router-link>
+        <router-link :to="{ name: 'basket' }"><div>오늘한끼</div> </router-link>
         <router-link :to="{ name: 'record' }"><div>나의기록</div> </router-link>
         <button
           class="bttn-unite bttn-md bttn-success logout-btn"

@@ -32,9 +32,11 @@ Vue.use(VueAwesomeSwiper)
 // animate
 import "animate.css";
 import "hover.css";
+import vuetify from './plugins/vuetify'
 
 new Vue({
   router,
   store,
-  render: (h) => h(App),
+  vuetify,
+  render: (h) => h(App)
 }).$mount("#app");
