@@ -27,46 +27,48 @@
 </template>
 
 <script>
-import TextScramble from '@/js/bannerani.js'
+import TextScramble from "@/js/bannerani.js";
 // import { mapState } from 'vuex'
 export default {
   props: {
     MainText: String,
-    SubText: String
+    SubText: String,
   },
   methods: {
     textAnimation() {
       const phrases = [
-        '식단',
-        '饮食',
-        'Diät',
-        'dieta',
-        'しょくじ',
-        'diet',
-        'diète',
-      ]
+        "diète",
+        "식단",
+        "饮食",
+        "Diät",
+        "dieta",
+        "しょくじ",
+        "diet",
+      ];
 
-      const el = document.querySelector('.my-text')
-      const fx = new TextScramble(el)
+      const el = document.querySelector(".my-text");
+      const fx = new TextScramble(el);
 
-      let counter = 0
+      let counter = 0;
       const next = () => {
         fx.setText(phrases[counter]).then(() => {
-          setTimeout(next, 1000)
-        })
-        counter = (counter + 1) % phrases.length
-      }
-      next()
-    }
+          setTimeout(next, 3000);
+        });
+        counter = (counter + 1) % phrases.length;
+      };
+      next();
+    },
   },
   mounted() {
-    if (!this.isLogin){
-      this.textAnimation()
+    if (!this.isLogin) {
+      this.textAnimation();
     }
   },
   computed: {
-    isLogin(){ return this.$store.getters.isLogin }
-  }
+    isLogin() {
+      return this.$store.getters.isLogin;
+    },
+  },
 };
 </script>
 
