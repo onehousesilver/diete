@@ -62,3 +62,14 @@ class MenuToFood(models.Model):
     
     # 수량 - 해당 음식의 수량
     amount = models.IntegerField(default=1)
+
+
+class FoodRecomm(models.Model):
+    # 음식 Id
+    foodId = models.IntegerField(default = 0)
+
+    # 음식 이름
+    foodName = models.CharField(max_length=100)
+
+    # 추천 점수
+    score = models.DecimalField(max_digits=3, decimal_places=2, default=10)

@@ -6,7 +6,7 @@ app_name = 'menus'
 
 urlpatterns = [
     # 음식추천
-    path('recommendation/<int:userId>/<int:pageNo>/',views.recommend_foods),
+    path('recommendation/<username>/',views.recommend_foods),
     
     # 음식상세조회
     path('<int:foodId>/', views.food_detail),
