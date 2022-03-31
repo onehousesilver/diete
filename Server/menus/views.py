@@ -38,8 +38,74 @@ def recommend_foods(request,username):
     food_list = getFoodRecomm(prefer_user, prefer_string)
     
     return Response(food_list, status=status.HTTP_200_OK)
-    
 
+# 나린
+def getUserMenus(username):
+    result = {}
+    
+    user=get_object_or_404(get_user_model(), username=username)
+    user_menus = Menu.objects.filter(userId=user.id)
+    menuserializer = MenuSerializer(user_menus, read_only=True, many=True)
+    for menu in menuserializer.data:
+        result[menu["dateTime"]] = list()
+        mtfs = MenuToFood.objects.filter(menuId=menu["id"])
+        mtfserializers = MenuToFoodSerializer(mtfs, read_only=True, many= True)
+        eat_food = {}
+        for mtfs in mtfserializers.data:
+            food = get_object_or_404(Food, id = mtfs["foodId"])
+            eat_food["foodName"] = food.foodName
+            eat_food["foodCategory"] = food.foodCategory
+            eat_food["foodDetailCategory"] = food.foodDetailCategory
+            eat_food["servingSize"] = food.servingSize
+            eat_food["foodKcal"] = food.foodKcal
+            eat_food["sugar"] = food.sugar
+            eat_food["carbohydrate"] = food.carbohydrate
+            eat_food["protein"] = food.protein
+            eat_food["fat"] = food.fat
+            eat_food["cholesterol"] = food.carbohydrate
+            eat_food["fattyAcid"] = food.fattyAcid
+            result[menu["dateTime"]].append(eat_food)
+    print(result)
+
+# 기호
+def getUserPrefer(request):
+    prefer_user = {"spicy":0, "meat":0, "vegetable":0, "seafood":0, "oily":0}
+    cnt = 0
+
+    for menu in menus:
+        print(cnt)
+        size = len(menus[menu]) 
+        # 각 날짜에 들어있는 메뉴의 가지 수 = size
+        while size > 0:
+            # 총 메뉴의 수 cnt (나중에 평균치 계산할 때)
+            cnt += 1
+            size -= 1
+
+            print("ㅡㅡㅡㅡㅡstartㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
+            print(menus[menu][size].get("foodName"))
+            print(menus[menu][size].get("spicy"))
+            print(menus[menu][size].get("meat"))
+            print(menus[menu][size].get("vegetable"))
+            print(menus[menu][size].get("seafood"))
+            print(menus[menu][size].get("oily"))
+            
+            # 각 메뉴마다 수치 더해주기
+            prefer_user["spicy"] += menus[menu][size].get("spicy")
+            prefer_user["meat"] += menus[menu][size].get("meat")
+            prefer_user["vegetable"] += menus[menu][size].get("vegetable")
+            prefer_user["seafood"] += menus[menu][size].get("seafood")
+            prefer_user["oily"] += menus[menu][size].get("oily")
+            print("ㅡㅡㅡㅡㅡendㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
+    # 평균내기
+    prefer_user["spicy"]/=cnt
+    prefer_user["meat"]/=cnt
+    prefer_user["vegetable"]/=cnt
+    prefer_user["seafood"]/=cnt
+    prefer_user["oily"]/=cnt
+    print(prefer_user)
+    return prefer_user
+
+# 수용
 def getFoodRecomm(prefer_user, prefer_string):
     foods = (Food.objects.filter(commercialFood="품목대표", meat = 0)
     | Food.objects.filter(commercialFood="품목대표", meat = 1)
@@ -168,39 +234,3 @@ def update_basket(request, menuId):
         return Response({'update: 데이터가 업데이트되었습니다.'}, status=status.HTTP_200_OK)
 
 # 추천알고리즘 2단계 
-def getUserPrefer(request):
-    prefer_user = {"spicy":0, "meat":0, "vegetable":0, "seafood":0, "oily":0}
-    cnt = 0
-
-    for menu in menus:
-        print(cnt)
-        size = len(menus[menu]) 
-        # 각 날짜에 들어있는 메뉴의 가지 수 = size
-        while size > 0:
-            # 총 메뉴의 수 cnt (나중에 평균치 계산할 때)
-            cnt += 1
-            size -= 1
- 
-            print("ㅡㅡㅡㅡㅡstartㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-            print(menus[menu][size].get("foodName"))
-            print(menus[menu][size].get("spicy"))
-            print(menus[menu][size].get("meat"))
-            print(menus[menu][size].get("vegetable"))
-            print(menus[menu][size].get("seafood"))
-            print(menus[menu][size].get("oily"))
-            
-            # 각 메뉴마다 수치 더해주기
-            prefer_user["spicy"] += menus[menu][size].get("spicy")
-            prefer_user["meat"] += menus[menu][size].get("meat")
-            prefer_user["vegetable"] += menus[menu][size].get("vegetable")
-            prefer_user["seafood"] += menus[menu][size].get("seafood")
-            prefer_user["oily"] += menus[menu][size].get("oily")
-            print("ㅡㅡㅡㅡㅡendㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-    # 평균내기
-    prefer_user["spicy"]/=cnt
-    prefer_user["meat"]/=cnt
-    prefer_user["vegetable"]/=cnt
-    prefer_user["seafood"]/=cnt
-    prefer_user["oily"]/=cnt
-    print(prefer_user)
-    return prefer_user
