@@ -63,8 +63,8 @@ def join(request):
     # 선호 식단을 골랐을 떄 들어가는 식단
         preference = request.data.get('preference')
         
-        #야채 선호 식단을 골랐을 경우 
-        if preference == '야채':
+        #채소 선호 식단을 골랐을 경우 
+        if preference == '채소':
             menudata = { 
             "userId" : user.id,
             "dateTime" : "2000-01-01",

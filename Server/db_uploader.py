@@ -16,13 +16,13 @@ SHEET_NAME = "Data"
 
 # 엑셀 파일의 필요 속성 13개
 xls_properties = ["NO", "상용제품", "식품명", "식품대분류", "식품상세분류", "1회제공량", "에너지(㎉)", "총당류(g)", "탄수화물(g)", "단백질(g)"
-, "지방(g)", "콜레스테롤(㎎)", "총 포화 지방산(g)", "고기", "야채", "해산물", "맵기", "기름기"]
+, "지방(g)", "콜레스테롤(㎎)", "총 포화 지방산(g)", "고기", "채소", "해산물", "맵기", "기름기"]
 
 # Food 테이블의 13개 속성 중 image를 제외한 12가지 매칭 + 품목대표인지 확인을 위해 "상용제품" 속성 추가 필요 -> "상용제품" : commercialFood
 table_properties = {"NO" : "id", "상용제품" : "commercialFood", "식품명" : "foodName", "식품대분류" : "foodCategory", "식품상세분류" : "foodDetailCategory"
 , "1회제공량" : "servingSize", "에너지(㎉)" : "foodKcal", "총당류(g)" : "sugar", "탄수화물(g)" : "carbohydrate"
 , "단백질(g)" : "protein", "지방(g)" : "fat", "콜레스테롤(㎎)" : "cholesterol", "총 포화 지방산(g)" : "fattyAcid"
-, "고기" : "meat", "야채" : "vegetable", "해산물" : "seafood", "맵기" : "spicy", "기름기" : "oily"}
+, "고기" : "meat", "채소" : "vegetable", "해산물" : "seafood", "맵기" : "spicy", "기름기" : "oily"}
 
 class XlsxParser():
     def __init__(self):
