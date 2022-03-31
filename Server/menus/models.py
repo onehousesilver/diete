@@ -72,4 +72,4 @@ class FoodRecomm(models.Model):
     foodName = models.CharField(max_length=100)
 
     # 추천 점수
-    score = models.DecimalField(max_digits=3, decimal_places=2, default=10)
+    score = models.DecimalField(max_digits=4, decimal_places=2, default=10)
