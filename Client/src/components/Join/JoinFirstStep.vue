@@ -6,12 +6,27 @@
             class="my-input" 
             type="text" 
             id="userID" 
-            placeholder="6~16자 이내"
+            placeholder="영문, 숫자를 각 1자 이상 포함해 8자 이상 16자 미만으로 입력해주세요"
             v-model="formData.userId"
           >
           <label for="userID">아이디</label>
           <span class="highlight"></span>
           <span class="bar"></span>
+          <button class="bttn-unite bttn-success check-btn" @click="userDuplicateCheck">중복체크</button>
+          <div v-show="idInputFlag">
+            <div class="error-msg" v-if="duplicateCheckFlag==1" style="color:green">
+              <span class="material-icons">check_circle</span>
+              <span>아이디 중복체크가 통과되었습니다.</span>
+            </div>
+            <div class="error-msg" v-else-if="duplicateCheckFlag==0" style="color:red">
+              <span class="material-icons">cancel</span>
+              <span>이미 존재하는 아이디 입니다.</span>
+            </div>
+            <div class="error-msg" v-else style="color:red">
+              <span class="material-icons">cancel</span>
+              <span>유효하지 않은 아이디 입니다.</span>
+            </div>
+          </div>
         </div>
           
         <div class="group">
@@ -19,13 +34,25 @@
             class="my-input"  
             type="password" 
             id="userPW" 
-            placeholder="영문 숫자를 포함한 8~16자 이내"
+            placeholder="영문, 숫자, 특수문자를 각 1자 이상 포함해 8자 이상 16자 미만으로 입력해주세요"
             v-model="formData.userPw"
+            @input="passwordValidation"
           >
           <label for="userPW">비밀번호</label>
           <span class="highlight"></span>
           <span class="bar"></span>
+          <div v-show="pwInputFlag">
+            <div class="error-msg" v-if="passwordValidateFlag" style="color:green">
+              <span class="material-icons">check_circle</span>
+              <span>비밀번호가 유효합니다.</span>
+            </div>
+            <div class="error-msg" v-else style="color:red">
+              <span class="material-icons">cancel</span>
+              <span>비밀번호가 유효하지 않습니다.</span>
+            </div>
+          </div>
         </div>
+
         <div class="group">
           <input 
             class="my-input"  
@@ -33,10 +60,21 @@
             id="userPWConf" 
             placeholder="비밀번호를 확인합니다"
             v-model="formData.userPwConf"
+            @input="passwordConfirm"
           >
           <label for="userPWConf">비밀번호 확인</label>
           <span class="highlight"></span>
           <span class="bar"></span>
+          <div v-show="passwordValidateFlag">
+            <div class="error-msg" v-if="passwordCheckFlag" style="color:green">
+              <span class="material-icons">check_circle</span>
+              <span>비밀번호가 일치합니다.</span>
+            </div>
+            <div class="error-msg" v-else style="color:red">
+              <span class="material-icons">cancel</span>
+              <span>비밀번호가 다릅니다.</span>
+            </div>
+          </div>
         </div>
         <div class="group">
           <input 
@@ -49,7 +87,18 @@
           <label for="userName">이름</label>
           <span class="highlight"></span>
           <span class="bar"></span>
+          <div v-show="nameInputFlag">
+            <div class="error-msg" v-if="formData.userName" style="color:green">
+              <span class="material-icons">check_circle</span>
+              <span>확인 되었습니다.</span>
+            </div>
+            <div class="error-msg" v-else style="color:red">
+              <span class="material-icons">cancel</span>
+              <span>필수 항목입니다.</span>
+            </div>
+          </div>
         </div>
+
         <div class="group">
           <input 
             class="my-input" 
@@ -61,7 +110,18 @@
           <label for="userBirth">생년월일</label>
           <span class="highlight"></span>
           <span class="bar"></span>
+          <div v-show="birthInputFlag">
+            <div class="error-msg" v-if="formData.userBirth" style="color:green">
+              <span class="material-icons">check_circle</span>
+              <span>확인 되었습니다.</span>
+            </div>
+            <div class="error-msg" v-else style="color:red">
+              <span class="material-icons">cancel</span>
+              <span>필수 항목입니다.</span>
+            </div>
+          </div>
         </div>
+
         <button 
           class="bttn-unite bttn-md bttn-success next-btn"
           @click="nextStep"
@@ -73,10 +133,12 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'JoinFirstStep',
   data() {
     return {
+      // 유저 데이터
       formData: {
         userId: null,
         userPw: null,
@@ -84,12 +146,83 @@ export default {
         userName: null,
         userBirth: null
       },
+      // 에러메시지 출력을 위한 flag
+      idInputFlag: false,
+      pwInputFlag: false,
+      nameInputFlag: false,
+      birthInputFlag: false,
+
+      // form 유효성 검사 확인 flag
+      duplicateCheckFlag: 2,
+      passwordValidateFlag: false,
+      passwordCheckFlag: false,
+      
     }
   },
   methods: {
+    // 다음단계로 이동
     nextStep() {
-      this.$emit('nextStep', this.formData);
-    }
+      // 모든 입력사항 체크 완료
+      if (this.duplicateCheckFlag===1 && this.passwordValidateFlag && this.passwordCheckFlag && !this.userName && !this.userBirth){
+        // 부모 컴포넌트에 emit
+        this.$emit('nextStep', this.formData);
+      }
+      // 미입력된 폼이 있을 때 에러메시지 v-show
+      else {
+        this.idInputFlag = true;
+        this.pwInputFlag = true;
+        this.nameInputFlag = true;
+        this.birthInputFlag = true;
+      }
+    },
+
+    // ID 중복체크
+    userDuplicateCheck() {
+      // 중복체크 버튼 클릭 시 에러메시지 출력
+      this.idInputFlag = true
+      if(this.formData.userId){
+        // JS 정규표현식. ID가 영문자, 숫자가 모두 포함된 8~15자 여야 유효
+        const idRule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,15}$/;
+        // const idRule = /^[A-Za-z\d]{8,15}$/;
+        // 유효하지 않은 ID일때 에러메시지 상태변경
+        if (!idRule.test(this.formData.userId)){
+          this.duplicateCheckFlag = 2
+        }
+        // 유효한 ID일때 서버에 중복체크 요청
+        else {
+        axios({
+          method: 'get', 
+          url: `${process.env.VUE_APP_API_URL}/user/id/${this.formData.userId}/`,
+        })
+          .then((res) => {
+            // 중복되지 않은 아이디 일때 유효성 검사 통과
+            this.duplicateCheckFlag = res.data.isUnique ? 1 : 0
+            // console.log(res)
+            
+          })
+          .catch(() => {})
+        }
+      }
+    },
+
+    // PW 유효성검사
+    passwordValidation() {
+      this.pwInputFlag = true
+      // JS 정규표현식. PW가 영문자, 숫자, 특수문자가 모두 포함되고 8~15자 여야 유효
+      const pwRule = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
+      // 유효한 PW일때 유효성검사 통과
+      this.passwordValidateFlag = pwRule.test(this.formData.userPw) ? true : false
+    },
+    
+    // PWConf 유효성검사
+    passwordConfirm(){
+      // PW가 유효한 경우에
+      if (this.passwordValidateFlag){
+        // PW, PW확인이 일치할 경우 유효성검사 통과
+        this.passwordCheckFlag = (this.formData.userPw == this.formData.userPwConf)
+      }
+    },
+    
   }
 }
 </script>
@@ -98,8 +231,6 @@ export default {
   /* Button */
   .bttn-unite.bttn-success{
     border-radius: 0.625rem;
-    width: 18.75rem;
-    margin-bottom: 1.875rem;
   }
   .bttn-unite.bttn-success:before{
     background: #25AB9B;
@@ -150,9 +281,26 @@ export default {
     -moz-transition:0.2s ease all; 
     -webkit-transition:0.2s ease all;
   }
+  .error-msg {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0;
+  }
+  .check-btn {
+    position: absolute;
+    font-size: 1rem;
+    width: 6rem;
+    right: 0;
+    bottom: 0.25rem;
+    height: 75%;
+  }
   .next-btn {
-    position: relative;
-    width: 100%;
+    margin-bottom: 1.875rem;
+    position: absolute;
+    width: calc(40vw - 2.2rem);
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   /* active state */

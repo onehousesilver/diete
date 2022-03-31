@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import NavBar from '@/components/Main/NavBar.vue'
+import NavBar from "@/components/Main/NavBar.vue";
 export default {
   name: "App",
   components: {
-    NavBar
-  }
+    NavBar,
+  },
 };
 </script>
 
@@ -24,9 +24,17 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
+
 #app {
-  font-family: "Roboto", "MinSans-Regular";
+  font-family: "MinSans-Regular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.4;
+}
+input {
+  box-sizing: initial;
+}
+* {
+  background-repeat: repeat !important;
 }
 </style>
