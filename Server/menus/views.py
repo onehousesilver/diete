@@ -76,11 +76,9 @@ def decision_basket(request):
             
         return Response({'create: 데이터가 생성되었습니다.'}, status=status.HTTP_201_CREATED)
 
-# 장바구니 수정
-    
+# 장바구니 수정    
 @api_view(['PUT'])
 @permission_classes([AllowAny])
-
 def update_basket(request, menuId):
     if request.method == 'PUT':
         # 기존 MenuToFood에 있는 menuId인 data 삭제
@@ -107,3 +105,40 @@ def update_basket(request, menuId):
             
         return Response({'update: 데이터가 업데이트되었습니다.'}, status=status.HTTP_200_OK)
 
+# 추천알고리즘 2단계 
+def getUserPrefer(request):
+    prefer_user = {"spicy":0, "meat":0, "vegetable":0, "seafood":0, "oily":0}
+    cnt = 0
+
+    for menu in menus:
+        print(cnt)
+        size = len(menus[menu]) 
+        # 각 날짜에 들어있는 메뉴의 가지 수 = size
+        while size > 0:
+            # 총 메뉴의 수 cnt (나중에 평균치 계산할 때)
+            cnt += 1
+            size -= 1
+ 
+            print("ㅡㅡㅡㅡㅡstartㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
+            print(menus[menu][size].get("foodName"))
+            print(menus[menu][size].get("spicy"))
+            print(menus[menu][size].get("meat"))
+            print(menus[menu][size].get("vegetable"))
+            print(menus[menu][size].get("seafood"))
+            print(menus[menu][size].get("oily"))
+            
+            # 각 메뉴마다 수치 더해주기
+            prefer_user["spicy"] += menus[menu][size].get("spicy")
+            prefer_user["meat"] += menus[menu][size].get("meat")
+            prefer_user["vegetable"] += menus[menu][size].get("vegetable")
+            prefer_user["seafood"] += menus[menu][size].get("seafood")
+            prefer_user["oily"] += menus[menu][size].get("oily")
+            print("ㅡㅡㅡㅡㅡendㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
+    # 평균내기
+    prefer_user["spicy"]/=cnt
+    prefer_user["meat"]/=cnt
+    prefer_user["vegetable"]/=cnt
+    prefer_user["seafood"]/=cnt
+    prefer_user["oily"]/=cnt
+    print(prefer_user)
+    return prefer_user
