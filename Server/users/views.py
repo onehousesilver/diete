@@ -148,4 +148,6 @@ def update_user_info(request):
         user = serializer.save()
         # kcal 다시 계산하고 serializer에추가
         user.kcal = get_user_kcal(data=request.data, gender=request.user.gender)
+        print(user.kcal)
+        user.save()
         return Response(serializer.data)
