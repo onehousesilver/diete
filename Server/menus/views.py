@@ -10,12 +10,74 @@ from rest_framework.permissions import AllowAny
 from rest_framework import status
 
 from .models import Food, Menu, MenuToFood
-from .serializers import FoodSerializer, MenuSerializer, MenuToFoodSerializer
+from .serializers import FoodSerializer, MenuSerializer, MenuToFoodSerializer, FoodRecommSerializer
 
 from datetime import datetime
-# 음식 추천
-def recommend_foods(request,userId,pageNo):
-    return HttpResponse("recom food")
+# 음식 추천 GET /recommend/{username}
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def recommend_foods(request,username):
+    # 1. 유저의 이전 식단기록(음식기록) 가져오기 [나린]
+    # menus = getUserMenus(username)
+    
+    # 1-2. 유저의 선호 식단 받아오기 (jwt로 받기 또는 db에서 찾아오기)
+    # prefer_string = getPreferString(username)
+    
+    # 2. 유저의 선호 태그들을 찾기 [기호]
+    # prefer_user = getUserPrefer(menus)
+
+    # 3. 모든 DB의 음식들에 대하여 점수 계산 [수용, 가은]
+    # prefer_user 더미 데이터 < 얘가 있다고 가정하고 코드를 짤거라 있어야만 해요!
+    
+
+    ###  참고 : user의 preference == "고기"
+    prefer_user = {"meat": 1.6,"vegetable": 0.3, "seafood": 0.7 , "spicy": 1.6, "oily": 1.5}
+    prefer_string = "야채" # 더미 데이터
+    
+    food_list = getFoodRecomm(prefer_user, prefer_string)
+    
+    return Response(food_list, status=status.HTTP_200_OK)
+    
+
+def getFoodRecomm(prefer_user, prefer_string):
+    foods = (Food.objects.filter(commercialFood="품목대표", meat = 0)
+    | Food.objects.filter(commercialFood="품목대표", meat = 1)
+    | Food.objects.filter(commercialFood="품목대표", meat = 2))
+    
+    # 사용자의 선호 식단 야채, 고기, 일반에 따라 가중치 ++
+    prefer_weight = {"meat": 1 ,"vegetable": 1, "seafood": 1 , "spicy": 1, "oily": 1}
+
+    if prefer_string == "야채": 
+        prefer_weight["vegetable"] = 0.1
+    elif prefer_string == "고기":
+        prefer_weight["meat"] = 0.1
+        
+    print(prefer_weight)
+    print(prefer_user)
+
+    # DB의 모든 Food에 대하여 점수 계산
+    food_list = []
+    for food in foods.values():
+        food_dic = {}
+        score = 0
+        # item : meat, vegetable, seafood, spicy, oily
+        for item in prefer_user:
+            score += abs(prefer_user[item] - food[item]) * prefer_weight[item]
+        # food_list.append((food["id"], food["foodName"], round(score,3)))
+        food_dic["foodId"] = food["id"]
+        food_dic["foodName"] = food["foodName"]
+        food_dic["score"] = round(score, 3)
+
+        foodrecommserializer = FoodRecommSerializer(data=food_dic)
+        if foodrecommserializer.is_valid(raise_exception = True):
+            food_list.append(foodrecommserializer)
+        else:
+            return Response({'error': 'FoodRecomm 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+    # food_list.sort(key=lambda x: x[-1])
+    # print(food_list)
+    return food_list
+    # 정렬 어쩌지...?
 
 # 음식 상세 조회
 @api_view(['GET'])
@@ -106,4 +168,5 @@ def update_basket(request, menuId):
                 return Response({'error': 'menuToFood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
             
         return Response({'update: 데이터가 업데이트되었습니다.'}, status=status.HTTP_200_OK)
+
 
