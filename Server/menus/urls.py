@@ -12,7 +12,7 @@ urlpatterns = [
     path('<int:foodId>/', views.food_detail),
 
     # 추가메뉴조회
-    path('submenu/<int:menuId>/', views.sub_foods),
+    path('submenu/<int:foodId>/', views.sub_foods),
 
     # 장바구니최종 결정
     path('basket/', views.decision_basket),
