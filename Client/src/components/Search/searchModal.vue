@@ -3,15 +3,17 @@
     <sweet-modal id="main-modal" ref="modal">
       <div class="modal">
         <section class="food-modal-header">
-          <img
-            src="../../assets/menu_rec/food_example_img.jpg"
-            alt="음식예시사진"
-            class="modal-img"
-          />
-          <div class="food-modal-text">
-            <div class="food-modal-name">{{ foodData.foodName }}</div>
-            <div class="food-modal-kcal">{{ foodData.foodKcal }}kcal</div>
-            <div class="food-modal-g">1회제공량: 400g</div>
+          <div class="food-set">
+            <img
+              src="../../assets/menu_rec/food_example_img.jpg"
+              alt="음식예시사진"
+              class="modal-img"
+            />
+            <div class="food-modal-text">
+              <div class="food-modal-name">{{ foodData.foodName }}</div>
+              <div class="food-modal-kcal">{{ foodData.foodKcal }}kcal</div>
+              <div class="food-modal-g">1회제공량: 400g</div>
+            </div>
           </div>
           <div id="chart">
             <ApexChart
@@ -23,17 +25,19 @@
           </div>
         </section>
 
-        <section class="food-modal-bottom" @click="selectFood">
+        <section class="food-modal-bottom">
           <div class="inner">
             <div class="food-modal-bottom-text">이런 음식은 어때요?</div>
 
             <swiper ref="mySwiper" :options="swiperOptions" class="my-swiper">
               <swiper-slide>
+                <div class="read-more" v-show="isRead">자세히보기</div>
                 <img
                   src="../../assets/menu_rec/food_example_img.jpg"
                   alt="음식예시사진"
                   class="modal-bottom-img"
                 />
+                <div class="sub-food-name">소고기무국</div>
               </swiper-slide>
               <swiper-slide>
                 <img
@@ -41,6 +45,7 @@
                   alt="음식예시사진"
                   class="modal-bottom-img"
                 />
+                <div class="sub-food-name">소고기무국</div>
               </swiper-slide>
               <swiper-slide>
                 <img
@@ -48,6 +53,7 @@
                   alt="음식예시사진"
                   class="modal-bottom-img"
                 />
+                <div class="sub-food-name">소고기무국</div>
               </swiper-slide>
               <swiper-slide>
                 <img
@@ -55,6 +61,7 @@
                   alt="음식예시사진"
                   class="modal-bottom-img"
                 />
+                <div class="sub-food-name">소고기무국</div>
               </swiper-slide>
               <swiper-slide>
                 <img
@@ -62,6 +69,7 @@
                   alt="음식예시사진"
                   class="modal-bottom-img"
                 />
+                <div class="sub-food-name">보쌈</div>
               </swiper-slide>
             </swiper>
             <div class="swiper-prev">
@@ -70,12 +78,6 @@
             <div class="swiper-next">
               <span class="material-icons">arrow_forward</span>
             </div>
-            <button
-              class="bttn-unite bttn-md bttn-success pocket-btn"
-              @click="goToPocket"
-            >
-              장바구니에 담기
-            </button>
           </div>
         </section>
       </div>
@@ -85,7 +87,7 @@
 
 <script>
 export default {
-  name: "FoodModal",
+  name: "searchModal",
   props: {
     test: Boolean,
     foodData: Object,
@@ -104,6 +106,7 @@ export default {
           prevEl: ".swiper-prev",
           nextEl: ".swiper-next",
         },
+        isRead: true,
       },
       // Aepxchart,
       series: [
@@ -155,19 +158,9 @@ export default {
     goToPocket() {
       this.$refs.modal.close("main-modal");
     },
-    selectFood() {
-      const subRecommendFood = document.querySelectorAll(".modal-bottom-img");
-      if (this.selectFlag == true) {
-        this.selectFlag = false;
-        for (let i = 0; i < subRecommendFood.length; i++) {
-          subRecommendFood[i].classList.remove("clicked");
-        }
-      } else {
-        this.selectFlag = true;
-        for (let i = 0; i < subRecommendFood.length; i++) {
-          subRecommendFood[i].classList.add("clicked");
-        }
-      }
+    readMore() {
+      const readMoreItem = document.querySelector("read-more");
+      console.log(readMoreItem);
     },
   },
   watch: {
@@ -183,74 +176,75 @@ export default {
 </script>
 
 <style>
+.sweet-modal {
+  max-width: 60vw;
+  overflow-x: hidden;
+}
 .modal-img {
-  width: 300px;
+  width: 11.7vw;
+  height: 23.1vh;
   border-radius: 10px;
-}
-.food-modal-bottom {
-  padding: 20px;
-  position: relative;
-  top: 30px;
-  width: 100%;
-}
-.food-modal-bottom .swiper-wrapper {
-  display: flex;
-  justify-content: center;
 }
 .food-modal-header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
-
+.food-set {
+  width: 31vw;
+  display: flex;
+  justify-content: space-around;
+  align-self: center;
+}
 .food-modal-text {
   font-weight: 700;
   align-self: center;
 }
 
 .food-modal-name {
-  font-size: 30px;
-  margin-bottom: 20px;
+  font-size: 1.8vw;
+  margin-bottom: 0.78vw;
 }
 .food-modal-kcal {
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 1.4vw;
+  margin-bottom: 0.78vw;
+}
+.food-modal-g {
+  font-size: 1.2vw;
 }
 
 #chart {
-  width: 500px;
+  width: 19.53vw;
+}
+.food-modal-bottom {
+  padding: 0.78vw;
+  position: relative;
+  top: 1.2vw;
+  width: 100%;
+}
+.food-modal-bottom .swiper-wrapper {
+  display: flex;
+  justify-content: center;
 }
 
 .food-modal-bottom-text {
-  font-size: 25px;
+  font-size: 1vw;
   font-weight: 700;
   text-align: left;
   position: relative;
-  left: 10px;
+  left: 2.1vw;
   margin-bottom: 10px;
 }
 .modal-bottom-img {
-  width: 200px;
-  height: 200px;
+  width: 7.8vw;
+  height: 15.42vh;
   margin: 10px;
   border-radius: 10px;
 }
 .modal-bottom-img:hover {
   cursor: pointer;
 }
-
-.pocket-btn {
-  width: 170px;
-  height: 50px;
-  font-size: 18px;
-  position: relative;
-  display: block;
-  border-radius: 7px;
-  left: 84%;
-  top: 20px;
-}
-.sweet-modal {
-  max-width: 60vw;
-  overflow-x: hidden;
+.sub-food-name {
+  font-size: 0.9vw;
 }
 
 .my-swiper {
@@ -258,8 +252,8 @@ export default {
 }
 .swiper-prev,
 .swiper-next {
-  width: 42px;
-  height: 42px;
+  width: 1.6vw;
+  height: 3.23vh;
   outline: none;
   border: 3px solid #ffffff;
   background-color: rgb(0, 0, 0);
@@ -277,7 +271,7 @@ export default {
 }
 
 .swiper-next {
-  right: 55px;
+  right: 2.1vw;
 }
 .swiper-prev:hover,
 .swiper-next:hover {
@@ -297,9 +291,53 @@ export default {
 .swiper-slide-active + .swiper-slide + .swiper-slide + .swiper-slide {
   opacity: 1;
 }
+.modal-bottom-img:hover {
+  filter: brightness(40%);
+}
+.read-more {
+  position: absolute;
+  top: 8vh;
+  margin-left: 4.3vw;
+  z-index: 1;
+  color: #fff;
+  font-size: 0.7vw;
+}
 
-/* 클래스 리스트 추가해서 수정 */
-.modal-bottom-img.clicked {
-  border: solid black 5px;
+@media screen and (max-width: 1440px) {
+  .food-modal-header {
+    display: block;
+  }
+  #chart {
+    position: relative;
+    left: 3.87vw;
+    width: 43vw;
+  }
+  .food-set {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .modal-img {
+    width: 20vw;
+    height: 20.1vh;
+    border-radius: 10px;
+  }
+  .food-modal-bottom-text {
+    font-size: 1.5vw;
+    font-weight: 700;
+    text-align: left;
+    position: relative;
+    left: 2.1vw;
+    margin-bottom: 10px;
+  }
+  .modal-bottom-img {
+    width: 10.8vw;
+    height: 15.42vh;
+    border-radius: 10px;
+  }
+  .sub-food-name {
+    font-size: 1.3vw;
+    margin-left: 1vw;
+  }
 }
 </style>

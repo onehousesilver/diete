@@ -1,9 +1,9 @@
 <template>
   <div id="rec-food-list">
-    <div v-if="userName" class="rec-text">
-      {{ userName }}님을 위한 음식 추천
+    <div class="search-text">
+      <span style="color: #219285">"{{ keyword }}"</span> 검색 결과
     </div>
-    <div class="food-wrap">
+    <div v-show="!isTrue" class="food-wrap">
       <div v-for="idx in foodList.length" :key="idx" class="food-list">
         <div
           v-for="(food, idx) in foodList"
@@ -24,30 +24,24 @@
           </div>
         </div>
       </div>
-      <FoodModal :test="myState" :foodData="foodList[`${tempidx}`]" />
-      <div class="mini-pocket animate__animated animate__fadeInRight">
-        <div>
-          <!-- 내 칼로리보다 10%이상 높을 경우빨간색 
-          낮을경우 파란색, +- 10%까지는 봐주기 -->
-          <!-- 전체 더한 kcal -->
-          <div class="mini-pocket-kcal">{{ sumFoodKcal }} kcal</div>
-          <button
-            class="bttn-unite bttn-md bttn-success done-btn"
-            @click="goToPocket"
-          >
-            선택완료
-          </button>
-        </div>
-      </div>
+      <SearchModal :test="myState" :foodData="foodList[`${tempidx}`]" />
+    </div>
+    <div v-show="isTrue">
+      <img
+        class="no-search-img"
+        src="../../assets/search/no_search_img.svg"
+        alt=""
+      />
+      <div class="no-search-text">검색 결과가 없습니다.</div>
     </div>
   </div>
 </template>
 
 <script>
-import FoodModal from "./FoodModal.vue";
+import SearchModal from "./searchModal.vue";
 export default {
-  components: { FoodModal },
-  name: "RecFoodList",
+  components: { SearchModal },
+  name: "SearchList",
   props: {
     search: String,
   },
@@ -63,6 +57,8 @@ export default {
       myState: false,
       tempidx: 0,
       userName: "한채은",
+      keyword: "소고기무국",
+      isTrue: false,
     };
   },
   methods: {
@@ -102,19 +98,20 @@ export default {
 <style scoped>
 img {
   display: block;
-  margin: 10px 20px;
+  margin: 0.4vw 0.8vw;
   border-radius: 10px;
+  width: 11vw;
+  height: 14vh;
 }
 #rec-food-list {
   width: 73vw;
   margin: 0 auto;
 }
-.rec-text {
+.search-text {
   font-size: 1vw;
   font-weight: 700;
   position: relative;
   bottom: 1.3vw;
-  left: 10px;
 }
 
 .food-wrap {
@@ -126,9 +123,9 @@ img {
 .food-wrap .food-list .food-list-el {
   background-color: #fff;
   border: solid 3px #25ab9b;
-  width: 20vw;
+  width: 24vw;
   height: 16vh;
-  margin: 10px;
+  margin: 0.4vw;
   border-radius: 10px;
   display: flex;
 }
@@ -140,12 +137,12 @@ img {
 }
 
 .food-list .food-list-el .food-description .food-name {
-  font-size: 30px;
+  font-size: 1.5vw;
   font-weight: 700;
 }
 
 .food-list .food-list-el .food-description .food-kcal {
-  font-size: 20px;
+  font-size: 1vw;
   display: block;
 }
 
@@ -153,28 +150,16 @@ img {
   cursor: pointer;
 }
 
-.mini-pocket {
-  width: 10vw;
-  border: solid 3px #25ab9b;
-  border-radius: 10px;
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
+.no-search-img {
+  width: 13.7vw;
+  height: 27vh;
+  margin: 0 auto;
 }
-.mini-pocket .mini-pocket-kcal {
-  font-size: 20px;
+
+.no-search-text {
   text-align: center;
-  display: block;
-  margin: 20px;
-}
-.mini-pocket .done-btn {
-  width: 7vw;
-  height: 3.5vh;
-  font-size: 0.8vw;
-  position: relative;
-  display: block;
-  border-radius: 10px;
-  margin: 0.8vw auto;
+  font-size: 1.6vw;
+  margin-top: 1.6vw;
+  font-weight: 700;
 }
 </style>
