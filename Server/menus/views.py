@@ -156,10 +156,47 @@ def food_detail(request,foodId):
     # return HttpResponse("You're at the food_detail.")
     return Response(serializer.data)
 
-# 추가메뉴조회
+
+
+# 추가메뉴조회 GET /submenu/{foodId}
 def sub_foods(request,foodId):
-    return HttpResponse("sub food")
+    # 1. foodId가 들어간 menuToFood "menuId"를 모두 찾기
+    menus = getMenus(foodId)
+    #### output :  menus = {menuId1 : [foodId1, foodId2], menuId2 : [foodId1, foodId2], . . .}
+
+    menus = {1 : [1, 2], 2 : [1, 4], 3: [4, 1]} # 더미 데이터
+    # 2. menus를 돌며 서브메뉴 딕셔너리 생성
+    sub_menus = getSubMenus(menus)
+    #### output :  sub_menus = {foodId1 : 3, foodId2 : 5, foodId3 : 2, . . .}
+
+    sub_menus = {1 : 3, 2 : 1, 4 : 2} 
+	# 3. sub_menus의 키를 값에 따라 정렬
+    # sub_menus_list = sorted sub_menus [:10]
+
+    # value에 따라 내림차순 정렬
+    sub_menus_list_sort = sorted(sub_menus.item(), key = lambda item: item[1], reverse=True)
+    # 정렬된 dictionarydml key값 추출
+    sub_menus_list = list(sub_menus_list_sort.keys()) 
     
+    sub_menus_list = [1, 4, 2] 
+    return Response(sub_menus_list[:10], status=status.HTTP_200_OK)
+
+def getMenus(foodId):
+    print("getMenus start! :", foodId)
+    mtf = MenuToFood.objects.filter(foodId=foodId)
+    mtfserializer = MenuToFoodSerializer(mtf, read_only=True, many=True)
+    
+    for mtf in mtfserializer.data:
+        print(mtf)
+    return {}
+
+def getSubMenus(menus):
+    #### input :  menus = {menuId1 : [foodId1, foodId2], menuId2 : [foodId1, foodId2], . . .}
+    pass
+
+
+
+
 # 장바구니 최종 결정
 @api_view(['POST'])
 @permission_classes([AllowAny])
