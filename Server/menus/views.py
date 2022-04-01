@@ -18,30 +18,24 @@ from datetime import datetime
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def recommend_foods(request, username):
-
+    # 유저 정보
     user=get_object_or_404(get_user_model(), username=username)
     # 1. 유저의 이전 식단기록(음식기록) 가져오기 [나린]
     menus = getUserMenus(user)
-
-    # 1-2. 유저의 선호 식단 받아오기 (jwt로 받기 또는 db에서 찾아오기)
-    # prefer_string = getPreferString(username)
     
     # 2. 유저의 선호 태그들을 찾기 [기호]
     prefer_user = getUserPrefer(menus)
 
-    # 3. 모든 DB의 음식들에 대하여 점수 계산 [수용, 가은]
-
     # prefer_user = {"meat": 1.6,"vegetable": 0.3, "seafood": 0.7 , "spicy": 1.6, "oily": 1.5}
     # prefer_string = "채소" # 더미 데이터
-
+    # 3. 모든 DB의 음식들에 대하여 점수 계산 [수용, 가은]
     food_list = getFoodRecomm(prefer_user, user.preference)
-    
+
     return Response(food_list, status=status.HTTP_200_OK)
 
 def getUserMenus(user):
     result = {}
-    
-    # user=get_object_or_404(get_user_model(), username=username)
+
     user_menus = Menu.objects.filter(userId=user.id)
     menuserializer = MenuSerializer(user_menus, read_only=True, many=True)
 
@@ -84,7 +78,12 @@ def getUserPrefer(menus):
             # 총 메뉴의 수 cnt (나중에 평균치 계산할 때)
             cnt += 1
             size -= 1
-   
+            print("11111111111111111111111111111111111111111111111111")
+            print(menus[menu])
+            print("222222222222222222222222222222222222222222222222222")
+            print(menus[menu][size])
+            print("333333333333333333333333333333333333333333333")
+            print(menus[menu][size].get("foodName"))
             # 각 메뉴마다 수치 더해주기
             prefer_user["spicy"] += menus[menu][size].get("spicy")
             prefer_user["meat"] += menus[menu][size].get("meat")
@@ -143,7 +142,7 @@ def getFoodRecomm(prefer_user, prefer_string):
             return Response({'error': 'FoodRecomm 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
     
     food_list.sort(key=lambda x: float(x["score"]))
-    print(food_list)
+    # print(food_list)
     return food_list
 
 # 음식 상세 조회
