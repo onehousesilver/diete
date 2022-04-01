@@ -72,7 +72,11 @@ export default {
           this.$router.push({ name: "home" });
         })
         .catch(() => {
-          alert("아이디/비밀번호를 확인해주세요");
+          this.$swal.fire({
+            icon: "error",
+            title: "로그인 할 수 없어요!",
+            text: "아이디 또는 비밀번호를 확인해주세요.",
+          });
           // console.log(err)
         })
         .catch((err) => {

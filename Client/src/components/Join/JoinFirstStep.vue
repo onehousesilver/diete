@@ -163,7 +163,8 @@ export default {
     // 다음단계로 이동
     nextStep() {
       // 모든 입력사항 체크 완료
-      if (this.duplicateCheckFlag===1 && this.passwordValidateFlag && this.passwordCheckFlag && !this.userName && !this.userBirth){
+      if (this.duplicateCheckFlag===1 && this.passwordValidateFlag && this.passwordCheckFlag && !this.userName && !this.userBirth)
+      {
         // 부모 컴포넌트에 emit
         this.$emit('nextStep', this.formData);
       }

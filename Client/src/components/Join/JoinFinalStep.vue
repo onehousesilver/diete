@@ -1,8 +1,8 @@
 <template>
   <div class="signup-container">
-    <div class="top">
+    <!-- <div class="top">
       <div class="text">어떤 식단을 선호하세요?</div>
-    </div>
+    </div> -->
 
     <div class="card-choice">
       <!-- 채소위주 식단 -->
@@ -48,7 +48,11 @@
           <span class="card-sub-text">일반 식단</span>을 선호하는 편입니다.
           <br />
         </div>
-        <img class="general-img" src="../../assets/join/general_img.png" alt="" />
+        <img
+          class="general-img"
+          src="../../assets/join/general_img.png"
+          alt=""
+        />
       </section>
     </div>
 
@@ -71,7 +75,21 @@ export default {
   },
   methods: {
     completedForm() {
-      this.$emit("completedForm", this.likeMenu);
+      if (this.clickCard != null) {
+        this.$emit("completedForm", this.likeMenu);
+        // alert을 넣을지 고민중
+        // this.$swal.fire({
+        //   icon: "success",
+        //   title: "회원가입이 완료되었습니다.",
+        //   text: "로그인 페이지로 이동합니다.",
+        // });
+      } else {
+        this.$swal.fire({
+          icon: "error",
+          title: "식단을 선택해주세요!",
+          text: "식단선택은 필수입니다.",
+        });
+      }
     },
     // 선택한 상태에서 다른 거 눌렀을 때 해제
     clickEvent(e) {
@@ -105,13 +123,13 @@ img {
   text-align: center;
   top: 3vh;
   position: relative;
-  height: 65vh;
+  height: 50vh;
 }
 .card-choice #vegetable,
 .card-choice #meat,
 .card-choice #general {
   width: 26vw;
-  height: 63vh;
+  height: 47vh;
   border: 3px solid #25ab9b;
   margin: 10px;
   border-radius: 20px;
@@ -153,11 +171,14 @@ img {
   width: 20vw;
   height: 6vh;
   font-size: 1.3vw;
-  top: 4.17vw;
+  top: 4vw;
 }
 .meat-img {
   margin: 0 auto;
-  width: 21vw;
+  width: 10vw;
+  display: block;
+  top: 3.8vw;
+  position: relative;
 }
 .carrot-img {
   top: 2.6vw;
@@ -167,7 +188,7 @@ img {
 }
 .general-img {
   margin: 0 auto;
-  top: 4.1vw;
+  top: 3.2vw;
   position: relative;
   width: 13.02vw;
 }
