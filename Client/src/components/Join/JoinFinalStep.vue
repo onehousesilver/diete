@@ -83,7 +83,6 @@ export default {
     completedForm() {
       if (this.clickCard != null) {
         this.$emit("completedForm", this.likeMenu);
-        // alert을 넣을지 고민중
         this.$swal.fire({
           icon: "success",
           title: "회원가입이 완료되었습니다.",
@@ -115,66 +114,6 @@ export default {
 };
 </script>
 <style scoped>
-@media screen and (max-width: 1024px) {
-  .signup-container {
-    position: relative;
-    top: 3vw;
-  }
-  .card-choice[data-v-7a57f87a] {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-  }
-  .card-choice #vegetable[data-v-7a57f87a],
-  .card-choice #meat[data-v-7a57f87a],
-  .card-choice #general[data-v-7a57f87a] {
-    border: 3px solid #25ab9b;
-    margin: 10px;
-    border-radius: 20px;
-    width: 50vw;
-    height: 16vw;
-    display: flex;
-    padding: 20px;
-    top: 0;
-  }
-  .text-set[data-v-7a57f87a] {
-    display: flex;
-    flex-direction: column;
-    align-self: center;
-  }
-  .card-choice .main-text[data-v-7a57f87a] {
-    top: 0;
-  }
-  .card-choice .sub-text[data-v-7a57f87a] {
-    top: 0;
-  }
-  img[data-v-7a57f87a] {
-    position: inherit;
-  }
-  .general-img[data-v-7a57f87a] {
-    width: 15.02vw;
-    height: 12vw;
-    margin-right: 2vw;
-  }
-  .meat-img[data-v-7a57f87a] {
-    width: 12vw;
-    height: 11vw;
-  }
-  .carrot-img[data-v-7a57f87a] {
-    height: 11vw;
-  }
-  .next-btn[data-v-7a57f87a] {
-    display: block;
-    margin: 0 auto;
-    border-radius: 5px;
-    width: 25vw;
-    height: 4vw;
-    font-size: 2vw;
-  }
-}
-
 img {
   display: block;
 }
@@ -264,4 +203,63 @@ img {
 .animate__animated.animate__pulse {
   animation-iteration-count: infinite;
 }
+/* @media screen and (max-width: 1024px) {
+  .signup-container {
+    position: relative;
+    top: 3vw;
+  }
+  .card-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+  .card-choice #vegetable,
+  .card-choice #meat,
+  .card-choice #general {
+    border: 3px solid #25ab9b;
+    margin: 10px;
+    border-radius: 20px;
+    width: 50vw;
+    height: 16vw;
+    display: flex;
+    padding: 20px;
+    top: 0;
+  }
+  .text-set {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+  }
+  .card-choice .main-text {
+    top: 0;
+  }
+  .card-choice .sub-text {
+    top: 0;
+  }
+  img {
+    position: inherit;
+  }
+  .general-img {
+    width: 15.02vw;
+    height: 12vw;
+    margin-right: 2vw;
+  }
+  .meat-img {
+    width: 12vw;
+    height: 11vw;
+  }
+  .carrot-img {
+    height: 11vw;
+  }
+  .next-btn {
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+    width: 25vw;
+    height: 4vw;
+    font-size: 2vw;
+  }
+} */
 </style>
