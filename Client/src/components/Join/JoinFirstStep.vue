@@ -179,23 +179,24 @@ export default {
     // 다음단계로 이동
     nextStep() {
       // 모든 입력사항 체크 완료
-      if (
-        this.duplicateCheckFlag === 1 &&
-        this.passwordValidateFlag &&
-        this.passwordCheckFlag &&
-        !this.userName &&
-        !this.userBirth
-      ) {
+      // if (
+      //   this.duplicateCheckFlag === 1 &&
+      //   this.passwordValidateFlag &&
+      //   this.passwordCheckFlag &&
+      //   !this.userName &&
+      //   !this.userBirth
+      // ) 
+      {
         // 부모 컴포넌트에 emit
         this.$emit("nextStep", this.formData);
       }
       // 미입력된 폼이 있을 때 에러메시지 v-show
-      else {
-        this.idInputFlag = true;
-        this.pwInputFlag = true;
-        this.nameInputFlag = true;
-        this.birthInputFlag = true;
-      }
+      // else {
+      //   this.idInputFlag = true;
+      //   this.pwInputFlag = true;
+      //   this.nameInputFlag = true;
+      //   this.birthInputFlag = true;
+      // }
     },
 
     // ID 중복체크

@@ -84,11 +84,11 @@ export default {
       if (this.clickCard != null) {
         this.$emit("completedForm", this.likeMenu);
         // alert을 넣을지 고민중
-        // this.$swal.fire({
-        //   icon: "success",
-        //   title: "회원가입이 완료되었습니다.",
-        //   text: "로그인 페이지로 이동합니다.",
-        // });
+        this.$swal.fire({
+          icon: "success",
+          title: "회원가입이 완료되었습니다.",
+          text: "로그인 페이지로 이동합니다.",
+        });
       } else {
         this.$swal.fire({
           icon: "error",
@@ -115,7 +115,6 @@ export default {
 };
 </script>
 <style scoped>
-
 @media screen and (max-width: 1024px) {
   .signup-container {
     position: relative;
