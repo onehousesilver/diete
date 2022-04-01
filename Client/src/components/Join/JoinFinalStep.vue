@@ -1,54 +1,64 @@
 <template>
   <div class="signup-container">
-    <div class="top">
+    <!-- <div class="top">
       <div class="text">어떤 식단을 선호하세요?</div>
-    </div>
+    </div> -->
 
     <div class="card-choice">
       <!-- 채소위주 식단 -->
       <section id="vegetable" class="hvr-glow" @click="clickEvent">
-        <div class="main-text">
-          <span class="card-main-text" style="color: #25ab2e">채소위주</span>의
-          식단을 선호합니다.
-        </div>
-        <div class="sub-text">
-          이런분들에게 추천해요! <br />
-          고기를 자주 먹지 않고, <br />
-          <span class="card-sub-text">야채 위주의 식단</span>을 선호하는
-          편입니다.<br />
+        <div class="text-set">
+          <div class="main-text">
+            <span class="card-main-text" style="color: #25ab2e">채소위주</span
+            >의 식단을 선호합니다.
+          </div>
+          <div class="sub-text">
+            이런분들에게 추천해요! <br />
+            고기를 자주 먹지 않고, <br />
+            <span class="card-sub-text">야채 위주의 식단</span>을 선호하는
+            편입니다.<br />
+          </div>
         </div>
         <img class="carrot-img" src="../../assets/join/veg_img.jpg" alt="" />
       </section>
 
       <!-- 고기위주 식단 -->
       <section id="meat" class="hvr-glow" @click="clickEvent">
-        <div class="main-text">
-          <span class="card-main-text" style="color: #7f4b3a">고기위주</span>의
-          식단을 선호합니다.
-        </div>
-        <div class="sub-text">
-          이런분들에게 추천해요!<br />
-          고기를 자주 먹고, <br />
-          <span class="card-sub-text">고기 위주의 식단</span>을 선호하는
-          편입니다.
-          <br />
+        <div class="text-set">
+          <div class="main-text">
+            <span class="card-main-text" style="color: #7f4b3a">고기위주</span
+            >의 식단을 선호합니다.
+          </div>
+          <div class="sub-text">
+            이런분들에게 추천해요!<br />
+            고기를 자주 먹고, <br />
+            <span class="card-sub-text">고기 위주의 식단</span>을 선호하는
+            편입니다.
+            <br />
+          </div>
         </div>
         <img class="meat-img" src="../../assets/join/meat_img.jpg" alt="" />
       </section>
 
       <!-- 일반식단 -->
       <section id="general" class="hvr-glow" @click="clickEvent">
-        <div class="main-text">
-          <span class="card-main-text" style="color: #4978a3">일반식단</span>을
-          선호합니다.
+        <div class="text-set">
+          <div class="main-text">
+            <span class="card-main-text" style="color: #4978a3">일반식단</span
+            >을 선호합니다.
+          </div>
+          <div class="sub-text">
+            이런분들에게 추천해요!<br />
+            고기, 야채 상관없이 <br />
+            <span class="card-sub-text">일반 식단</span>을 선호하는 편입니다.
+            <br />
+          </div>
         </div>
-        <div class="sub-text">
-          이런분들에게 추천해요!<br />
-          고기, 야채 상관없이 <br />
-          <span class="card-sub-text">일반 식단</span>을 선호하는 편입니다.
-          <br />
-        </div>
-        <img class="general-img" src="../../assets/join/general_img.png" alt="" />
+        <img
+          class="general-img"
+          src="../../assets/join/general_img.png"
+          alt=""
+        />
       </section>
     </div>
 
@@ -71,7 +81,20 @@ export default {
   },
   methods: {
     completedForm() {
-      this.$emit("completedForm", this.likeMenu);
+      if (this.clickCard != null) {
+        this.$emit("completedForm", this.likeMenu);
+        this.$swal.fire({
+          icon: "success",
+          title: "회원가입이 완료되었습니다.",
+          text: "로그인 페이지로 이동합니다.",
+        });
+      } else {
+        this.$swal.fire({
+          icon: "error",
+          title: "식단을 선택해주세요!",
+          text: "식단선택은 필수입니다.",
+        });
+      }
     },
     // 선택한 상태에서 다른 거 눌렀을 때 해제
     clickEvent(e) {
@@ -103,15 +126,15 @@ img {
   display: flex;
   justify-content: center;
   text-align: center;
-  top: 3vh;
+  top: 2vw;
   position: relative;
-  height: 65vh;
+  height: 100%;
 }
 .card-choice #vegetable,
 .card-choice #meat,
 .card-choice #general {
   width: 26vw;
-  height: 63vh;
+  height: 26vw;
   border: 3px solid #25ab9b;
   margin: 10px;
   border-radius: 20px;
@@ -151,27 +174,92 @@ img {
   margin: 0 auto;
   border-radius: 5px;
   width: 20vw;
-  height: 6vh;
+  height: 3vw;
   font-size: 1.3vw;
-  top: 4.17vw;
+  top: 3vw;
 }
 .meat-img {
   margin: 0 auto;
-  width: 21vw;
+  width: 8vw;
+  display: block;
+  top: 3.8vw;
+  position: relative;
+  height: 8vw;
 }
 .carrot-img {
-  top: 2.6vw;
+  top: 3vw;
   position: relative;
   margin: 0 auto;
-  width: 16.7vw;
+  width: 13.7vw;
+  height: 9vw;
 }
 .general-img {
   margin: 0 auto;
-  top: 4.1vw;
+  top: 3.2vw;
   position: relative;
-  width: 13.02vw;
+  width: 10.02vw;
+  height: 8vw;
 }
 .animate__animated.animate__pulse {
   animation-iteration-count: infinite;
 }
+/* @media screen and (max-width: 1024px) {
+  .signup-container {
+    position: relative;
+    top: 3vw;
+  }
+  .card-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+  .card-choice #vegetable,
+  .card-choice #meat,
+  .card-choice #general {
+    border: 3px solid #25ab9b;
+    margin: 10px;
+    border-radius: 20px;
+    width: 50vw;
+    height: 16vw;
+    display: flex;
+    padding: 20px;
+    top: 0;
+  }
+  .text-set {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+  }
+  .card-choice .main-text {
+    top: 0;
+  }
+  .card-choice .sub-text {
+    top: 0;
+  }
+  img {
+    position: inherit;
+  }
+  .general-img {
+    width: 15.02vw;
+    height: 12vw;
+    margin-right: 2vw;
+  }
+  .meat-img {
+    width: 12vw;
+    height: 11vw;
+  }
+  .carrot-img {
+    height: 11vw;
+  }
+  .next-btn {
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+    width: 25vw;
+    height: 4vw;
+    font-size: 2vw;
+  }
+} */
 </style>

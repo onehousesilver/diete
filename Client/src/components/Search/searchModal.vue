@@ -302,7 +302,6 @@ export default {
   color: #fff;
   font-size: 0.7vw;
 }
-
 @media screen and (max-width: 1440px) {
   .food-modal-header {
     display: block;
