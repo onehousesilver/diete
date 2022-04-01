@@ -75,7 +75,28 @@
         </div>
       </div>
       <div class="activity-btn">
-        <span class="activity-title">활동량</span>
+        <div>
+          <span class="activity-title"
+            >활동량
+            <span class="material-icons help" @click="showImg"
+              >help_outline</span
+            ></span
+          >
+        </div>
+        <!-- 활동량 설명 이미지 -->
+        <div v-show="showImgflag">
+          <div class="activitiy-description">
+            <span>적음</span> <br />
+            <p>
+              앉아서 주로 생활하거나, 매일 가벼운 움직임만 하며 <br />
+              활동량이 적은 경우
+            </p>
+            <span>보통</span> <br />
+            <p>규칙적인 생활로 보통의 활동량을 가진 경우</p>
+            <span>많음</span> <br />
+            <p>육체노동 등 평소 신체 활동량이 많은 경우</p>
+          </div>
+        </div>
         <input
           type="radio"
           id="activity-s"
@@ -134,6 +155,7 @@ export default {
         activity: null,
         gender: null,
       },
+      showImgflag: false,
     };
   },
   methods: {
@@ -154,6 +176,9 @@ export default {
           text: "모든 항목은 필수입니다.",
         });
       }
+    },
+    showImg() {
+      this.showImgflag = !this.showImgflag;
     },
   },
 };
@@ -193,6 +218,7 @@ export default {
   width: calc(40vw - 2.2rem);
   left: 50%;
   transform: translatex(-50%);
+  z-index: -1;
 }
 input[type="radio"] {
   display: none;
@@ -267,6 +293,35 @@ input[type="radio"]:checked + label {
   top: -1.875rem;
   font-size: 1.4rem;
   color: #25ab9b;
+}
+.material-icons.help {
+  color: #25ab9b;
+  position: absolute;
+  top: 0.13vw;
+}
+.material-icons.help:hover {
+  cursor: pointer;
+}
+.activitiy-description {
+  position: absolute;
+  text-align: left;
+  width: 19vw;
+  background-color: #fff;
+  top: 0.5vw;
+  border: 2px solid #25ab9b;
+  border-radius: 10px;
+  padding: 0.7vw;
+  left: 3vw;
+  z-index: 1;
+}
+.activitiy-description span {
+  font-size: 1vw;
+  font-weight: 700;
+  color: #25ab9b;
+}
+
+.activitiy-description p {
+  font-size: 0.8vw;
 }
 .activity-btn label,
 .activity-btn label {

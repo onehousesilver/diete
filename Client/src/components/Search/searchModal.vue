@@ -176,6 +176,43 @@ export default {
 </script>
 
 <style>
+@media screen and (max-width: 1440px) {
+  .food-modal-header {
+    display: block;
+  }
+  #chart {
+    position: relative;
+    left: 3.87vw;
+    width: 43vw;
+  }
+  .food-set {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .modal-img {
+    width: 20vw;
+    height: 20.1vh;
+    border-radius: 10px;
+  }
+  .food-modal-bottom-text {
+    font-size: 1.5vw;
+    font-weight: 700;
+    text-align: left;
+    position: relative;
+    left: 2.1vw;
+    margin-bottom: 10px;
+  }
+  .modal-bottom-img {
+    width: 10.8vw;
+    height: 15.42vh;
+    border-radius: 10px;
+  }
+  .sub-food-name {
+    font-size: 1.3vw;
+    margin-left: 1vw;
+  }
+}
 .sweet-modal {
   max-width: 60vw;
   overflow-x: hidden;
@@ -301,43 +338,5 @@ export default {
   z-index: 1;
   color: #fff;
   font-size: 0.7vw;
-}
-
-@media screen and (max-width: 1440px) {
-  .food-modal-header {
-    display: block;
-  }
-  #chart {
-    position: relative;
-    left: 3.87vw;
-    width: 43vw;
-  }
-  .food-set {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-  }
-  .modal-img {
-    width: 20vw;
-    height: 20.1vh;
-    border-radius: 10px;
-  }
-  .food-modal-bottom-text {
-    font-size: 1.5vw;
-    font-weight: 700;
-    text-align: left;
-    position: relative;
-    left: 2.1vw;
-    margin-bottom: 10px;
-  }
-  .modal-bottom-img {
-    width: 10.8vw;
-    height: 15.42vh;
-    border-radius: 10px;
-  }
-  .sub-food-name {
-    font-size: 1.3vw;
-    margin-left: 1vw;
-  }
 }
 </style>
