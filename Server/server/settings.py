@@ -28,7 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '52.78.117.134',
-	'j6b104.p.ssafy.io'
+	'j6b104.p.ssafy.io',
+    '127.0.0.1'
 ]
 
 

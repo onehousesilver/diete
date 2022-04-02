@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from datetime import datetime, timedelta
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
@@ -12,6 +12,8 @@ from .serializers import WeekMenuSerializer
 
 from menus.models import Menu, MenuToFood, Food
 from menus.serializers import MenuSerializer, MenuToFoodSerializer
+
+import datetime
 # import json
 # Create your views here.
 
@@ -78,3 +80,49 @@ def weekly_nutrients(request,userId, week):
 def data_analysis(request, userId):
     return HttpResponse("data_analysis")
 
+
+# 식단 분석 - 일별 총 칼로리
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def oneday_kcal(request, username):
+    # 유저 검색
+    user=get_object_or_404(get_user_model(), username=username)
+    # 유저가 입력한 menu 검색
+    user_oneday = Menu.objects.filter(userId=user.id)
+
+    # day_id_dict = {"2000-01-01" : [menuId1, menuId2], ...}
+    day_id_dict = {}
+    for user_menu in user_oneday:
+        # dummydata 제외
+        if user_menu.dateTime == datetime.date(2000,1,1):
+            pass
+        else:
+            if user_menu.dateTime in day_id_dict:
+                day_id_dict[user_menu.dateTime].append(user_menu.id)
+            else:
+                day_id_dict[user_menu.dateTime] = [user_menu.id]
+    # print(day_id_dict)
+
+    # 반환값 : daily_kcal = [ {"dateTime": "2000-01-01", "kcal": 5340 }, {}]
+    daily_kcal = []
+    for key in day_id_dict.keys():
+        total_kcal = total_sugar = total_carbo = total_protein = 0
+        total_fat = total_cholesterol = total_fatty = 0
+
+        for menuId in day_id_dict[key]:
+            mtfs = MenuToFood.objects.filter(menuId =menuId)
+            for mtf in mtfs:
+                total_kcal += mtf.foodId.foodKcal * mtf.amount
+                total_sugar += mtf.foodId.sugar * mtf.amount
+                total_carbo += mtf.foodId.carbohydrate * mtf.amount
+                total_protein += mtf.foodId.protein * mtf.amount
+                total_fat += mtf.foodId.fat * mtf.amount
+                total_cholesterol += mtf.foodId.cholesterol * mtf.amount
+                total_fatty += mtf.foodId.fattyAcid * mtf.amount
+
+        # print(total_kcal)
+        daily_kcal.append({"dateTime": key, "total_kcal": total_kcal, "total_sugar" : total_sugar, "total_carbo" : total_carbo, 
+        "total_protein" : total_protein, "total_fat": total_fat, "total_cholesterol": total_cholesterol, "total_fatty": total_fatty })
+    # print(daily_kcal)
+    
+    return JsonResponse(daily_kcal, safe=False)
