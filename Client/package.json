@@ -21,6 +21,7 @@
     "sass-loader": "^12.6.0",
     "scrollmagic": "^2.0.8",
     "sweet-modal-vue": "^2.0.0",
+    "swiper": "^5.3.7",
     "vue": "^2.6.14",
     "vue-apexcharts": "^1.6.2",
     "vue-awesome-swiper": "^4.1.1",
