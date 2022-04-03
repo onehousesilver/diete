@@ -6,7 +6,7 @@
       class="elevation-1 "
       :headers="headers"
 
-      :items="myMenu"
+      :items="foodDataList"
 
       hide-default-footer
       show-select
@@ -57,19 +57,23 @@
     </template>
     </v-data-table>
     <div class="text-center pt-2">
-      <button class="bttn-success bttn-unite mr-5" @click="test">선택음식 식단에 저장</button>
-      <button class="bttn-success bttn-unite mr-5" >음식 추가하러가기</button>
-      <button class="bttn-success bttn-unite">식단 저장하기</button>
+      <button class="bttn-success bttn-unite mr-5" @click="saveMyMenus">선택음식 식단에 저장</button>
+      <button class="bttn-success bttn-unite" >음식 추가하러가기</button>
     </div>
   </v-app>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import axios from 'axios';
 export default {
-  name: 'FoodList',
+  name: 'BasketFoodList',
   data () {
     return {
+      today: new Date(),
+      sendData: {
+        menus:[],
+      },
       dialogDelete: false,
       selected: [],
       expanded: [],
@@ -83,7 +87,7 @@ export default {
       },
       headers: [
         { text: '음식이름',  align:'end', value: 'foodName', sortable: true, },
-        { text: '1회 제공량(g)',  align:'end', value: 'foodservingSize', sortable: false, },
+        { text: '1회 제공량(g)',  align:'end', value: 'servingSize', sortable: false, },
         { text: '1회 당 열량(kcal)', align:'end',  value: 'foodKcal' },
         { text: '당류(g)', align:'end',  value: 'sugar' },
         { text: '탄수화물(g)', align:'end',  value: 'carbohydrate' },
@@ -93,56 +97,6 @@ export default {
         { text: '총 포화지방산(g)', align:'end',  value: 'fattyAcid' },
         { text: '장바구니에서 삭제', align: 'end', value: 'actions', sortable: false },
       ],
-      myMenu: [
-      {
-        dateTime: '',
-        mealTime: 1,
-        amount: 1,
-        foodName: '흰 쌀밥',
-        foodCategory: '탄수화물류',
-        foodDetailCategory: '밥',
-        foodservingSize: 200,
-        foodKcal: 100,
-        sugar: 3.5,
-        carbohydrate: 2,
-        protein: 5,
-        fat: 6,
-        cholesterol: 2,
-        fattyAcid: 1,
-      },
-      {
-        dateTime: '',
-        mealTime: 1,
-        amount: 1,
-        foodName: '배추김치',
-        foodCategory: '김치류',
-        foodDetailCategory: '배추김치류',
-        foodservingSize: 300,
-        foodKcal: 30,
-        sugar: 1,
-        carbohydrate: 2,
-        protein: 3,
-        fat: 4,
-        cholesterol: 5,
-        fattyAcid: 6,
-      },
-      {
-        dateTime: '',
-        mealTime: 1,
-        amount: 1,
-        foodName: '소고기무국',
-        foodCategory: '국류',
-        foodDetailCategory: '소고기무국류',
-        foodservingSize: 200,
-        foodKcal: 230,
-        sugar: 2,
-        carbohydrate: 3.4,
-        protein: 5.2,
-        fat: 6.2,
-        cholesterol: 1.4,
-        fattyAcid: 3.5,
-      },
-    ],
     }
   },
   methods: {
@@ -155,11 +109,33 @@ export default {
       else if (calories > 300) return 'orange'
       else return 'green'
     },
-    test() {
-      console.log(this.myMenu === this.selected)
-      // this.myMenu.forEach(food => {
-      //   console.log(food)
-      // })
+    // DB에 식단 저장
+    saveMyMenus() {
+      // console.log(this.myMenu === this.selected)
+      this.selected.forEach(food => {
+        this.sendData.menus.push(
+          { foodId: food.id, amount: 1 }
+        )
+      })
+      // this.sendData.menus = JSON.stringify(this.sendData.menus)
+      this.sendData.dateTime = `${this.today.getFullYear()}-0${this.today.getMonth()+1}-${this.today.getDate()}`;
+      this.sendData.mealTime = this.$store.state.mealTime;
+      this.sendData.username = this.userInfo.username
+      console.log(this.sendData)
+      axios({
+        method: 'post',
+        url: `${process.env.VUE_APP_API_URL}/menu/basket/`,
+        data: this.sendData,
+        headers: {
+          Authorization : `JWT ${this.userToken}`
+        }
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     // 삭제버튼 클릭시
     deleteItem (item) {
@@ -198,21 +174,19 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.myMenu[this.editedIndex], this.editedItem)
       } else {
-        this.myMenu.push(this.editedItem)
+        // this.myMenu.push(this.editedItem)
       }
       this.close()
     },
   },
   mounted(){
-    this.myMenuUpdate()
   },
   computed: {
     // store에 저장된 장바구니정보
-    foodDataList() { return this.$store.getters.getMyMenu },
+    foodDataList() { return this.$store.state.menus },
+    userInfo() { return this.$store.getters.getUserInfo },
+    userToken() { return this.$store.getters.getUserToken },
   },
-  watch: {
-    selected() { console.log(this.selected) }
-  }
 }
 </script>
 
