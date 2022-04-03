@@ -37,18 +37,20 @@ export default new Vuex.Store({
   },
   mutations: {
     // 장바구니 갱신
-    SET_MENU: function(state, menus) {
+    SET_MENU: function(state, menu) {
       if (!state.menus[0]){
-        state.menus[0] = menus
+        state.menus[0] = menu
       }
       else {
-        state.menus.push(menus)
+        state.menus.push(menu)
       }
-      console.log(state.menus)
     },
     // 장바구니 끼니 선택
     SET_BASKET_MEAL: function(state, mealTime){
       state.myBasket.mealTime = mealTime
+    },
+    SET_MENUS_UPDATE: function(state, menus){
+      state.menus = menus
     },
     // 로그인
     SET_LOGIN: function(state, token) {
@@ -56,6 +58,7 @@ export default new Vuex.Store({
       state.userToken = token;
       state.userInfo = decoded_token;
       state.isLogin = true;
+      // 장바구니 초기화
       state.menus = [];
       state.mealTime = 0;
       localStorage.setItem('userToken', token);
@@ -78,9 +81,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    myMenuUpdate: function({ commit }, menus) {
+    myMenuUpdate: function({ commit }, menu) {
       // 전달받은 장바구니 메뉴 목록을 commit
-      commit("SET_MENU", menus);
+      commit("SET_MENU", menu);
     },
     getUserToken: function({ commit }, token){
       // 전달받은 토큰을 commit
@@ -94,6 +97,10 @@ export default new Vuex.Store({
     },
     mealTimeUpdate: function({ commit }, mealTime) {
       commit("SET_BASKET_MEAL", mealTime)
+    },
+    menusUpdate: function({ commit }, menus){
+      // 변경된 메뉴 전체업데이트
+      commit("SET_MENUS_UPDATE", menus)
     }
   },
   modules: {
