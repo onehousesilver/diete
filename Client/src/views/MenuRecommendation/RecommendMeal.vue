@@ -5,7 +5,8 @@
       SubText="맛있는 음식을 추천해드립니다."
     />
     <SearchBar />
-    <button @click="test">asfddasfasdf</button>
+    <RecFoodList/>
+    <!-- <button @click="test">asfddasfasdf</button> -->
     <!-- <CategoryBar/>
     <SearchList /> -->
   </div>
@@ -15,6 +16,7 @@
 import BannerBar from "@/components/Main/BannerBar.vue";
 import axios from 'axios';
 import SearchBar from "@/components/Search/SearchBar.vue";
+import RecFoodList from '@/components/Recommend/RecFoodList.vue'
 // import SearchList from "@/components/Search/SearchList.vue";
 // import CategoryBar from "@/components/Search/CategoryBar.vue";
 export default {
@@ -22,6 +24,7 @@ export default {
   components: {
     BannerBar,
     SearchBar,
+    RecFoodList
     // SearchList,
     // CategoryBar,
   },
@@ -31,10 +34,25 @@ export default {
     }
   },
   methods: {
-    test(){
+    getRecommendedMeal(){
       axios({
         method: "get",
         url: `${process.env.VUE_APP_API_URL}/menu/recommendation/${this.userInfo.username}/`,
+        headers: {
+          Authorization: `JWT ${this.token}`
+        }
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    test() {
+      axios({
+        method: "get",
+        url: `${process.env.VUE_APP_API_URL}/record/menu/${this.userInfo.username}/20220328/`,
         headers: {
           Authorization: `JWT ${this.token}`
         }

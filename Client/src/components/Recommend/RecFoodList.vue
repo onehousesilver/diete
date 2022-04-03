@@ -1,7 +1,6 @@
 <template>
   <div id="rec-food-list">
     <div v-if="userName" class="rec-text">
-      {{ userName }}님을 위한 음식 추천
     </div>
     <div class="food-wrap">
       <div v-for="idx in foodList.length" :key="idx" class="food-list">

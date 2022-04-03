@@ -50,11 +50,11 @@
         </v-chip>
       </template>
       <!-- 확장(이미지) 등등 -->
-      <template v-slot:expanded-item="{ headers, item }">
-      <td :colspan="headers.length">
-        {{ item.foodName }}사진
-      </td>
-    </template>
+      <!-- <template v-slot:expanded-item="{ headers, item }">
+        <td :colspan="headers.length">
+          {{ item.foodName }}사진
+        </td>
+      </template> -->
     </v-data-table>
     <div class="text-center pt-2">
       <button class="bttn-success bttn-unite mr-5" @click="saveMyMenus">선택음식 식단에 저장</button>
@@ -101,7 +101,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'myMenuUpdate'
+      'myMenuUpdate',
+      'menusUpdate'
     ]),
     // 칼로리 위험도를 제공하기 위해 1회 당 500kcal이 넘는다면 위험, 300kcal이 넘는다면 경고, 300kcal 이하는 적합
     getColor (calories) {
@@ -111,17 +112,15 @@ export default {
     },
     // DB에 식단 저장
     saveMyMenus() {
-      // console.log(this.myMenu === this.selected)
       this.selected.forEach(food => {
         this.sendData.menus.push(
           { foodId: food.id, amount: 1 }
         )
       })
-      // this.sendData.menus = JSON.stringify(this.sendData.menus)
       this.sendData.dateTime = `${this.today.getFullYear()}-0${this.today.getMonth()+1}-${this.today.getDate()}`;
       this.sendData.mealTime = this.$store.state.mealTime;
       this.sendData.username = this.userInfo.username
-      console.log(this.sendData)
+      // console.log(this.sendData)
       axios({
         method: 'post',
         url: `${process.env.VUE_APP_API_URL}/menu/basket/`,
@@ -141,7 +140,6 @@ export default {
     deleteItem (item) {
       // 선택한 아이템의 index 저장
       this.editedIndex = this.myMenu.indexOf(item)
-      // this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
@@ -149,16 +147,7 @@ export default {
     deleteItemConfirm () {
       this.myMenu.splice(this.editedIndex, 1)
       this.closeDelete()
-      console.log(this.myMenu)
-    },
-
-    // 취소버튼클릭시
-    close () {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        this.editedIndex = -1
-      })
+      this.menusUpdate(this.myMenu)
     },
 
     // 취소버튼클릭시
@@ -170,21 +159,15 @@ export default {
       })
     },
 
-    save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.myMenu[this.editedIndex], this.editedItem)
-      } else {
-        // this.myMenu.push(this.editedItem)
-      }
-      this.close()
-    },
   },
   mounted(){
   },
   computed: {
     // store에 저장된 장바구니정보
     foodDataList() { return this.$store.state.menus },
+    // 유저정보
     userInfo() { return this.$store.getters.getUserInfo },
+    // API 요청을 위한 JWT
     userToken() { return this.$store.getters.getUserToken },
   },
 }
@@ -192,10 +175,6 @@ export default {
 
 <style scoped>
 .save-btn {
-  /* position: fixed; */
   width: 20vw;
-  /* bottom: 10vh; */
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
 }
 </style>
