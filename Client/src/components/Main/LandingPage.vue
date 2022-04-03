@@ -3,7 +3,7 @@
     <!-- 비회원일 때 랜딩 페이지 -->
     <div id="logout" v-if="!isLogin">
       <div id="to-top">
-        <div class="material-icons" @click="toTop">arrow_upward</div>
+        <div class="material-icons arrow" @click="toTop">arrow_upward</div>
       </div>
       <!-- top -->
       <section class="top-section">
@@ -113,12 +113,13 @@
         </div>
       </section>
     </div>
-
     <!-- 회원일 때 랜딩 페이지 -->
     <div id="login" v-else>
       <div class="main-section-login">
         <div class="main-title">건강한 하루의 시작</div>
-        <div class="main-sub-title">오늘 하루도 건강하게 시작해보세요!</div>
+        <div class="main-sub-title">
+          {{ userName }}님, 오늘 하루도 건강하게 시작해보세요!
+        </div>
         <div class="card-section">
           <div class="menu-recommend-card">
             <router-link :to="{ name: 'ChooseMeal' }">
@@ -153,6 +154,11 @@
 import scroll from "../../js/scroll.js";
 export default {
   name: "MainDescription",
+  data() {
+    return {
+      userName: null,
+    };
+  },
   methods: {
     startScrollEvent() {
       scroll();
@@ -171,26 +177,35 @@ export default {
     this.startScrollEvent();
   },
   computed: {
-    isLogin() { return this.$store.getters.isLogin }
-  }
+    isLogin() {
+      return this.$store.getters.isLogin;
+    },
+    userInfo() {
+      return this.$store.getters.getUserInfo;
+    },
+  },
 };
 </script>
 
 <style scoped>
 #to-top {
-  width: 50px;
-  height: 50px;
+  width: 3vw;
+  height: 3vw;
   background-color: #25ab9b;
   color: #fff;
-  border: 2px solid #fff;
-  border-radius: 10px;
+  border: 0.1vw solid #fff;
+  border-radius: 0.4vw;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 1.5vw;
+  right: 1.5vw;
+}
+
+#to-top .arrow {
+  font-size: 1.5vw;
 }
 .text-highlight {
   background: linear-gradient(to top, #b7fef6 50%, transparent 50%);
@@ -199,7 +214,7 @@ export default {
 
 .top-section {
   background-color: #fdfefe;
-  height: 75vh;
+  height: 38vw;
   color: #333;
 }
 
@@ -208,27 +223,27 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 75rem;
-  height: 43.75rem;
+  width: 50vw;
+  height: 30vw;
   margin: 0 auto;
 }
 
 .top-section .text-group .title {
   position: relative;
-  font-size: 4.375rem;
+  font-size: 3vw;
   font-weight: 700;
-  bottom: 3.125rem;
+  bottom: 2vw;
 }
 .top-section .inner img {
   display: block;
   position: absolute;
-  width: 43.5rem;
-  right: -11.625rem;
+  width: 35vw;
+  right: -16vw;
 }
 .top-section .text-group .description {
-  font-size: 2rem;
   position: relative;
-  top: 1.25rem;
+  font-size: 1.5vw;
+  top: 1vw;
   z-index: 1;
 }
 
@@ -236,53 +251,70 @@ export default {
 .middle-section .inner {
   position: relative;
   height: 40vh;
-  width: 68.75rem;
+  width: 60vw;
   margin: 0 auto;
 }
 .middle-section .inner .recommend_page {
   display: block;
   position: absolute;
-  width: 37.5rem;
-  left: -6.25rem;
+  width: 23vw;
+  left: 3vw;
 }
 
 .middle-section .text-group {
   position: absolute;
-  top: 6.25rem;
-  left: 37.5rem;
+  top: 3vw;
+  left: 30vw;
+  width: 30vw;
+  height: 8vw;
+}
+.middle-section .text-group .title {
+  width: 17vw;
+  height: 5vw;
 }
 
 .middle-section .text-group .description {
   display: block;
+  width: 31vw;
+  height: 3.5vw;
+  margin-left: 0.5vw;
 }
 
 /* middle-sction2 */
 .middle-section2 {
   background-image: url("../../assets/main_logout/main_bg.png");
-  height: 43.75rem;
+  height: 100%;
 }
 .middle-section2 .inner {
   position: relative;
   height: 40vh;
-  width: 68.75rem;
+  width: 60vw;
   margin: 0 auto;
-  top: 9.375rem;
+  top: 4vw;
 }
 .middle-section2 .inner .my_page {
   display: block;
   position: absolute;
-  width: 37.5rem;
-  right: -5.625rem;
+  width: 23vw;
+  right: -1vw;
 }
 
 .middle-section2 .text-group {
   position: absolute;
-  top: 6.25rem;
-  left: -6.25rem;
+  top: 2vw;
+  left: 4vw;
+}
+
+.middle-section2 .text-group .title {
+  width: 14vw;
+  height: 5vw;
 }
 
 .middle-section2 .text-group .description {
   display: block;
+  width: 31vw;
+  height: 3.5vw;
+  margin-left: 0.3vw;
 }
 
 /* bottom */
@@ -290,37 +322,47 @@ export default {
 .bottom-section .inner {
   position: relative;
   height: 40vh;
-  width: 68.75rem;
+  width: 45vw;
   margin: 0 auto;
-  top: 3.375rem;
+  top: 2vw;
 }
 .bottom-section .inner .bottom-bg {
   display: block;
   position: absolute;
-  width: 56.5rem;
-  right: -10.625rem;
+  width: 42vw;
+  right: -8vw;
 }
 .bottom-section .text-group {
-  width: 22.625rem;
+  width: 26vw;
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
   position: relative;
-  left: 9.375rem;
+  left: -9vw;
 }
 
 .bottom-section .text-group .title {
-  margin-bottom: -2.5rem;
+  margin-bottom: -2vw;
   position: relative;
-  left: 1.875rem;
+  left: 1vw;
+  width: 17vw;
+  height: 15vw;
+}
+
+.bottom-section .text-group .text {
+  position: relative;
+  width: 32vw;
+  height: 16vw;
 }
 .bottom-section .start-btn {
-  margin-top: 1.25rem;
-  margin-right: 1.875rem;
-  margin-bottom: 1.875rem;
-  width: 18.75rem;
-  height: 3.125rem;
-  border-radius: 0.625rem;
+  margin-top: 1vw;
+  margin-right: 1vw;
+  margin-bottom: 1vw;
+  width: 10vw;
+  height: 2vw;
+  font-size: 1vw;
+  border-radius: 0.3vw;
+  height: 2.5vw;
 }
 
 /*BACK TO POSITION*/
@@ -352,79 +394,64 @@ export default {
 }
 /* Login 랜딩 페이지 */
 #login {
-  margin: 0 6.25rem;
+  margin: 0 5vw;
 }
 a {
   width: 100%;
   height: 100%;
 }
 .main-section-login .main-title {
-  font-size: 2.3rem;
+  font-size: 2vw;
   font-weight: 700;
-  margin-top: 1.875rem;
-  color: #333;
+  margin-top: 1.5vw;
+  margin-left: 0.5vw;
 }
 .main-section-login .main-sub-title {
-  font-size: 1.5rem;
-  color: #333;
+  font-size: 1.3vw;
+  margin-left: 0.5vw;
 }
 
 .card-section {
   display: flex;
-  font-size: 2rem;
+  font-size: 1.8vw;
   justify-items: center;
-  margin-top: 1.875rem;
+  margin-top: 1vw;
   color: #333;
 }
 .card-section span {
   display: block;
-  font-size: 1rem;
-  margin-left: 1.25rem;
+  font-size: 1vw;
+  margin-left: 1.2vw;
   color: #333;
 }
 .card-section div {
-  margin-left: 1.25rem;
-  margin-top: 0.625rem;
+  margin-left: 1.1vw;
+  margin-top: 0.3vw;
   font-weight: 700;
 }
 
-.card-section .menu-recommend-card {
+.card-section .menu-recommend-card,
+.card-section .menu-search-card,
+.card-section .menu-record-card {
   display: flex;
   flex-direction: column;
-  padding: 0.625rem;
-  margin: 0.313rem;
-  width: calc(100% / 3);
-  height: 40vh;
-  border: solid #25ab9b 0.125rem;
-  border-radius: 1.25rem;
+  padding: 0.5vw;
+  margin: 0.3vw;
+  width: 33vw;
+  height: 23vw;
+  border: solid #25ab9b 0.2vw;
+  border-radius: 1vw;
   cursor: pointer;
 }
-.card-section .menu-recommend-card a {
+.card-section .menu-recommend-card a,
+.card-section .menu-search-card a,
+.card-section .menu-record-card a {
   position: relative;
 }
+
+.card-section .menu-search-card img,
+.card-section .menu-record-card img,
 .card-section .menu-recommend-card img {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
-  max-width: 100%;
-  max-height: 75%;
-}
-.card-section .menu-search-card {
-  display: flex;
-  flex-direction: column;
-  padding: 0.625rem;
-  margin: 0.313rem;
-  width: calc(100% / 3);
-  height: 40vh;
-  border: solid #25ab9b 0.125rem;
-  border-radius: 1.25rem;
-  cursor: pointer;
-}
-.card-section .menu-search-card a {
-  position: relative;
-}
-.card-section .menu-search-card img {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -433,32 +460,10 @@ a {
   max-height: 75%;
   object-fit: cover;
 }
-.card-section .menu-record-card {
-  display: flex;
-  flex-direction: column;
-  padding: 0.625rem;
-  margin: 0.313rem;
-  width: calc(100% / 3);
-  height: 40vh;
-  border: solid #25ab9b 0.125rem;
-  border-radius: 1.25rem;
-  cursor: pointer;
-}
-.card-section .menu-record-card a {
-  position: relative;
-}
-.card-section .menu-record-card img {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
-  max-width: 100%;
-  max-height: 75%;
-}
 
 .scroll-bar {
   position: absolute;
-  width: 3rem;
+  width: 3vw;
   height: 8px;
   left: 50%;
   bottom: 5rem;
