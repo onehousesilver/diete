@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <div class="week-chart">
-      <div id="chart">
-        <ApexChart
-          type="bar"
-          height="500"
-          width="800"
-          :options="chartOptions"
-          :series="series"
-        ></ApexChart>
-      </div>
+  <div class="week-chart">
+    <div id="chart">
+      <ApexChart
+        type="bar"
+        width="800"
+        height="450"
+        :options="chartOptions"
+        :series="series"
+      ></ApexChart>
     </div>
   </div>
 </template>
@@ -90,8 +88,12 @@ export default {
 </script>
 
 <style>
+#chart {
+  width: 45vw;
+}
 .week-chart {
   display: flex;
-  left: 12.5rem;
+  align-self: center;
+  text-align: -webkit-center;
 }
 </style>

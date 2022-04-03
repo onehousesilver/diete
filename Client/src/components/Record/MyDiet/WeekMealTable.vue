@@ -1,8 +1,12 @@
 <template>
   <div class="week-calendar">
     <!-- 수정버튼 -->
-
-    <span class="today-week"> 3월 첫째주</span>
+    <select name="week-select" class="week-select">
+      <option class="week-item">4월 1주차</option>
+      <option class="week-item">4월 2주차</option>
+      <option class="week-item">4월 3주차</option>
+      <option class="week-item">4월 4주차</option>
+    </select>
     <span class="material-icons settings" @click="editMealTable">
       settings
     </span>
@@ -143,17 +147,16 @@ export default {
 
 <style scoped>
 .week-calendar {
-  width: 50rem;
+  width: 40vw;
   height: 100%;
-  border-radius: 1.25rem;
-  text-align: center;
+  border-radius: 1vw;
 }
 .meal-table-el {
-  width: calc(600px / 7);
-  height: 7.5rem;
+  width: calc(30vw / 7);
+  height: 6vw;
   border: 0.125rem solid #25ab9b;
-  margin: 0.313rem;
-  border-radius: 1.25rem;
+  margin: 0.2vw;
+  border-radius: 1vw;
   position: relative;
   text-align: center;
   align-items: center;
@@ -162,7 +165,18 @@ export default {
   justify-content: center;
   align-content: center;
   position: relative;
-  top: 2.063rem;
+  top: 1.5vw;
+}
+.week-select {
+  width: 6vw;
+  height: 1.5vw;
+  text-align: center;
+  border: #25ab9b 2px solid;
+  border-radius: 0.5vw;
+  position: relative;
+  font-size: 0.9vw;
+  left: 5.5vw;
+  top: -1.4vw;
 }
 
 .meal-table-el.clicked {
@@ -180,34 +194,33 @@ export default {
   align-items: center;
   align-content: center;
   position: relative;
-  top: -0.625rem;
+  top: -0.3vw;
 }
 .meal-time {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 17.5rem;
-  font-size: 1.125rem;
+  height: 13.8vw;
+  font-size: 1vw;
   font-weight: 700;
-  margin: 0 0.75rem;
+  margin: 0 1vw;
   position: relative;
-  top: 2.75rem;
+  top: 2vw;
 }
 .text {
-  font-size: 1.125rem;
+  font-size: 1vw;
   font-weight: 700;
   position: relative;
-  top: 1.875rem;
+  top: 1vw;
+  text-align: center;
 }
-.material-icons {
-  font-size: 1.75rem;
-  vertical-align: bottom;
-  color: #333;
-  position: relative;
-  left: 19.375rem;
-  bottom: 1.5rem;
+.settings {
+  position: absolute;
+  font-size: 1.4vw;
+  left: 88.95%;
+  bottom: 56.7%
 }
-.material-icons:hover {
+.settings:hover {
   cursor: pointer;
   color: #25ab9b;
   transform: scale(1.2);
@@ -215,14 +228,10 @@ export default {
   background-color: rgb(221, 221, 221);
   border-radius: 50%;
 }
-span {
-  font-size: 0.875rem;
-}
+
 .today-week {
-  font-size: 1.375rem;
-  position: relative;
-  right: 33%;
   font-weight: 700;
+  font-size: 1vw;
 }
 
 @keyframes vibration {

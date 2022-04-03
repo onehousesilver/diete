@@ -82,12 +82,12 @@ export default {
   methods: {
     completedForm() {
       if (this.clickCard != null) {
-        this.$emit("completedForm", this.likeMenu);
         this.$swal.fire({
           icon: "success",
           title: "회원가입이 완료되었습니다.",
           text: "로그인 페이지로 이동합니다.",
         });
+        this.$emit("completedForm", this.likeMenu);
       } else {
         this.$swal.fire({
           icon: "error",

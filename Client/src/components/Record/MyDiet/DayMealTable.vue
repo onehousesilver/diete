@@ -4,12 +4,12 @@
       <span id="month-text"></span>
       <div class="day">
         <!-- 전날로 넘어가는 버튼 -->
-        <span class="material-icons navigate"> navigate_before </span>
+        <span class="material-icons navigate-before"> navigate_before </span>
         <!-- 오늘 날짜 -->
         <span id="today">{{ todayStr }}</span>
 
         <!-- 다음날로 넘어가는 버튼 -->
-        <span class="material-icons navigate"> navigate_next </span>
+        <span class="material-icons navigate-next"> navigate_next </span>
         <!-- 수정버튼 -->
         <span class="material-icons settings" @click="editMealTable">
           settings
@@ -120,37 +120,36 @@ export default {
 
 <style scoped>
 .day-calendar {
-  width: 50rem;
+  width: 40vw;
   height: 100%;
   border-radius: 1.25rem;
 }
 .day {
-  font-size: 1.5rem;
+  font-size: 1.2vw;
   text-align: center;
-  margin-left: 1.875rem;
+  margin-left: 1.5vw;
   font-weight: 700;
 }
 
 #month-text {
-  font-size: 1.875rem;
+  font-size: 1vw;
   display: inline-block;
   text-align: center;
-  margin-bottom: 1.25rem;
-  margin-top: -1.25rem;
+  margin-bottom: 1vw;
+  margin-top: -1vw;
   position: relative;
-  left: 45%;
   font-weight: 700;
 }
 .meal-table-el {
-  width: calc(700px / 3);
-  height: 300px;
+  width: calc(35vw / 3);
+  height: 15vw;
   border: 0.188rem solid #25ab9b;
-  margin: 0.313rem;
-  border-radius: 1.25rem;
+  margin: 0.5vw;
+  border-radius: 1.1vw;
   position: relative;
-  top: 1.25rem;
+  top: 1.1vw;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1.1vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -164,40 +163,46 @@ export default {
 .meal-table-el.clicked:hover {
   cursor: pointer;
 }
-.color-change.red {
-  color: red;
-}
-.color-change.blue {
-  color: blue;
-}
+
 .menu-card {
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
+  height: 19vw;
+  top: 0.6vw;
+  position: relative;
 }
 
 .morning-text,
 .lunch-text,
 .dinner-text {
-  font-size: 1.5rem;
+  font-size: 1.2vw;
   text-align: center;
-  margin-top: 1.875rem;
   font-weight: 700;
 }
 
 .goToRecommend-btn {
-  border-radius: 0.625rem;
+  border-radius: 0.3vw;
   width: 6.25rem;
   font-size: 0.875rem;
   margin: 0 auto;
   position: relative;
   margin-top: 0.625rem;
 }
-.navigate {
-  font-size: 2rems;
+.navigate-before {
+  font-size: 1.6vw;
   vertical-align: bottom;
   color: #333;
+  position: relative;
+  left: -1.5vw;
+}
+.navigate-next {
+  font-size: 1.6vw;
+  vertical-align: bottom;
+  color: #333;
+  position: relative;
+  left: 1.5vw;
 }
 .material-icons:hover {
   cursor: pointer;
@@ -210,10 +215,9 @@ export default {
 
 .settings {
   position: relative;
-  font-size: 1.75rem;
-  left: 17rem;
-  bottom: 4.125rem;
-  color: #333;
+  font-size: 1.4vw;
+  left: 12.6vw;
+  bottom: 2.18vw;
 }
 
 @keyframes vibration {

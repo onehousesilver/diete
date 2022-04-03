@@ -1,13 +1,8 @@
 <template>
   <div>
-    <MyProfile 
-      @editMode="editMode"
-    />
+    <MyProfile @editMode="editMode" />
     <div class="btn-container">
-      <button
-        class="bttn-unite bttn-md bttn-success my-diet"
-        @click="goMyDiet"
-      >
+      <button class="bttn-unite bttn-md bttn-success my-diet" @click="goMyDiet">
         나의식단
       </button>
       <button
@@ -48,7 +43,7 @@ export default {
     },
     // 프로필 수정모드 On/Off
     editMode() {
-      this.editState = !this.editState
+      this.editState = !this.editState;
     },
   },
 };
@@ -56,20 +51,19 @@ export default {
 
 <style>
 .btn-container {
-  margin: 30px auto;
+  margin: 2.5vw auto;
   display: block;
   width: 30vw;
   text-align: center;
 }
 
-.btn-container .my-diet {
-  border-radius: 0;
-  width: 10vw;
-  margin-right: 2px;
-}
+.btn-container .my-diet,
 .btn-container .my-analysis {
   border-radius: 0;
   width: 10vw;
+  height: 2.5vw;
+  margin-right: 0.1vw;
+  font-size: 1vw;
 }
 .edit-cover {
   opacity: 0.7;
@@ -77,7 +71,7 @@ export default {
   width: 100%;
   height: 70vh;
   position: fixed;
-  top: 30vh;
+  top: 14vw;
   background: #fff;
 }
 </style>

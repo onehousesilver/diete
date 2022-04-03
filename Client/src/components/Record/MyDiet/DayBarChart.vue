@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <div class="week-chart">
-      <div id="chart">
-        <ApexChart
-          type="bar"
-          height="500"
-          width="800"
-          :options="chartOptions"
-          :series="series"
-        ></ApexChart>
-      </div>
+  <div class="day-chart">
+    <div id="chart">
+      <ApexChart
+        type="bar"
+        width="800"
+        height="450"
+        :options="chartOptions"
+        :series="series"
+      ></ApexChart>
     </div>
   </div>
 </template>
@@ -40,7 +38,6 @@ export default {
       chartOptions: {
         chart: {
           type: "bar",
-          height: 400,
           stacked: true,
         },
         plotOptions: {
@@ -53,7 +50,7 @@ export default {
           colors: ["#fff"],
         },
         // title: {
-        //   text: "WEEK",
+        //   text: "DAY",
         // },
         xaxis: {
           categories: ["아침", "점심", "저녁"],
@@ -89,10 +86,13 @@ export default {
 };
 </script>
 
-<style>
-.week-chart {
+<style scoped>
+#chart {
+  width: 45vw;
+  align-self: center;
+  text-align: -webkit-center;
+}
+.day-chart {
   display: flex;
-  /* justify-content: center; */
-  left: 12.5rem;
 }
 </style>
