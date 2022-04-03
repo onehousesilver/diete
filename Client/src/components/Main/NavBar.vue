@@ -84,26 +84,28 @@ a {
 .nav .logo {
   display: inline-block;
   font-weight: 700;
-  font-size: 1.875rem;
-  margin-left: 6.25rem;
+  font-size: 2vw;
+  margin-left: 4vw;
 }
 .nav .logo:hover {
   cursor: pointer;
 }
 .nav .menu {
-  margin-right: 6.25rem;
+  margin-right: 5vw;
 }
 .nav .menu .login-join .login-btn {
-  border-radius: 0.625rem;
-  font-size: 0.875rem;
-  width: 6.25rem;
-  margin-right: 1.25rem;
+  border-radius: 0.4vw;
+  font-size: 0.8vw;
+  width: 5vw;
+  height: 100%;
+  margin-right: 1vw;
 }
 .nav .menu .login-join .join-btn {
-  border-radius: 0.625rem;
-  margin-right: 2.8125rem;
-  font-size: 0.875rem;
-  width: 6.25rem;
+  border-radius: 0.4vw;
+  margin-right: 2vw;
+  font-size: 0.8vw;
+  height: 100%;
+  width: 5vw;
 }
 .bttn-unite.bttn-success:after,
 .bttn-unite.bttn-success:before {
@@ -116,12 +118,14 @@ a {
 }
 
 .nav .menu .menu-items a {
-  margin-right: 2.8125rem;
+  font-size: 0.8vw;
+  margin-right: 2vw;
 }
 
 .nav .menu .menu-items .logout-btn {
-  font-size: 0.875rem;
-  width: 6.25rem;
-  border-radius: 0.625rem;
+  font-size: 0.8vw;
+  width: 5vw;
+  height: 100%;
+  border-radius: 0.4vw;
 }
 </style>
