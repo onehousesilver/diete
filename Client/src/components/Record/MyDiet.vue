@@ -58,10 +58,13 @@ export default {
 
 <style>
 .toggle-btn {
-  left: 83%;
+  left: 84vw;
 }
 .body {
   display: flex;
   justify-content: center;
 }
+/* @media screen and (max-width: 1770px){
+  
+} */
 </style>
