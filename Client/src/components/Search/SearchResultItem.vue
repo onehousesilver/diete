@@ -212,12 +212,6 @@ export default {
   max-width: 60vw;
   overflow-x: hidden;
 }
-.food-modal-bottom {
-  padding: 20px;
-  position: relative;
-  top: 30px;
-  width: 100%;
-}
 .food-modal-header {
   display: flex;
   justify-content: space-between;

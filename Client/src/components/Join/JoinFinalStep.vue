@@ -75,8 +75,8 @@ export default {
   name: "JoinSecondStep",
   data() {
     return {
-      likeMenu: 1,
       clickCard: null, // 선택한 식단
+      emitData: null,
     };
   },
   methods: {
@@ -95,6 +95,21 @@ export default {
           text: "식단선택은 필수입니다.",
         });
       }
+      switch(this.clickCard){
+        case 'vegetable':
+          this.emitData = '야채';
+          break;
+        case 'meat':
+          this.emitData = '고기';
+          break;
+        case 'general':
+          this.emitData = '일반';
+          break;
+        default:
+          break;
+      }
+      // console.log(this.emitData)
+      this.$emit("completedForm", this.emitData);
     },
     // 선택한 상태에서 다른 거 눌렀을 때 해제
     clickEvent(e) {

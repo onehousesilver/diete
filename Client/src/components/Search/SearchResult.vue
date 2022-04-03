@@ -112,10 +112,7 @@ export default {
 
 <style scoped>
 .rec-food-list {
-  /* position: relative; */
   width: 73vw;
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
   margin-bottom: 5vw;
   margin-left: 13vw;
 }
@@ -194,32 +191,5 @@ export default {
 }
 .next-btn{
   right: -3vw;
-}
-.mini-pocket {
-  width: 12vw;
-  border: solid 3px #25ab9b;
-  border-radius: 10px;
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  position: absolute;
-  right: 0;
-  top: 7vh;
-  height: 50vh;
-}
-.mini-pocket .mini-pocket-kcal {
-  font-size: 20px;
-  text-align: center;
-  display: block;
-  margin: 20px;
-}
-.mini-pocket .done-btn {
-  width: 150px;
-  font-size: 16px;
-  position: relative;
-  display: block;
-  border-radius: 10px;
-  margin: 20px auto;
 }
 </style>

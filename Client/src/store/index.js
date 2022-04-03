@@ -8,13 +8,14 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     // 현재 장바구니 정보
-    myMenu: [
-      {}
-    ],
+    myBasket: {
+      
+    },
+    mealTime: 0,  // 끼니 (0, 1, 2)
+    menus: [],    // 끼니별 식단
 
     // 로그인 여부
     isLogin: false,
-
     // JWT
     userToken: null,
     // JWT.payload
@@ -30,22 +31,33 @@ export default new Vuex.Store({
     getUserToken(state) {
       return state.userToken;
     },
-    getMyMenu(state) {
-      return state.myMenu;
+    getMyBasket(state) {
+      return state.myBasket;
     }
   },
   mutations: {
     // 장바구니 갱신
     SET_MENU: function(state, menus) {
-      state.myMenu.push(menus)
+      if (!state.menus[0]){
+        state.menus[0] = menus
+      }
+      else {
+        state.menus.push(menus)
+      }
+      console.log(state.menus)
+    },
+    // 장바구니 끼니 선택
+    SET_BASKET_MEAL: function(state, mealTime){
+      state.myBasket.mealTime = mealTime
     },
     // 로그인
     SET_LOGIN: function(state, token) {
       let decoded_token = jwt_decode(token)
-      // * Token decoding 필요
       state.userToken = token;
       state.userInfo = decoded_token;
       state.isLogin = true;
+      state.menus = [];
+      state.mealTime = 0;
       localStorage.setItem('userToken', token);
     },
     // 로그아웃
@@ -79,6 +91,9 @@ export default new Vuex.Store({
     },
     updateUserInfo: function({ commit }, data){
       commit("SET_KCAL", data)
+    },
+    mealTimeUpdate: function({ commit }, mealTime) {
+      commit("SET_BASKET_MEAL", mealTime)
     }
   },
   modules: {

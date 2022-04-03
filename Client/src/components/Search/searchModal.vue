@@ -170,7 +170,7 @@ export default {
     },
   },
   mounted() {
-    this.showSwiper();
+    // this.showSwiper();
   },
 };
 </script>

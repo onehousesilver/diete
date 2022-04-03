@@ -59,6 +59,7 @@
 <script>
 import BannerBar from "@/components/Main/BannerBar.vue";
 import $ from "jquery";
+import { mapActions } from 'vuex';
 
 export default {
   name: "ChooseMeal",
@@ -71,6 +72,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions([
+      'mealTimeUpdate',
+    ]),
     // 끼니 선택 메서드. 선택된 섹션의 style을 변경하고, 변수에 바인딩
     chooseMeal(e) {
       // 이미 선택된 섹션이 있을 때
@@ -89,6 +93,7 @@ export default {
     },
     nextStep() {
       if (this.selectedMeal != null) {
+        this.mealTimeUpdate(this.selectedMeal)
         this.$router.push({ path: "/menu/recommendation" });
       } else {
         this.$swal.fire({

@@ -55,7 +55,9 @@ export default {
         ? e.target.offsetParent.id
         : e.target.id;
       // 클래스 추가
+      console.log(this.clickCategory)
       $(`#${this.clickCategory}`).addClass("category-item--current");
+      this.$emit('changeCategory', this.clickCategory)
     },
   },
 };
@@ -64,7 +66,7 @@ export default {
 <style scoped>
 .category {
   display: flex;
-  margin: 2vw auto 3vw;
+  margin: 2vw auto 0vw;
   width: 73vw;
   cursor: pointer;
 }
