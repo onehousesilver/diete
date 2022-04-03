@@ -38,7 +38,8 @@ const routes = [
     path: "/search",
     name: "search",
     component: () => import("@/views/SearchView.vue"),
-    meta: {requiresAuth: true, title: "diète - 음식검색"}
+    meta: {requiresAuth: true, title: "diète - 음식검색"},
+    props: true
   },
   {
     path: "/basket",
@@ -84,6 +85,7 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
+// page title
 router.afterEach((to) => {
   const title = to.meta.title === undefined ? 'diète' : to.meta.title;
   Vue.nextTick(() => {
