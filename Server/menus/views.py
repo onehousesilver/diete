@@ -168,7 +168,7 @@ def sub_foods(request, foodId):
         sub_menu_list.append(tempDict)
 
     # value에 따라 내림차순 정렬
-    sub_menu_list.sort(key = lambda x: -x["count"])
+    sub_menu_list.sort(key = lambda x: -x["cnt"])
 
     return JsonResponse(sub_menu_list[:10], safe=False)
 
