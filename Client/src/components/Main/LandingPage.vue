@@ -118,7 +118,7 @@
       <div class="main-section-login">
         <div class="main-title">건강한 하루의 시작</div>
         <div class="main-sub-title">
-          {{ userName }}님, 오늘 하루도 건강하게 시작해보세요!
+          {{ userInfo.data.name }}님, 오늘 하루도 건강하게 시작해보세요!
         </div>
         <div class="card-section">
           <div class="menu-recommend-card">
