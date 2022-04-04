@@ -6,6 +6,7 @@
     />
     <SearchBar />
     <RecFoodList/>
+    <MiniBasket />
     <!-- <button @click="test">asfddasfasdf</button> -->
     <!-- <CategoryBar/>
     <SearchList /> -->
@@ -16,6 +17,7 @@
 import BannerBar from "@/components/Main/BannerBar.vue";
 import axios from 'axios';
 import SearchBar from "@/components/Search/SearchBar.vue";
+import MiniBasket from '@/components/Basket/MiniBasket.vue'
 import RecFoodList from '@/components/Recommend/RecFoodList.vue'
 // import SearchList from "@/components/Search/SearchList.vue";
 // import CategoryBar from "@/components/Search/CategoryBar.vue";
@@ -24,7 +26,8 @@ export default {
   components: {
     BannerBar,
     SearchBar,
-    RecFoodList
+    RecFoodList,
+    MiniBasket
     // SearchList,
     // CategoryBar,
   },

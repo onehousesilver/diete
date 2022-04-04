@@ -78,11 +78,21 @@ export default {
     },
   },
   mounted() {
-    // 메뉴의 총 칼로리 합산
     if (this.menus){
       this.menus.forEach(menu => {
         this.totalKcal += parseFloat(menu.foodKcal)
       });
+    }
+  },
+  watch: {
+    // 메뉴의 총 칼로리 합산
+    menus() {
+      this.totalKcal = 0
+      if (this.menus){
+      this.menus.forEach(menu => {
+        this.totalKcal += parseFloat(menu.foodKcal)
+      });
+    }
     }
   }
 }
@@ -101,19 +111,26 @@ export default {
 .basket-list {
   border: 3px solid #25ab9b;
   border-radius: 10px;
-  width: 15vw;
-  height: 50vh;
+  width: 3vw;
+  height: 3vw;
   position: fixed;
-  right: -15vw;
-  top: 20vw;
+  right: 0;
+  top: 50%;
   background: #fff;
+  color: #fff;
   opacity: 0;
-  transition-property: right, opacity ; /* 어떤 css 프로퍼티를 transition할지 지정 */
-  transition-duration: 1s, 1s;
+  transition-property: right, opacity, top, width, height, z-index, color; /* 어떤 css 프로퍼티를 transition할지 지정 */
+  transition-duration: 1s;
+  z-index: -1;
 }
 .basket-list.selected {
   right: 5vw;
+  width: 15vw;
+  top: 20vw;
   opacity: 1;
+  height: 50vh;
+  z-index: 1;
+  color: #111;
 }
 .basket-list h2 {
   font-size: 1.2vw;
