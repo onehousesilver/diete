@@ -2,7 +2,7 @@
   <div>
     <BannerBar
       MainText="음식추천"
-      SubText="맛있는 음식을 추천해드립니다."
+      SubText="diète에서 맛있는 음식을 추천받아보세요"
     />
     <SearchBar />
     <RecFoodList/>

@@ -1,7 +1,10 @@
 <template>
   <div>
     <!-- Banner -->
-    <BannerBar MainText="음식추천" SubText="추천받을 끼니를 선택해 주세요" />
+    <BannerBar
+      MainText="음식추천"
+      SubText="diète에서 맛있는 음식을 추천받아보세요"
+    />
     <h1>언제 드실 음식이신가요?</h1>
     <div class="choose-container">
       <section id="breakfast" @click="chooseMeal">
@@ -59,7 +62,7 @@
 <script>
 import BannerBar from "@/components/Main/BannerBar.vue";
 import $ from "jquery";
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 
 export default {
   name: "ChooseMeal",
@@ -72,9 +75,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      'mealTimeUpdate',
-    ]),
+    ...mapActions(["mealTimeUpdate"]),
     // 끼니 선택 메서드. 선택된 섹션의 style을 변경하고, 변수에 바인딩
     chooseMeal(e) {
       // 이미 선택된 섹션이 있을 때
@@ -93,7 +94,7 @@ export default {
     },
     nextStep() {
       if (this.selectedMeal != null) {
-        this.mealTimeUpdate(this.selectedMeal)
+        this.mealTimeUpdate(this.selectedMeal);
         this.$router.push({ path: "/menu/recommendation" });
       } else {
         this.$swal.fire({
