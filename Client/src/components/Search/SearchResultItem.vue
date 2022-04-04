@@ -115,6 +115,7 @@ export default {
       // Apexchart,
       series: [
         {
+          name: "함량",
           data: [
             // { x: '탄수화물', y: 0},
             // { x: '단백질', y: 0},

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BannerBar MainText="오늘의 한끼" SubText="SubText"/>
+    <BannerBar MainText="오늘의 한끼" SubText="diète에서 맛있는 식단을 만들어보세요"/>
     <div class="basket-container">
       <BasketFoodList />
     </div>
