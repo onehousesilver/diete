@@ -23,7 +23,7 @@
         <router-link :to="{ name: 'ChooseMeal' }">
           <div>음식추천</div>
         </router-link>
-        <router-link :to="{ name: 'search' }"><div>영양정보</div> </router-link>
+        <router-link :to="{ name: 'search', params: { onlySearch: true } }"><div>영양정보</div> </router-link>
         <router-link :to="{ name: 'basket' }"><div>오늘한끼</div> </router-link>
         <router-link :to="{ name: 'record' }"><div>나의기록</div> </router-link>
         <button
