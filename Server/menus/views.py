@@ -11,6 +11,7 @@ from rest_framework import status
 
 from .models import Food, Menu, MenuToFood
 from .serializers import FoodSerializer, MenuSerializer, MenuToFoodSerializer, FoodRecommSerializer
+from image_adapter import ImageIncoder
 
 from datetime import datetime
 # 음식 추천 GET /recommend/{username}
@@ -126,13 +127,14 @@ def food_detail(request,foodId):
     food = get_object_or_404(Food, pk=foodId)
     print(food)
     serializer = FoodSerializer(food)
-    # return HttpResponse("You're at the food_detail.")
     return Response(serializer.data)
 
 
 
 # 추가메뉴조회 GET /submenu/{foodId}
 def sub_foods(request, foodId):
+    imageIncoder = ImageIncoder()
+
     # 1. foodId가 들어간 menuToFood "menuId"를 모두 찾기
     mtfs = MenuToFood.objects.filter(foodId = foodId)
     
@@ -140,7 +142,7 @@ def sub_foods(request, foodId):
     sub_menus = {}
     for mtf in mtfs:
         menu_id_list.append(mtf.menuId)
-    # print(menu_id_list)
+    print(menu_id_list)
     for menuId in menu_id_list:
         mtf_menu = MenuToFood.objects.filter(menuId = menuId)
         for mtf in mtf_menu:
@@ -154,17 +156,19 @@ def sub_foods(request, foodId):
                     sub_menus[mtf.foodId.id] = 1
     
     print(sub_menus)
-    # 순서대로 foodId, foodName, 같이 먹은 횟수 
+    # 순서대로 foodId, foodName, image, 같이 먹은 횟수 
     sub_menu_list = []
     for key in sub_menus:
+        tempDict = {}
         food = Food.objects.get(id = key)
-        sub_menu_list.append([key, food.foodName, sub_menus[key]])
-        # ***** image 파일 넣어주세요 수용닙!! ***** (/▽＼)
-
+        tempDict["foodId"] = key
+        tempDict["foodName"] = food.foodName
+        tempDict["img"] = imageIncoder.getBase64String(food.foodName).decode('utf8')
+        tempDict["cnt"] = sub_menus[key]
+        sub_menu_list.append(tempDict)
 
     # value에 따라 내림차순 정렬
-    sub_menu_list.sort(key = lambda x: -x[2])
-    print(sub_menu_list)
+    sub_menu_list.sort(key = lambda x: -x["count"])
 
     return JsonResponse(sub_menu_list[:10], safe=False)
 
