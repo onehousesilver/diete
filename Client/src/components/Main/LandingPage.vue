@@ -175,6 +175,7 @@ export default {
   },
   mounted() {
     this.startScrollEvent();
+    this.userName = this.userInfo.data.name;
   },
   computed: {
     isLogin() {
