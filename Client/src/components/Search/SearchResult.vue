@@ -30,7 +30,7 @@
         </button>
       </div>
     </div>
-    <SearchResultItem :modalState="modalState" :foodData="foodData" />
+    <SearchResultItem :modalState="modalState" :foodData="foodData" :onlySearch="onlySearch"/>
   </div>
 </template>
 
@@ -41,6 +41,7 @@ export default {
   name: "SearchResult",
   props: {
     receivedData: Array,
+    onlySearch: Boolean,
   },
   components: {
     SearchResultItem,

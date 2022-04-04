@@ -25,9 +25,12 @@
       :receivedData="searchData"
       @showModal="showModal"
       @searchKeyword="onSearchKeyword"
+      :onlySearch="onlySearch"
     />
-    <SearchResultItem :modalState="modalState" :foodData="foodData" />
-    <MiniBasket />
+    <!-- <SearchResultItem :modalState="modalState" :foodData="foodData" /> -->
+    <MiniBasket 
+      v-show="!onlySearch"
+    />
   </div>
 </template>
 
@@ -36,7 +39,7 @@ import BannerBar from "@/components/Main/BannerBar.vue";
 import SearchBar from "@/components/Search/SearchBar.vue";
 import CategoryBar from "@/components/Search/CategoryBar.vue";
 import SearchResult from "@/components/Search/SearchResult.vue";
-import SearchResultItem from "@/components/Search/SearchResultItem.vue";
+// import SearchResultItem from "@/components/Search/SearchResultItem.vue";
 import MiniBasket from "@/components/Basket/MiniBasket.vue";
 import axios from "axios";
 
@@ -44,13 +47,14 @@ export default {
   name: "RecommendMeal",
   props: {
     keyword: String, // params로 prop 해서 온 데이터(검색 키워드)
+    onlySearch: Boolean,
   },
   components: {
     BannerBar,
     SearchBar,
     CategoryBar,
     SearchResult,
-    SearchResultItem,
+    // SearchResultItem,
     MiniBasket,
   },
   data() {

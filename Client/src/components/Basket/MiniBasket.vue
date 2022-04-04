@@ -172,6 +172,7 @@ export default {
 }
 .basket-list .done-btn {
   position: absolute;
+  width: 10vw;
   bottom: 1vh;
   left: 50%;
   transform: translateX(-50%);

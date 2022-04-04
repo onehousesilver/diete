@@ -130,7 +130,7 @@
           </div>
 
           <div class="menu-search-card">
-            <router-link :to="{ name: 'search' }">
+            <router-link :to="{ name: 'search', params:{ onlySearch: true } }">
               <div>음식검색</div>
               <span>어떤 음식이든 검색해보세요!</span>
               <img src="../../assets/search-card.svg" alt="" />

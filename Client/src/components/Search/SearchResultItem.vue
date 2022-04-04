@@ -70,6 +70,7 @@
             <button
               class="bttn-unite bttn-md bttn-success pocket-btn"
               @click="putInBasket"
+              v-show="!onlySearch"
             >
               장바구니에 담기
             </button>
@@ -89,6 +90,7 @@ export default {
   props: {
     modalState: Boolean,
     foodData: Object,
+    onlySearch: Boolean,
   },
   components: {
     // Swiper,
