@@ -8,12 +8,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,  permission_classes
 from rest_framework.permissions import AllowAny
-from .serializers import WeekMenuSerializer
-
 from menus.models import Menu, MenuToFood, Food
 from menus.serializers import MenuSerializer, MenuToFoodSerializer
-
-import datetime
+from datetime import datetime
 # import json
 # Create your views here.
 
@@ -24,7 +21,7 @@ def weekly_menus(request, username, firstDayOfWeek):
     # front에 보낼 data dictionary
     result_data = []
     # 하루하루의 data dictionary
-    user_data = {}
+    response_data = []
     
     # 시작 날짜, 끝날 날짜 지정
     firstDayOfWeek = str(firstDayOfWeek)
@@ -42,35 +39,40 @@ def weekly_menus(request, username, firstDayOfWeek):
     
     for find_menu in menuserializer.data:
         # user_data에 DB 저장해서 만들기
+        print(find_menu)
+        user_data = {}
         user_data["dateTime"] = find_menu["dateTime"]
         user_data["mealTime"] = find_menu["mealTime"]
         mtf = MenuToFood.objects.filter(menuId=find_menu["id"])
         mtfserializer = MenuToFoodSerializer(mtf, read_only=True, many=True)
+        user_data["menus"] = []
         for mtf in mtfserializer.data:
+            food_data = {}
             food = get_object_or_404(Food, id=mtf["foodId"])
-            user_data["foodName"] = food.foodName
-            user_data["foodCategory"] = food.foodCategory
-            user_data["foodDetailCategory"] = food.foodDetailCategory
-            user_data["servingSize"] = food.servingSize
-            user_data["foodKcal"] = food.foodKcal
-            user_data["sugar"] = food.sugar
-            user_data["carbohydrate"] = food.carbohydrate
-            user_data["protein"] = food.protein
-            user_data["fat"] = food.fat
-            user_data["cholesterol"] = food.carbohydrate
-            user_data["fattyAcid"] = food.fattyAcid
-            user_data["amount"] = mtf["amount"]
+            food_data["foodName"] = food.foodName
+            food_data["foodCategory"] = food.foodCategory
+            food_data["foodDetailCategory"] = food.foodDetailCategory
+            food_data["servingSize"] = food.servingSize
+            food_data["foodKcal"] = food.foodKcal
+            food_data["sugar"] = food.sugar
+            food_data["carbohydrate"] = food.carbohydrate
+            food_data["protein"] = food.protein
+            food_data["fat"] = food.fat
+            food_data["cholesterol"] = food.carbohydrate
+            food_data["fattyAcid"] = food.fattyAcid
+            food_data["amount"] = mtf["amount"]
 
-            weekmenuserializer = WeekMenuSerializer(data=user_data)
-            if weekmenuserializer.is_valid(raise_exception=True):
-                result_data.append(weekmenuserializer.data)
-            else:
-                return Response({'error': 'menuToFood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+            user_data["menus"].append(food_data)
+        result_data.append(user_data)
+        response_data.append(result_data)
+        # if weekmenuserializer.is_valid(raise_exception=True):
+        # else:
+            # return Response({'error': 'menuToFood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+    
 
     return Response(result_data, status=status.HTTP_200_OK)
     # return Response(json.dumps(result_data), status=status.HTTP_200_OK)
-
-
+    
 # 주차별 영양소 기록 조회
 def weekly_nutrients(request,userId, week):
     return HttpResponse("weekly_nutrients")
