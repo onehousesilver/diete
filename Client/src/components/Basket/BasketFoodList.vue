@@ -139,15 +139,15 @@ export default {
     // 삭제버튼 클릭시
     deleteItem (item) {
       // 선택한 아이템의 index 저장
-      this.editedIndex = this.myMenu.indexOf(item)
+      this.editedIndex = this.foodDataList.indexOf(item)
       this.dialogDelete = true
     },
 
     // 삭제 모달 확인버튼 클릭시
     deleteItemConfirm () {
-      this.myMenu.splice(this.editedIndex, 1)
+      this.foodDataList.splice(this.editedIndex, 1)
       this.closeDelete()
-      this.menusUpdate(this.myMenu)
+      this.menusUpdate(this.foodDataList)
     },
 
     // 취소버튼클릭시
