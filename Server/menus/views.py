@@ -20,95 +20,60 @@ from datetime import datetime
 def recommend_foods(request, username):
     # 유저 정보
     user=get_object_or_404(get_user_model(), username=username)
-    # 1. 유저의 이전 식단기록(음식기록) 가져오기 [나린]
-    menus = getUserMenus(user)
-    
-    # 2. 유저의 선호 태그들을 찾기 [기호]
-    prefer_user = getUserPrefer(menus)
 
-    # prefer_user = {"meat": 1.6,"vegetable": 0.3, "seafood": 0.7 , "spicy": 1.6, "oily": 1.5}
-    # prefer_string = "채소" # 더미 데이터
-    # 3. 모든 DB의 음식들에 대하여 점수 계산 [수용, 가은]
-    food_list = getFoodRecomm(prefer_user, user.preference)
+    # user의 메뉴를 가져오되, dummydata는 제외
+    user_menus = Menu.objects.filter(userId=user.id).exclude(dateTime= "2000-01-01")
+    meat = vegetable = seafood = spicy = oily = 0 
 
-    return Response(food_list, status=status.HTTP_200_OK)
-
-def getUserMenus(user):
-    result = {}
-
-    user_menus = Menu.objects.filter(userId=user.id)
-    menuserializer = MenuSerializer(user_menus, read_only=True, many=True)
-
-    for menu in menuserializer.data:
-        result[menu["dateTime"]] = list()
-        mtfs = MenuToFood.objects.filter(menuId=menu["id"])
-        mtfserializers = MenuToFoodSerializer(mtfs, read_only=True, many= True)
-
-        for mtfs in mtfserializers.data:
-            food = get_object_or_404(Food, id = mtfs["foodId"])
-            eat_food = {}
-            eat_food["foodName"] = food.foodName
-            eat_food["foodCategory"] = food.foodCategory
-            eat_food["foodDetailCategory"] = food.foodDetailCategory
-            eat_food["servingSize"] = food.servingSize
-            eat_food["foodKcal"] = food.foodKcal
-            eat_food["sugar"] = food.sugar
-            eat_food["carbohydrate"] = food.carbohydrate
-            eat_food["protein"] = food.protein
-            eat_food["fat"] = food.fat
-            eat_food["cholesterol"] = food.carbohydrate
-            eat_food["fattyAcid"] = food.fattyAcid
-            eat_food["spicy"] = food.spicy
-            eat_food["meat"] = food.meat
-            eat_food["vegetable"] = food.vegetable
-            eat_food["seafood"] = food.seafood
-            eat_food["oily"] = food.oily
-            result[menu["dateTime"]].append(eat_food)
-
-    return result
-
-def getUserPrefer(menus):
-    prefer_user = {"spicy":0, "meat":0, "vegetable":0, "seafood":0, "oily":0}
-    cnt = 0
-
-    for menu in menus:
-        size = len(menus[menu]) 
-        # 각 날짜에 들어있는 메뉴의 가지 수 = size
-        while size > 0:
-            # 총 메뉴의 수 cnt (나중에 평균치 계산할 때)
+    # dummydata를 제외하여 data가 없는 상황때문에 cnt를 기본 1
+    cnt = 1
+    for user_menu in user_menus:
+        menuId = user_menu.id
+        mtfs = MenuToFood.objects.filter(menuId=menuId)
+        for mtf in mtfs:
+            meat += mtf.foodId.meat
+            vegetable += mtf.foodId.vegetable
+            seafood += mtf.foodId.seafood
+            spicy += mtf.foodId.spicy
+            oily += mtf.foodId.oily
             cnt += 1
-            size -= 1
-            print("11111111111111111111111111111111111111111111111111")
-            print(menus[menu])
-            print("222222222222222222222222222222222222222222222222222")
-            print(menus[menu][size])
-            print("333333333333333333333333333333333333333333333")
-            print(menus[menu][size].get("foodName"))
-            # 각 메뉴마다 수치 더해주기
-            prefer_user["spicy"] += menus[menu][size].get("spicy")
-            prefer_user["meat"] += menus[menu][size].get("meat")
-            prefer_user["vegetable"] += menus[menu][size].get("vegetable")
-            prefer_user["seafood"] += menus[menu][size].get("seafood")
-            prefer_user["oily"] += menus[menu][size].get("oily")
 
-    # 평균내기
-    if cnt:
-        prefer_user["spicy"]/=cnt
-        prefer_user["meat"]/=cnt
-        prefer_user["vegetable"]/=cnt
-        prefer_user["seafood"]/=cnt
-        prefer_user["oily"]/=cnt
-    else:
-        print("cnt가 0인디?????")
-        # prefer_user["spicy"] = 1
-        # prefer_user["meat"] = 1
-        # prefer_user["vegetable"] = 1
-        # prefer_user["seafood"] = 1
-        # prefer_user["oily"] = 1
+    # 유저가 선호하는 식단의 지표
+    prefer_user = {"meat": meat/cnt, "vegetable": vegetable/cnt, "seafood": seafood/cnt, "spicy": spicy/cnt, "oily": oily/cnt}
+    print(prefer_user)
 
-    return prefer_user
+    # 사용자 선호 정도 조사
+    level = [["고기",'', 0], ["야채",'',0], ["해산물",'',0], ["매콤",'',0], ["느끼함",'',0]]
+    idx = 0
+    for pre in prefer_user:
 
-def getFoodRecomm(prefer_user, prefer_string):
+        if prefer_user[pre] > 2 :
+            level[idx][1] = "높음"
+            level[idx][2] = prefer_user[pre]
+        
+        elif prefer_user[pre] < 2 : 
+            level[idx][1] = "낮음"
+            level[idx][2] = prefer_user[pre]
+        
+        else:
+            level[idx][1] = "평균"
+            level[idx][2] = prefer_user[pre]
+        
+        idx += 1
+    print("level")
+    # print(level)
+
+    # 2로부터 멀리 떨어진 순서대로 정렬
+    level.sort(key = lambda x : -abs(2-x[2]))
+    print(level)
+
+    ###################################################
+    # 1. 0.1랑 비슷한 값을 가진 음식들을 list에 담아서 보내기
+    # 2. return 형식 바꾸기 (어떻게??모르겠습니다..)
+
+    # 유저의 선호 식단
+    prefer_string = user.preference
+    print(prefer_string)
     foods = (Food.objects.filter(commercialFood="품목대표", meat = 0)
     | Food.objects.filter(commercialFood="품목대표", meat = 1)
     | Food.objects.filter(commercialFood="품목대표", meat = 2))
@@ -120,30 +85,38 @@ def getFoodRecomm(prefer_user, prefer_string):
         prefer_weight["vegetable"] = 3
     elif prefer_string == "고기":
         prefer_weight["meat"] = 3
+
     # DB의 모든 Food에 대하여 점수 계산
     food_list = []
     for food in foods.values():
-        food_dic = {}
         score = 0
         # item : meat, vegetable, seafood, spicy, oily
         for item in prefer_user:
-            # print(item, " : ",  abs(prefer_user[item] - food[item])**2 * prefer_weight[item])
             score += abs(prefer_user[item] - food[item])**2 *prefer_weight[item]
-
-        # food_list.append((food["id"], food["foodName"], round(score,3)))
-        food_dic["foodId"] = food["id"]
-        food_dic["foodName"] = food["foodName"]
-        food_dic["score"] = round(score, 2)
-
-        foodrecommserializer = FoodRecommSerializer(data=food_dic)
-        if foodrecommserializer.is_valid(raise_exception = True):
-            food_list.append(foodrecommserializer.data)
-        else:
-            return Response({'error': 'FoodRecomm 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
-    
-    food_list.sort(key=lambda x: float(x["score"]))
+        # print(food["foodName"] , score)
+        
+        food_list.append([food["id"], round(score,3)])
     # print(food_list)
-    return food_list
+    # 값에 따라 정렬
+    food_list.sort(key=lambda x: float(x[1]))
+
+    main_food_recomm = {"전체" : ("전체11",)}
+    main_rec = []
+    for f in range(len(food_list)):
+        if f == 10:
+            break
+
+        food = Food.objects.get(id = food_list[f][0])
+        foodserializer = FoodSerializer(food)
+        main_rec.append(foodserializer)
+    # main_food = main_food_recomm["전체"] + main_rec
+
+    # print(main_food)
+
+
+    # return Response(main_food.data)
+    return HttpResponse("hi Good")
+    
 
 # 음식 상세 조회
 @api_view(['GET'])
@@ -159,40 +132,42 @@ def food_detail(request,foodId):
 
 
 # 추가메뉴조회 GET /submenu/{foodId}
-def sub_foods(request,foodId):
+def sub_foods(request, foodId):
     # 1. foodId가 들어간 menuToFood "menuId"를 모두 찾기
-    menus = getMenus(foodId)
-    #### output :  menus = {menuId1 : [foodId1, foodId2], menuId2 : [foodId1, foodId2], . . .}
+    mtfs = MenuToFood.objects.filter(foodId = foodId)
+    
+    menu_id_list = []
+    sub_menus = {}
+    for mtf in mtfs:
+        menu_id_list.append(mtf.menuId)
+    # print(menu_id_list)
+    for menuId in menu_id_list:
+        mtf_menu = MenuToFood.objects.filter(menuId = menuId)
+        for mtf in mtf_menu:
+            # foodId랑 같다면 pass
+            if mtf.foodId.id == foodId:
+                pass
+            else:
+                if mtf.foodId.id in sub_menus:
+                    sub_menus[mtf.foodId.id] += 1
+                else:
+                    sub_menus[mtf.foodId.id] = 1
+    
+    print(sub_menus)
+    # 순서대로 foodId, foodName, 같이 먹은 횟수 
+    sub_menu_list = []
+    for key in sub_menus:
+        food = Food.objects.get(id = key)
+        sub_menu_list.append([key, food.foodName, sub_menus[key]])
+        # ***** image 파일 넣어주세요 수용닙!! ***** (/▽＼)
 
-    menus = {1 : [1, 2], 2 : [1, 4], 3: [4, 1]} # 더미 데이터
-    # 2. menus를 돌며 서브메뉴 딕셔너리 생성
-    sub_menus = getSubMenus(menus)
-    #### output :  sub_menus = {foodId1 : 3, foodId2 : 5, foodId3 : 2, . . .}
-
-    sub_menus = {1 : 3, 2 : 1, 4 : 2} 
-	# 3. sub_menus의 키를 값에 따라 정렬
-    # sub_menus_list = sorted sub_menus [:10]
 
     # value에 따라 내림차순 정렬
-    sub_menus_list_sort = sorted(sub_menus.item(), key = lambda item: item[1], reverse=True)
-    # 정렬된 dictionarydml key값 추출
-    sub_menus_list = list(sub_menus_list_sort.keys()) 
-    
-    sub_menus_list = [1, 4, 2] 
-    return Response(sub_menus_list[:10], status=status.HTTP_200_OK)
+    sub_menu_list.sort(key = lambda x: -x[2])
+    print(sub_menu_list)
 
-def getMenus(foodId):
-    print("getMenus start! :", foodId)
-    mtf = MenuToFood.objects.filter(foodId=foodId)
-    mtfserializer = MenuToFoodSerializer(mtf, read_only=True, many=True)
-    
-    for mtf in mtfserializer.data:
-        print(mtf)
-    return {}
+    return JsonResponse(sub_menu_list[:10], safe=False)
 
-def getSubMenus(menus):
-    #### input :  menus = {menuId1 : [foodId1, foodId2], menuId2 : [foodId1, foodId2], . . .}
-    pass
 
 
 
