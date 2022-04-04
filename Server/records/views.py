@@ -10,7 +10,7 @@ from rest_framework.decorators import api_view,  permission_classes
 from rest_framework.permissions import AllowAny
 from menus.models import Menu, MenuToFood, Food
 from menus.serializers import MenuSerializer, MenuToFoodSerializer
-from datetime import datetime
+from datetime import date
 # import json
 # Create your views here.
 
@@ -96,7 +96,7 @@ def oneday_kcal(request, username):
     day_id_dict = {}
     for user_menu in user_oneday:
         # dummydata 제외
-        if user_menu.dateTime == datetime.date(2000,1,1):
+        if user_menu.dateTime == date(2000,1,1):
             pass
         else:
             if user_menu.dateTime in day_id_dict:
