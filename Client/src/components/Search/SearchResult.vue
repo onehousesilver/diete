@@ -3,10 +3,12 @@
     <div class="rec-text">검색결과</div>
     <div class="food-wrap">
       <div class="food-list">
-        <button class="material-icons prev-btn" @click="prevPage">arrow_back</button>
-        <div 
+        <button class="material-icons prev-btn" @click="prevPage">
+          arrow_back
+        </button>
+        <div
           class="food-list-el"
-          v-for="(food, idx) in receivedData.slice(startIdx,endIdx)"
+          v-for="(food, idx) in receivedData.slice(startIdx, endIdx)"
           :key="idx"
           :id="`${idx}`"
           @click="showModal(food)"
@@ -23,7 +25,9 @@
             <div class="food-kcal">{{ food.foodKcal }} kcal</div>
           </div>
         </div>
-        <button class="material-icons next-btn" @click="nextPage">arrow_forward</button>
+        <button class="material-icons next-btn" @click="nextPage">
+          arrow_forward
+        </button>
       </div>
     </div>
     <SearchResultItem :modalState="modalState" :foodData="foodData" />
@@ -32,7 +36,7 @@
 
 <script>
 import SearchResultItem from "@/components/Search/SearchResultItem.vue";
-import axios from 'axios';
+import axios from "axios";
 export default {
   name: "SearchResult",
   props: {
@@ -45,21 +49,21 @@ export default {
     return {
       startIdx: 0,
       endIdx: 9,
-      sumFoodKcal: 1500,    // 끼니 합산 칼로리
-      modalState: false,   // Modal On/Off State
+      sumFoodKcal: 1500, // 끼니 합산 칼로리
+      modalState: false, // Modal On/Off State
       foodIdx: 0,
-      foodData: {},     // 모달에 전달해줄 Data
+      foodData: {}, // 모달에 전달해줄 Data
     };
   },
   methods: {
-    nextPage(){
-      if (this.startIdx < this.receivedData.length-9){
+    nextPage() {
+      if (this.startIdx < this.receivedData.length - 9) {
         this.startIdx += 9;
         this.endIdx += 9;
       }
     },
-    prevPage(){
-      if (this.startIdx > 8){
+    prevPage() {
+      if (this.startIdx > 8) {
         this.startIdx -= 9;
         this.endIdx -= 9;
       }
@@ -74,35 +78,37 @@ export default {
       this.$router.push({ name: "pocket" }).catch(() => {});
     },
     showModal(food) {
-      this.modalState = !this.modalState
-      this.foodData = food
+      this.modalState = !this.modalState;
+      this.foodData = food;
       // this.$emit('showModal', food)
     },
     // 음식정보 상세조회
-    getFoodDetail(){
+    getFoodDetail() {
       axios({
-        method:'get',
-        url: `${process.env.VUE_APP_API_URL}/menu/`
+        method: "get",
+        url: `${process.env.VUE_APP_API_URL}/menu/`,
       })
-        .then(res => {
-          console.log(res)
+        .then((res) => {
+          console.log(res);
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 
   computed: {
-    userInfo() { return this.$store.getters.getUserInfo; },
+    userInfo() {
+      return this.$store.getters.getUserInfo;
+    },
   },
   watch: {
     // 탭을 변경하거나 다른키워드로 검색했을 때 다시 첫 인덱스부터
     receivedData() {
       this.startIdx = 0;
       this.endIdx = 9;
-      window.scrollTo({top: 500, behavior: 'smooth'})
-    }
+      window.scrollTo({ top: 500, behavior: "smooth" });
+    },
   },
   mounted() {
     this.showAnimation();
@@ -117,7 +123,7 @@ export default {
   margin-left: 13vw;
 }
 .rec-text {
-  font-size: 1.5vw;
+  font-size: 1.3vw;
   font-weight: 700;
   padding-top: 20px;
   padding-bottom: 10px;
@@ -152,7 +158,7 @@ export default {
 .food-wrap .food-list .food-list-el .food-image {
   display: block;
   position: absolute;
-  left: .5vw;
+  left: 0.5vw;
   border-radius: 10px;
   object-fit: cover;
   width: 8vw;
@@ -184,12 +190,21 @@ export default {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 3vw;
+  font-size: 2vw;
+  color: #25ab9b;
+
+  background-color: rgb(221, 221, 221);
+  border-radius: 50%;
+}
+.prev-btn:hover,
+.next-btn:hover {
+  transform: translateY(-50%) scale(1.2);
+  transition: transform 0.1s;
 }
 .prev-btn {
   left: -3vw;
 }
-.next-btn{
+.next-btn {
   right: -3vw;
 }
 </style>

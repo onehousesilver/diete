@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <sweet-modal id="main-modal" ref="modals">
       <div class="modal">
         <section class="food-modal-header">
@@ -13,7 +12,9 @@
             <div class="food-modal-text">
               <div class="food-modal-name">{{ foodData.foodName }}</div>
               <div class="food-modal-kcal">{{ foodData.foodKcal }}kcal</div>
-              <div class="food-modal-g">1회제공량: {{ foodData.servingSize }}g</div>
+              <div class="food-modal-g">
+                1회제공량: {{ foodData.servingSize }}g
+              </div>
             </div>
           </div>
           <div id="my-chart">
@@ -82,7 +83,7 @@
 <script>
 // import swiper from "../../js/swiper";
 // import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 export default {
   name: "SearchResultItem",
   props: {
@@ -112,13 +113,13 @@ export default {
       // Apexchart,
       series: [
         {
-          data: [ 
-            // { x: '탄수화물', y: 0}, 
-            // { x: '단백질', y: 0}, 
-            // { x: '지방', y: 0}, 
-            // { x: '총 당류', y: 0}, 
-            // { x: '포화지방산', y: 0}, 
-            0,0,0,0,0
+          data: [
+            // { x: '탄수화물', y: 0},
+            // { x: '단백질', y: 0},
+            // { x: '지방', y: 0},
+            // { x: '총 당류', y: 0},
+            // { x: '포화지방산', y: 0},
+            0, 0, 0, 0, 0,
           ],
         },
       ],
@@ -146,41 +147,33 @@ export default {
           },
         },
         xaxis: {
-          categories: [
-            "탄수화물",
-            "단백질",
-            "지방",
-            "당류",
-            "총 포화지방산",
-          ],
+          categories: ["탄수화물", "단백질", "지방", "당류", "총 포화지방산"],
           title: {
-            text: 'g (gram)'
-          }
+            text: "g (gram)",
+          },
         },
         tooltip: {
           y: {
-            formatter: function(val){
-              return `${val} g`
-            }
-          }
-        }
+            formatter: function (val) {
+              return `${val} g`;
+            },
+          },
+        },
       },
       selectFlag: false,
     };
   },
   methods: {
-    ...mapActions([
-      'myMenuUpdate'
-    ]),
+    ...mapActions(["myMenuUpdate"]),
     showModal() {
       this.$refs.modals.open("main-modal");
     },
     // 장바구니에 담기
     putInBasket() {
       // console.log(this.foodData)
-      this.myMenuUpdate(this.foodData)
+      this.myMenuUpdate(this.foodData);
       // console.log(this.$store.state.myBasket)
-      // this.$refs.modal.close("main-modal");
+      this.$refs.modals.close("main-modal");
     },
     selectFood() {
       // console.log(this.foodData)
@@ -188,13 +181,13 @@ export default {
     },
     dataUpdate() {
       this.series[0].data = [
-        { x: '탄수화물', y: this.foodData.carbohydrate}, 
-        { x: '단백질', y: this.foodData.protein}, 
-        { x: '지방', y: this.foodData.fat}, 
-        { x: '총 당류', y: this.foodData.sugar}, 
-        { x: '포화지방산', y: this.foodData.fattyAcid}, 
-      ]
-    }
+        { x: "탄수화물", y: this.foodData.carbohydrate },
+        { x: "단백질", y: this.foodData.protein },
+        { x: "지방", y: this.foodData.fat },
+        { x: "총 당류", y: this.foodData.sugar },
+        { x: "포화지방산", y: this.foodData.fattyAcid },
+      ];
+    },
   },
   watch: {
     modalState() {
@@ -202,7 +195,7 @@ export default {
     },
     foodData() {
       this.dataUpdate();
-    }
+    },
   },
 };
 </script>
