@@ -112,6 +112,32 @@
           </div>
         </div>
       </section>
+
+      <!-- footer -->
+      <section>
+        <div class="footer-form">
+          <section class="left-area">
+            <div class="footer-logo">diète</div>
+            <span>(주)디에떼</span>
+            <div class="footer-developer">
+              길기호, 김나린, 김수용, 이가은, 이진석, 한채은
+            </div>
+            <div class="footer-sub-text">
+              © diète Inc. 2022 All Rights Reserved.
+            </div>
+          </section>
+          <section class="right-area">
+            <div class="footer-adress">
+              대표 주소: 서울 강남구 테헤란로 212길 (역삼동, 멀티캠퍼스)
+            </div>
+            <div class="email">대표 문의: ssafy@ssafy.com</div>
+            <div class="tel">고객센터: 02-3429-5100</div>
+            <div class="operating-time">
+              운영 시간: 오전 9시 ~ 오후 6시 (주말 및 공휴일 휴무)
+            </div>
+          </section>
+        </div>
+      </section>
     </div>
     <!-- 회원일 때 랜딩 페이지 -->
     <div id="login" v-else>
@@ -130,7 +156,7 @@
           </div>
 
           <div class="menu-search-card">
-            <router-link :to="{ name: 'search', params:{ onlySearch: true } }">
+            <router-link :to="{ name: 'search', params: { onlySearch: true } }">
               <div>음식검색</div>
               <span>어떤 음식이든 검색해보세요!</span>
               <img src="../../assets/search-card.svg" alt="" />
@@ -319,10 +345,13 @@ export default {
 }
 
 /* bottom */
+.bottom-section {
+  height: 37vw;
+}
 
 .bottom-section .inner {
   position: relative;
-  height: 40vh;
+  height: 34vw;
   width: 45vw;
   margin: 0 auto;
   top: 2vw;
@@ -393,6 +422,48 @@ export default {
 .show .back-to-position.delay-3 {
   transition-delay: 0.9s;
 }
+
+/* footer */
+.footer-form {
+  height: 14vw;
+  background-color: #25ab9b;
+  display: flex;
+  justify-content: center;
+  padding: 3.5vw;
+  color: #fff;
+  line-height: 1.6;
+}
+/* footer-left */
+.footer-form .left-area {
+  width: 22vw;
+  align-self: flex-end;
+}
+.footer-form .left-area .footer-logo {
+  font-size: 2vw;
+  font-weight: 700;
+}
+
+.footer-form .left-area .footer-developer {
+  font-size: 0.8vw;
+  font-weight: 700;
+}
+.footer-form .left-area .footer-sub-text {
+  font-size: 0.9vw;
+}
+
+/* footer-right */
+.footer-form .right-area {
+  width: 22vw;
+  align-self: flex-end;
+}
+
+.footer-form .right-area .tel,
+.footer-form .right-area .email,
+.footer-form .right-area .operating-time,
+.footer-form .right-area .footer-adress {
+  font-size: 0.8vw;
+}
+
 /* Login 랜딩 페이지 */
 #login {
   margin: 0 5vw;
