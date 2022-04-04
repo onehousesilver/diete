@@ -192,6 +192,14 @@ def decision_basket(request):
             "mealTime" : request.data["mealTime"]
         }
         menuserializer = MenuSerializer(data=menudata)
+
+        if Menu.objects.filter(userId_id = request.user.id).filter(dateTime = request.data["dateTime"]).exists() and Menu.objects.filter(dateTime = request.data["dateTime"]).filter(mealTime = request.data["mealTime"]).exists():
+            print("이미 있는 데이터입니다")
+            return Response({'error': 'menuToFood 테이블에 이미 있는 데이터'}, status=status.HTTP_400_BAD_REQUEST)
+        else :
+            print("처음 보는 데이터")
+
+            
         if menuserializer.is_valid(raise_exception=True):
             menuserializer.save()
             # menu에서 저장될 때 생성된 id 저장 (MenuToFood를 위해서)
@@ -199,6 +207,8 @@ def decision_basket(request):
         else:
             return Response({'error': 'menu 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
         
+
+
         basket = request.data
         # print(type(basket), basket) # dict
         menus = basket.get("menus")
