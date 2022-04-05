@@ -1,3 +1,4 @@
+import re
 from django.http import HttpResponse
 from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, get_list_or_404
@@ -13,6 +14,7 @@ from .models import Food, Menu, MenuToFood
 from .serializers import FoodSerializer, MenuSerializer, MenuToFoodSerializer, FoodRecommSerializer
 
 from datetime import datetime
+import json
 # 음식 추천 GET /recommend/{username}
 
 @api_view(['GET'])
@@ -40,43 +42,14 @@ def recommend_foods(request, username):
 
     # 유저가 선호하는 식단의 지표
     prefer_user = {"meat": meat/cnt, "vegetable": vegetable/cnt, "seafood": seafood/cnt, "spicy": spicy/cnt, "oily": oily/cnt}
-    print(prefer_user)
-
-    # 사용자 선호 정도 조사
-    level = [["고기",'', 0], ["야채",'',0], ["해산물",'',0], ["매콤",'',0], ["느끼함",'',0]]
-    idx = 0
-    for pre in prefer_user:
-
-        if prefer_user[pre] > 2 :
-            level[idx][1] = "높음"
-            level[idx][2] = prefer_user[pre]
-        
-        elif prefer_user[pre] < 2 : 
-            level[idx][1] = "낮음"
-            level[idx][2] = prefer_user[pre]
-        
-        else:
-            level[idx][1] = "평균"
-            level[idx][2] = prefer_user[pre]
-        
-        idx += 1
-    print("level")
-    # print(level)
-
-    # 2로부터 멀리 떨어진 순서대로 정렬
-    level.sort(key = lambda x : -abs(2-x[2]))
-    print(level)
-
-    ###################################################
-    # 1. 0.1랑 비슷한 값을 가진 음식들을 list에 담아서 보내기
-    # 2. return 형식 바꾸기 (어떻게??모르겠습니다..)
 
     # 유저의 선호 식단
     prefer_string = user.preference
-    print(prefer_string)
     foods = (Food.objects.filter(commercialFood="품목대표", meat = 0)
     | Food.objects.filter(commercialFood="품목대표", meat = 1)
-    | Food.objects.filter(commercialFood="품목대표", meat = 2))
+    | Food.objects.filter(commercialFood="품목대표", meat = 2)
+    | Food.objects.filter(commercialFood="품목대표", meat = 3)
+    | Food.objects.filter(commercialFood="품목대표", meat = 4))
     
     # 사용자의 선호 식단 채소, 고기, 일반에 따라 가중치 ++
     prefer_weight = {"meat": 10 ,"vegetable": 10, "seafood": 10 , "spicy": 10, "oily": 10}
@@ -93,30 +66,76 @@ def recommend_foods(request, username):
         # item : meat, vegetable, seafood, spicy, oily
         for item in prefer_user:
             score += abs(prefer_user[item] - food[item])**2 *prefer_weight[item]
-        # print(food["foodName"] , score)
         
         food_list.append([food["id"], round(score,3)])
-    # print(food_list)
+    
     # 값에 따라 정렬
     food_list.sort(key=lambda x: float(x[1]))
 
-    main_food_recomm = {"전체" : ("전체11",)}
+    result = {}
     main_rec = []
     for f in range(len(food_list)):
         if f == 10:
+            result["전체"] = {"선호도" : 0, "data" : main_rec}
             break
+        # food = Food.objects.filter(id = food_list[f][0])
+        food = get_object_or_404(Food, id = food_list[f][0])
+        foodserializer = FoodSerializer(food, read_only=True)
+        main_rec.append(foodserializer.data)
 
-        food = Food.objects.get(id = food_list[f][0])
-        foodserializer = FoodSerializer(food)
-        main_rec.append(foodserializer)
-    # main_food = main_food_recomm["전체"] + main_rec
-
-    # print(main_food)
-
-
-    # return Response(main_food.data)
-    return HttpResponse("hi Good")
+    # 유저가 선호하는 식단의 지표 정렬
+    more_prefer = sorted(prefer_user.items(), key = lambda item : item[1], reverse=True)
+    print(more_prefer)
     
+    for k in range(3):
+        food_cate, amount = more_prefer[k]
+        if food_cate == "meat":
+            foods = (Food.objects.filter(commercialFood="품목대표", meat = 3)
+            | Food.objects.filter(commercialFood="품목대표", meat = 4))
+            
+        elif food_cate == "vegetable":
+            foods = (Food.objects.filter(commercialFood="품목대표", vegetable = 3)
+            | Food.objects.filter(commercialFood="품목대표", vegetable = 4))
+            
+        elif food_cate == "seafood":
+            foods = (Food.objects.filter(commercialFood="품목대표", seafood = 3)
+            | Food.objects.filter(commercialFood="품목대표", seafood = 4))
+            
+        elif food_cate == "spicy":
+            foods = (Food.objects.filter(commercialFood="품목대표", spicy = 3)
+            | Food.objects.filter(commercialFood="품목대표", spicy = 4))
+            
+        else: # oily
+            foods = (Food.objects.filter(commercialFood="품목대표", oily = 3)
+            | Food.objects.filter(commercialFood="품목대표", oily = 4))
+        # print("food : ", foods)
+        food_list = []
+        for food in foods.values():
+            score = 0
+            # item : meat, vegetable, seafood, spicy, oily
+            for item in prefer_user:
+                if item == food_cate:
+                    pass
+                else:
+                    score += abs(prefer_user[item] - food[item])**2 *prefer_weight[item]
+        
+            food_list.append([food["id"], round(score,3)])
+        
+        # 값에 따라 정렬
+        food_list.sort(key=lambda x: float(x[1]))
+        main_rec = []
+        for i in range(10):
+            food = get_object_or_404(Food, id = food_list[i][0])
+            foodserializer = FoodRecommSerializer(food, read_only=True)
+            main_rec.append(foodserializer.data)
+
+        result[food_cate] = {}
+        result[food_cate]["선호도"] = amount
+        result[food_cate]["data"] = main_rec
+
+    
+    return Response(result, status=status.HTTP_200_OK)
+
 
 # 음식 상세 조회
 @api_view(['GET'])

@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Food, Menu, MenuToFood, FoodRecomm
-
+from .models import Food, Menu, MenuToFood
+from image_adapter import ImageIncoder
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Food
@@ -21,7 +21,11 @@ class MenuToFoodSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class FoodRecommSerializer(serializers.ModelSerializer):
-    
+    # image = serializers.CharField(read_only=True)
+    imageIncoder = ImageIncoder()
+    image = serializers.SerializerMethodField()
     class Meta:
-        model = FoodRecomm
+        model = Food
         fields = '__all__'
+    def get_image(self, obj):
+        return self.imageIncoder.getBase64String(obj.foodName)
