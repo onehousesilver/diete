@@ -28,9 +28,7 @@
       :onlySearch="onlySearch"
     />
     <!-- <SearchResultItem :modalState="modalState" :foodData="foodData" /> -->
-    <MiniBasket 
-      v-show="!onlySearch"
-    />
+    <MiniBasket v-show="!onlySearch" />
   </div>
 </template>
 
@@ -134,15 +132,6 @@ export default {
 </script>
 
 <style>
-/* .no-result {
-  font-size: 3vw;
-  position: relative;
-  width: 100%;
-  line-height: 30vh;
-  height: 30vh;
-  text-align: center;
-  z-index: 3;
-} */
 .no-search-img {
   display: block;
   margin: 2vw auto;
