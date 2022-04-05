@@ -81,7 +81,7 @@ def recommend_foods(request, username):
             break
         # food = Food.objects.filter(id = food_list[f][0])
         food = get_object_or_404(Food, id = food_list[f][0])
-        foodserializer = FoodSerializer(food, read_only=True)
+        foodserializer = FoodRecommSerializer(food, read_only=True)
         main_rec.append(foodserializer.data)
 
     # 유저가 선호하는 식단의 지표 정렬
