@@ -77,7 +77,7 @@ def recommend_foods(request, username):
     main_rec = []
     for f in range(len(food_list)):
         if f == 10:
-            result["전체"] = {"선호도" : 0, "data" : main_rec}
+            result["all"] = {"preference" : 0, "data" : main_rec}
             break
         # food = Food.objects.filter(id = food_list[f][0])
         food = get_object_or_404(Food, id = food_list[f][0])
@@ -131,7 +131,7 @@ def recommend_foods(request, username):
             main_rec.append(foodserializer.data)
 
         result[food_cate] = {}
-        result[food_cate]["선호도"] = amount
+        result[food_cate]["preference"] = amount
         result[food_cate]["data"] = main_rec
 
     
