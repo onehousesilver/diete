@@ -155,6 +155,8 @@ export default {
                   title: "식단이 수정되었습니다",
                   text: "나의기록 페이지로 이동합니다.",
                 });
+                this.menusUpdate([])
+                this.$router.push({ name:'record' })
               })
               .catch(err => {
                 console.log(err)
@@ -166,10 +168,10 @@ export default {
               title: "식단에 저장되었습니다",
               text: "나의기록 페이지로 이동합니다.",
             });
-          }
-          // 전역 장바구니 초기화
           this.menusUpdate([])
           this.$router.push({ name:'record' })
+          }
+          // 전역 장바구니 초기화
         })
         .catch((err) => {
           this.$swal.fire({

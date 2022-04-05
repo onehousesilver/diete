@@ -7,12 +7,16 @@
     <SearchBar />
     <MiniBasket />
     <div v-if="loadingState" class="loading-container">
-      <img class="loading-img" src="../../assets/spinner.gif" alt="loading spinner">
-      <span class="loading-text">{{userInfo.data.name}}님의 선호도를 분석 중입니다.</span>
+      <img
+        class="loading-img"
+        src="../../assets/main_logout/main_landing.gif"
+        alt="loading spinner"
+      />
+      <span class="loading-text">{{ loadingText }}</span>
     </div>
     <RecFoodList
-      v-else 
-      v-for="(data,key) in recommendedData"
+      v-else
+      v-for="(data, key) in recommendedData"
       :key="key"
       :receivedData="data"
       :dataKey="key"
@@ -23,12 +27,12 @@
 
 <script>
 import BannerBar from "@/components/Main/BannerBar.vue";
-import axios from 'axios';
+import axios from "axios";
 import SearchBar from "@/components/Search/SearchBar.vue";
-import MiniBasket from '@/components/Basket/MiniBasket.vue'
+import MiniBasket from "@/components/Basket/MiniBasket.vue";
 import RecFoodList from "@/components/Recommend/RecFoodList.vue";
 export default {
-  name: 'RecommendMeal',
+  name: "RecommendMeal",
   components: {
     BannerBar,
     SearchBar,
@@ -37,44 +41,65 @@ export default {
   },
   data() {
     return {
-      recommendedData: null,  // 추천된음식 데이터
+      recommendedData: null, // 추천된음식 데이터
       modalState: false,
       loadingState: true,
-      test: 'test'
-    }
+      test: "test",
+      loadingText: ``,
+    };
   },
   methods: {
     // 추천식단 API 호출
-    getRecommendedMeal(){
+    getRecommendedMeal() {
       axios({
         method: "get",
         url: `${process.env.VUE_APP_API_URL}/menu/recommendation/${this.userInfo.username}/`,
         headers: {
-          Authorization: `JWT ${this.token}`
-        }
+          Authorization: `JWT ${this.token}`,
+        },
       })
-        .then(res => {
-          this.recommendedData = res.data
-          console.log(res.data)
+        .then((res) => {
+          this.recommendedData = res.data;
+          console.log(res.data);
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     showModal() {
       this.modalState = !this.modalState;
-    }
+    },
   },
-  computed:{
-    userInfo() { return this.$store.getters.getUserInfo },
-    token() { return this.$store.getters.getUserToken }
+  computed: {
+    userInfo() {
+      return this.$store.getters.getUserInfo;
+    },
+    token() {
+      return this.$store.getters.getUserToken;
+    },
   },
   mounted() {
-    this.getRecommendedMeal()
+    this.getRecommendedMeal();
+    this.loadingText = `${this.userInfo.data.name}님에게 추천할 음식을 요리하고있어요`;
+    let loading = setInterval(() => {
+      this.loadingText += ".";
+      console.log(this.loadingText);
+    }, 1300);
     setTimeout(() => {
-      this.loadingState=false;
-    }, 5000);
-  }
+      this.loadingState = false;
+      clearTimeout(loading);
+      this.$swal.fire({
+        title: "장바구니를 이용해보세요!",
+        text: "장바구니에 담아 실시간 칼로리를 확인해보세요",
+        imageUrl: require("../../assets/alert_basket.gif"),
+        imageWidth: 800,
+        imageHeight: 400,
+        width: 850,
+        imageAlt: "basket gif",
+      });
+    }, 3800);
+  },
+  // alert 추가
 };
 </script>
 
@@ -84,18 +109,21 @@ export default {
   width: 100vw;
   height: 50vh;
 }
-.loading-img{
-  width: 1000px;
+.loading-img {
+  width: 40vw;
   position: absolute;
-  left:50%;
-  transform: translateX(-50%);
-}
-.loading-text{
-  font-size: 3vw;
-  position: absolute;
-  top:0;
   left: 50%;
   transform: translateX(-50%);
 }
-
+.loading-text {
+  font-size: 2vw;
+  position: absolute;
+  font-weight: 700;
+  top: 2vw;
+  left: 50%;
+  transform: translateX(-50%);
+}
+/* .swal2-popup {
+  width: 35vw;
+} */
 </style>

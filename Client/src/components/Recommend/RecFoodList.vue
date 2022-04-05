@@ -30,7 +30,7 @@
         </button>
       </div>
     </div>
-    <FoodModal :modalState="modalState" :foodData="foodData"/>
+    <FoodModal :modalState="modalState" :foodData="foodData" />
   </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
       endIdx: 3,
       modalState: false, // Modal On/Off State
       foodData: {}, // 모달에 전달해줄 Data
-      description: '',
+      description: "",
     };
   },
   methods: {
@@ -87,34 +87,34 @@ export default {
           console.log(err);
         });
     },
-    // 
-    textInit(){
-      Math.random()
-      switch(this.dataKey){
-        case 'all':
-          this.description = `${this.userInfo.data.name}님이 가장 좋아하실 만한 음식이에요.`
-          break
-        case 'oily':
-          this.description = `포만감 한 가득, 먹어도 먹어도 배고픈 당신을 위해 준비했어요.`
-          break
-        case 'meat':
-          this.description = `단백질 가득 고기, 든든하고 풍성한 한끼를 만들어 보세요`
-          break
-        case 'seafood':
-          this.description = `영양만점 해산물, 내일 아침에는 고소한 생선 구이 어떠세요?`
-          this.description = `바다 향이 가득한 해조류, 영양 풍부하고 맛 좋은 해조류로 차리는 한 상`
-          break
-        case 'vegetable':
-          this.description = `건강한 자연 식물식, 가공 식품을 최소화한 식단`
-          break
-        case 'spicy':
-          this.description = `날씨가 추워지면 생각나는, 얼큰한 음식` 
-          this.description = `얼큰하게 즐기는 매운 음식, 스트레스를 풀어보세요`
-          break
+    //
+    textInit() {
+      Math.random();
+      switch (this.dataKey) {
+        case "all":
+          this.description = `${this.userInfo.data.name}님이 가장 좋아하실 만한 음식이에요.`;
+          break;
+        case "oily":
+          this.description = `포만감 한 가득, 먹어도 먹어도 배고픈 당신을 위해 준비했어요.`;
+          break;
+        case "meat":
+          this.description = `단백질 가득 고기, 든든하고 풍성한 한끼를 만들어 보세요`;
+          break;
+        case "seafood":
+          this.description = `영양만점 해산물, 내일 아침에는 고소한 생선 구이 어떠세요?`;
+          this.description = `바다 향이 가득한 해조류, 영양 풍부하고 맛 좋은 해조류로 차리는 한 상`;
+          break;
+        case "vegetable":
+          this.description = `건강한 자연 식물식, 가공 식품을 최소화한 식단`;
+          break;
+        case "spicy":
+          this.description = `날씨가 추워지면 생각나는, 얼큰한 음식`;
+          this.description = `얼큰하게 즐기는 매운 음식, 스트레스를 풀어보세요`;
+          break;
         default:
-          break
+          break;
       }
-    }
+    },
   },
 
   computed: {
@@ -130,15 +130,17 @@ export default {
       this.textInit();
     },
   },
-  mounted(){
+  mounted() {
     this.textInit();
-  }
+  },
 };
 </script>
 
 <style>
 .rec-food-list {
   width: 73vw;
+  height: 8vw;
+  margin-top: 1vw;
   margin-bottom: 5vw;
   margin-left: 13vw;
 }
@@ -380,8 +382,8 @@ export default {
   transform: translate(-50%, -50%);
   opacity: 0;
   z-index: -1;
-  color:#eee;
-  cursor:pointer;
+  color: #eee;
+  cursor: pointer;
 }
 .modal-bottom-img:hover + .modal-bottom-img-text {
   opacity: 1;

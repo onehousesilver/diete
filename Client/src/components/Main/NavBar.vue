@@ -21,29 +21,30 @@
       </div>
       <div class="menu-items" v-else>
         <router-link :to="{ name: 'ChooseMeal' }">
-            <!-- @mouseover="isRecordMouseOver" -->
+          <!-- @mouseover="isRecordMouseOver" -->
           <span
             @mouseover="iconToggle"
             @mouseleave="iconToggle"
             id="1"
             class="nav-food-rec material-icons"
-          > restaurant 
+          >
+            restaurant
             <!-- <span class="" v-show="isRecord"></span> -->
           </span>
         </router-link>
         <router-link :to="{ name: 'search', params: { onlySearch: true } }">
-          <span 
+          <span
             class="nav-food-search material-icons"
-            @mouseover="iconToggle" 
+            @mouseover="iconToggle"
             @mouseleave="iconToggle"
             id="2"
-          > 
-            search 
+          >
+            search
           </span>
         </router-link>
         <router-link :to="{ name: 'record' }">
-          <span 
-            @mouseover="iconToggle" 
+          <span
+            @mouseover="iconToggle"
             @mouseleave="iconToggle"
             id="3"
             class="nav-food-mypage material-icons"
@@ -63,7 +64,7 @@
 </template>
 
 <script>
-import $ from 'jquery';
+import $ from "jquery";
 import { mapActions } from "vuex";
 export default {
   name: "NavBar",
@@ -87,39 +88,40 @@ export default {
       this.removeUserToken();
     },
     // hover 시에 아이콘 > 글자 토글
-    iconToggle(e){
+    iconToggle(e) {
       // target id 값 기준으로 1,2,3일때
-      switch(e.target.id){
+      switch (e.target.id) {
         case "1":
           // mouseover 이벤트가 발생하면
-          if(e.type=='mouseover'){
+          if (e.type == "mouseover") {
             // innerText 변경, material-icons 클래스 삭제
-            $('.nav-food-rec').text("음식추천").removeClass('material-icons');
+            $(".nav-food-rec").text("음식추천").removeClass("material-icons");
+          } else {
+            $(".nav-food-rec").text("restaurant").addClass("material-icons");
           }
-          else{
-            $('.nav-food-rec').text("restaurant").addClass('material-icons');
-          }
-          break
+          break;
         case "2":
-          if(e.type=='mouseover'){
-            $('.nav-food-search').text("음식검색").removeClass('material-icons');
+          if (e.type == "mouseover") {
+            $(".nav-food-search")
+              .text("음식검색")
+              .removeClass("material-icons");
+          } else {
+            $(".nav-food-search").text("search").addClass("material-icons");
           }
-          else{
-            $('.nav-food-search').text("search").addClass('material-icons');
-          }
-          break
+          break;
         case "3":
-          if(e.type=='mouseover'){
-            $('.nav-food-mypage').text("나의기록").removeClass('material-icons');
+          if (e.type == "mouseover") {
+            $(".nav-food-mypage")
+              .text("나의기록")
+              .removeClass("material-icons");
+          } else {
+            $(".nav-food-mypage").text("portrait").addClass("material-icons");
           }
-          else{
-            $('.nav-food-mypage').text("portrait").addClass('material-icons');
-          }
-          break
+          break;
         default:
-          break
+          break;
       }
-    }, 
+    },
   },
   computed: {
     isLogin() {
@@ -195,11 +197,6 @@ a {
   height: 100%;
   border-radius: 0.4vw;
 }
-.material-icons {
-  font-size: 1.5vw;
-  color: #333;
-  vertical-align: -webkit-baseline-middle;
-}
 
 .nav-food-rec,
 .nav-food-search,
@@ -212,5 +209,7 @@ a {
 .nav-food-search.material-icons,
 .nav-food-mypage.material-icons {
   font-size: 1.5vw;
+  color: #333;
+  vertical-align: -webkit-baseline-middle;
 }
 </style>
