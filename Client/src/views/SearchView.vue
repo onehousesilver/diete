@@ -19,7 +19,7 @@
         에 대한 검색결과가 없습니다.
       </div>
     </div>
-    <!-- <RecFoodList /> -->
+    <img class="loading-img" src="../assets/spinner.gif" alt="loading spinner" v-show="!resultState&&loadingState">
     <SearchResult
       v-show="resultState"
       :receivedData="searchData"
@@ -27,7 +27,6 @@
       @searchKeyword="onSearchKeyword"
       :onlySearch="onlySearch"
     />
-    <!-- <SearchResultItem :modalState="modalState" :foodData="foodData" /> -->
     <MiniBasket v-show="!onlySearch" />
   </div>
 </template>
@@ -37,7 +36,6 @@ import BannerBar from "@/components/Main/BannerBar.vue";
 import SearchBar from "@/components/Search/SearchBar.vue";
 import CategoryBar from "@/components/Search/CategoryBar.vue";
 import SearchResult from "@/components/Search/SearchResult.vue";
-// import SearchResultItem from "@/components/Search/SearchResultItem.vue";
 import MiniBasket from "@/components/Basket/MiniBasket.vue";
 import axios from "axios";
 
@@ -52,7 +50,6 @@ export default {
     SearchBar,
     CategoryBar,
     SearchResult,
-    // SearchResultItem,
     MiniBasket,
   },
   data() {
@@ -60,27 +57,20 @@ export default {
       searchResult: null, // 검색 결과(Array)
       noResult: false, // 검색결과가 없습니다 T/F
       category: "all", // 검색카테고리 (default=all)
-      currentKeyword: "",
+      currentKeyword: "", // 검색키워드
 
+      loadingState: false, // loading spinner On/Off
       resultState: false, // 검색결과 T/F
       searchData: [], // 검색결과 Data
       modalState: false, // Modal On/Off State
-      foodData: {
-        foodName: "",
-        foodKcal: 0,
-        servingSize: 0,
-        image: "",
-        carbohydrate: 0,
-        protein: 0,
-        fat: 0,
-        sugar: 0,
-        fattyAcid: 0,
-      },
     };
   },
   methods: {
     onSearchKeyword(keyword) {
       this.currentKeyword = keyword;
+      this.resultState=false;
+      this.noResult=false;
+      this.loadingState=true;
       axios({
         method: "get",
         url: `${process.env.VUE_APP_API_URL}/search/${this.category}/${keyword}/`,
@@ -102,8 +92,7 @@ export default {
     },
     // 검색결과가 없다면 검색결과가 없습니다 표시
     // 검색결과가 있다면 검색 결과 컴포넌트 표시
-    showModal(food) {
-      this.foodData = food;
+    showModal() {
       this.modalState = !this.modalState;
     },
     changeCategory(category) {
@@ -141,5 +130,11 @@ export default {
 .no-search-text {
   font-size: 2vw;
   text-align: center;
+}
+.loading-img {
+  width: 30vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mini-basket-form" @click="test">
+    <div class="mini-basket-form" @click="basketToggle">
       <span class="material-icons basket-btn">shopping_cart</span>
     </div>
     <div class="basket-list">
@@ -83,14 +83,13 @@ export default {
           }
         });
     },
-    test() {
+    basketToggle() {
       if (this.basketState) {
         $(".basket-list").removeClass("selected");
       } else {
         $(".basket-list").addClass("selected");
       }
       this.basketState = !this.basketState;
-      console.log(this.mealTime);
     },
   },
   computed: {
@@ -113,24 +112,24 @@ export default {
     },
   },
   mounted() {
-    if (this.menus) {
-      this.menus.forEach((menu) => {
-        this.totalKcal += parseFloat(menu.foodKcal);
+    if (this.menus){
+      this.menus.forEach(menu => {
+        this.totalKcal += parseInt(menu.foodKcal)
       });
     }
   },
   watch: {
     // 메뉴의 총 칼로리 합산
     menus() {
-      this.totalKcal = 0;
-      if (this.menus) {
-        this.menus.forEach((menu) => {
-          this.totalKcal += parseFloat(menu.foodKcal);
+      this.totalKcal = 0
+      if (this.menus){
+        this.menus.forEach(menu => {
+          this.totalKcal += parseInt(menu.foodKcal)
         });
-      }
-    },
-  },
-};
+    }
+    }
+  }
+}
 </script>
 
 <style scoped>

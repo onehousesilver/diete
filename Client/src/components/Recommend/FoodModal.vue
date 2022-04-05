@@ -1,19 +1,23 @@
 <template>
   <div>
-    <sweet-modal id="main-modal" ref="modal">
+    <sweet-modal id="main-modal" ref="modals">
       <div class="modal">
         <section class="food-modal-header">
-          <img
-            src="../../assets/menu_rec/food_example_img.jpg"
-            alt="음식예시사진"
-            class="modal-img"
-          />
-          <div class="food-modal-text">
-            <div class="food-modal-name">{{ foodData.foodName }}</div>
-            <div class="food-modal-kcal">{{ foodData.foodKcal }}kcal</div>
-            <div class="food-modal-g">1회제공량: 400g</div>
+          <div class="food-modal-header-left">
+            <img
+              :src="`data:image/png;base64,${foodData.image}`"
+              alt="음식 사진"
+              class="modal-img"
+            />
+            <div class="food-modal-text">
+              <div class="food-modal-name">{{ foodData.foodName }}</div>
+              <div class="food-modal-kcal">{{ foodData.foodKcal }}kcal</div>
+              <div class="food-modal-g">
+                1회제공량: {{ foodData.servingSize }}g
+              </div>
+            </div>
           </div>
-          <div id="chart">
+          <div id="my-chart">
             <ApexChart
               type="bar"
               height="300"
@@ -23,45 +27,29 @@
           </div>
         </section>
 
-        <section class="food-modal-bottom" @click="selectFood">
+        <section class="food-modal-bottom">
           <div class="inner">
-            <div class="food-modal-bottom-text">이런 음식은 어때요?</div>
+            <div class="food-modal-bottom-text">다른 사용자들은 이런 음식도 먹었어요</div>
 
             <swiper ref="mySwiper" :options="swiperOptions" class="my-swiper">
-              <swiper-slide>
+              <swiper-slide
+                v-for="(subFood, idx) in subMenu"
+                :key="idx"
+                class="submenu"
+                :id="`${idx}`"
+              >
                 <img
-                  src="../../assets/menu_rec/food_example_img.jpg"
+                  :src="`data:image/png;base64,${subFood.img}`"
                   alt="음식예시사진"
                   class="modal-bottom-img"
+                  @click="mainMenuUpdate(subFood)"
                 />
-              </swiper-slide>
-              <swiper-slide>
-                <img
-                  src="../../assets/menu_rec/food_example_img.jpg"
-                  alt="음식예시사진"
-                  class="modal-bottom-img"
-                />
-              </swiper-slide>
-              <swiper-slide>
-                <img
-                  src="../../assets/menu_rec/food_example_img.jpg"
-                  alt="음식예시사진"
-                  class="modal-bottom-img"
-                />
-              </swiper-slide>
-              <swiper-slide>
-                <img
-                  src="../../assets/menu_rec/food_example_img.jpg"
-                  alt="음식예시사진"
-                  class="modal-bottom-img"
-                />
-              </swiper-slide>
-              <swiper-slide>
-                <img
-                  src="../../assets/menu_rec/food_example_img2.png"
-                  alt="음식예시사진"
-                  class="modal-bottom-img"
-                />
+                <div 
+                  class="modal-bottom-img-text"
+                  @click="mainMenuUpdate(subFood)"
+                >
+                  {{ subFood.foodName }}
+                </div>
               </swiper-slide>
             </swiper>
             <div class="swiper-prev">
@@ -72,7 +60,8 @@
             </div>
             <button
               class="bttn-unite bttn-md bttn-success pocket-btn"
-              @click="goToPocket"
+              @click="putInBasket"
+              v-show="!onlySearch"
             >
               장바구니에 담기
             </button>
@@ -84,14 +73,18 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { mapActions } from "vuex";
 export default {
-  name: "FoodModal",
+  name: "SearchResultItem",
   props: {
-    test: Boolean,
+    modalState: Boolean,
     foodData: Object,
+    onlySearch: Boolean,
   },
   data() {
     return {
+      subMenu: null,    // 추가메뉴
       // swiper
       swiperOptions: {
         loop: true,
@@ -105,10 +98,13 @@ export default {
           nextEl: ".swiper-next",
         },
       },
-      // Aepxchart,
+      // Apexchart,
       series: [
         {
-          data: [400, 430, 448, 470, 540, 580],
+          name: "함량",
+          data: [
+            0, 0, 0, 0, 0,
+          ],
         },
       ],
       chartOptions: {
@@ -128,129 +124,205 @@ export default {
         },
         dataLabels: {
           enabled: true,
-          offsetX: -6,
+          offsetX: -10,
           style: {
             fontSize: "12px",
             colors: ["#fff"],
           },
         },
         xaxis: {
-          categories: [
-            "탄수화물",
-            "단백질",
-            "지방",
-            "당류",
-            "총 포화지방산",
-            "콜레스테롤",
-          ],
+          categories: ["탄수화물", "단백질", "지방", "당류", "총 포화지방산"],
+          title: {
+            text: "g (gram)",
+          },
+        },
+        tooltip: {
+          y: {
+            formatter: function (val) {
+              return `${val} g`;
+            },
+          },
         },
       },
       selectFlag: false,
+      newData: null,
     };
   },
   methods: {
+    ...mapActions(["myMenuUpdate"]),
     showModal() {
-      this.$refs.modal.open("main-modal");
+      this.$refs.modals.open("main-modal");
     },
-    goToPocket() {
-      this.$refs.modal.close("main-modal");
+    dataUpdate() {
+      this.series[0].data = [
+        { x: "탄수화물", y: this.foodData.carbohydrate },
+        { x: "단백질", y: this.foodData.protein },
+        { x: "지방", y: this.foodData.fat },
+        { x: "총 당류", y: this.foodData.sugar },
+        { x: "포화지방산", y: this.foodData.fattyAcid },
+      ];
     },
-    selectFood() {
-      const subRecommendFood = document.querySelectorAll(".modal-bottom-img");
-      if (this.selectFlag == true) {
-        this.selectFlag = false;
-        for (let i = 0; i < subRecommendFood.length; i++) {
-          subRecommendFood[i].classList.remove("clicked");
+    subMenuUpdate() {
+      axios({
+        method: 'get',
+        url: `${process.env.VUE_APP_API_URL}/menu/submenu/${this.foodData.id}/`
+      })
+        .then(res => {
+          this.subMenu = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    // 아쉽지만
+    mainMenuUpdate(subMenu){
+      console.log(subMenu)
+      axios({
+        method: 'get',
+        url: `${process.env.VUE_APP_API_URL}/menu/${subMenu.foodId}/`
+      })
+        .then(res => {
+          this.$emit('dataUpdate', res.data)
+          console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    // 장바구니담기
+    putInBasket(){
+      // 선택한 음식이 이미 장바구니에 존재할 때
+      if (this.$store.state.menus.length){
+        let alreadyIncludeState = this.$store.state.menus.every(food => food.id == this.foodData.id)
+        if (alreadyIncludeState){
+          this.$swal.fire({
+            icon: "error",
+            title: "이미 장바구니에 들어있어요.",
+          });
         }
-      } else {
-        this.selectFlag = true;
-        for (let i = 0; i < subRecommendFood.length; i++) {
-          subRecommendFood[i].classList.add("clicked");
+        else {
+          this.myMenuUpdate(this.foodData);
+          this.$swal.fire({
+            icon: "success",
+            title: "장바구니에 추가되었습니다."
+          });
         }
       }
-    },
+      else{
+        this.myMenuUpdate(this.foodData);
+        this.$swal.fire({
+          icon: "success",
+          title: "장바구니에 추가되었습니다."
+        });
+      }
+      this.$refs.modals.close("main-modal");
+    }
   },
   watch: {
-    test() {
-      console.log(this.test);
+    modalState() {
       this.showModal();
     },
-  },
-  mounted() {
-    this.showSwiper();
+    foodData() {
+      this.dataUpdate();
+      this.subMenuUpdate();
+    },
   },
 };
 </script>
 
 <style>
-.modal-img {
-  width: 300px;
-  border-radius: 10px;
-}
-.food-modal-bottom {
-  padding: 20px;
-  position: relative;
-  top: 30px;
-  width: 100%;
-}
-.food-modal-bottom .swiper-wrapper {
-  display: flex;
-  justify-content: center;
-}
-.food-modal-header {
-  display: flex;
-  justify-content: space-around;
+.sweet-modal {
+  max-width: 60vw;
+  overflow-x: hidden;
 }
 
 .food-modal-text {
   font-weight: 700;
   align-self: center;
 }
-
 .food-modal-name {
-  font-size: 30px;
-  margin-bottom: 20px;
+  font-size: 1.6vw;
 }
 .food-modal-kcal {
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 1.4vw;
+}
+.food-modal-g {
+  font-size: 1.2vw;
+}
+
+.modal-img {
+  width: 12vw;
+  height: 23vh;
+  border-radius: 10px;
+}
+.modal-bottom-img {
+  width: 10vw;
+  height: 10vw;
+  border-radius: 10px;
+}
+#my-chart {
+  width: 30vw;
+}
+
+.pocket-btn {
+  width: 10vw;
+  height: 2vw;
+  font-size: 1vw;
+  display: block;
+  border-radius: 0.5vw;
+  left: 84%;
+  top: 1vw;
+}
+
+.food-modal-header {
+  display: flex;
+  justify-content: space-evenly;
+}
+.food-set {
+  width: 31vw;
+  display: flex;
+  justify-content: space-around;
+  align-self: center;
+}
+.food-modal-text {
+  font-weight: 700;
+  align-self: center;
 }
 
 #chart {
-  width: 500px;
+  width: 25vw;
+}
+.food-modal-bottom {
+  padding: 0.78vw;
+  position: relative;
+  top: 1.2vw;
+  width: 100%;
+}
+.food-modal-bottom .swiper-wrapper {
+  display: flex;
+  justify-content: center;
+  height: 15.42vh;
 }
 
 .food-modal-bottom-text {
-  font-size: 25px;
+  font-size: 1vw;
   font-weight: 700;
   text-align: left;
   position: relative;
-  left: 10px;
+  left: 2.1vw;
   margin-bottom: 10px;
 }
 .modal-bottom-img {
-  width: 200px;
-  height: 200px;
+  width: 7.8vw;
+  height: 15.42vh;
   margin: 10px;
   border-radius: 10px;
 }
 .modal-bottom-img:hover {
   cursor: pointer;
 }
-
-.pocket-btn {
-  width: 170px;
-  height: 50px;
-  font-size: 18px;
-  position: relative;
-  display: block;
-  border-radius: 7px;
-  left: 84%;
-  top: 20px;
-}
-.sweet-modal {
-  max-width: 60vw;
-  overflow-x: hidden;
+.sub-food-name {
+  font-size: 0.9vw;
 }
 
 .my-swiper {
@@ -258,8 +330,8 @@ export default {
 }
 .swiper-prev,
 .swiper-next {
-  width: 42px;
-  height: 42px;
+  width: 1.6vw;
+  height: 3.23vh;
   outline: none;
   border: 3px solid #ffffff;
   background-color: rgb(0, 0, 0);
@@ -277,7 +349,7 @@ export default {
 }
 
 .swiper-next {
-  right: 55px;
+  right: 2.1vw;
 }
 .swiper-prev:hover,
 .swiper-next:hover {
@@ -297,9 +369,33 @@ export default {
 .swiper-slide-active + .swiper-slide + .swiper-slide + .swiper-slide {
   opacity: 1;
 }
-
-/* 클래스 리스트 추가해서 수정 */
-.modal-bottom-img.clicked {
-  border: solid black 5px;
+.modal-bottom-img:hover {
+  filter: brightness(40%);
+}
+.submenu {
+  position: relative;
+}
+.modal-bottom-img-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: -1;
+  color:#eee;
+  cursor:pointer;
+}
+.modal-bottom-img:hover + .modal-bottom-img-text {
+  opacity: 1;
+  z-index: 1;
+  cursor: pointer;
+}
+.read-more {
+  position: absolute;
+  top: 8vh;
+  margin-left: 4.3vw;
+  z-index: 1;
+  color: #fff;
+  font-size: 0.7vw;
 }
 </style>

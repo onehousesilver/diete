@@ -16,10 +16,12 @@
       <WeekMealTable v-if="!current" @goToWeek="goToWeek" />
       <DayMealTable v-else @goToWeek="goToWeek" />
     </div>
+    <button @click="getDiet">asdf</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import DayBarChart from "./MyDiet/DayBarChart.vue";
 import DayMealTable from "./MyDiet/DayMealTable.vue";
 import WeekBarChart from "./MyDiet/WeekBarChart.vue";
@@ -52,6 +54,16 @@ export default {
     goToDay() {
       this.current = true;
     },
+    getDiet(){
+      axios({
+        method:'get',
+        url: `${process.env.VUE_APP_API_URL}/record/menu/qwer1234/20220407/`
+        // url: `${process.env.VUE_APP_API_URL}/record/qwer1234/`
+      })
+        .then(res => {
+          console.log(res)
+        })
+    }
   },
 };
 </script>
@@ -63,6 +75,10 @@ export default {
 .body {
   display: flex;
   justify-content: center;
+}
+
+.apexcharts-reset-icon {
+  display: none;
 }
 /* @media screen and (max-width: 1770px){
   

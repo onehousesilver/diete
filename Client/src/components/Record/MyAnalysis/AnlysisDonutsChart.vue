@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="chart">
+    <div ref="donutchart">
       <ApexChart
         type="pie"
         width="500"
@@ -26,7 +26,7 @@ export default {
         labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
         responsive: [
           {
-            breakpoint: 480,
+            breakpoint: 600,
             options: {
               chart: {
                 width: 200,

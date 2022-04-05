@@ -38,16 +38,16 @@ export default new Vuex.Store({
   mutations: {
     // 장바구니 갱신
     SET_MENU: function(state, menu) {
-      if (!state.menus[0]){
-        state.menus[0] = menu
-      }
-      else {
+      // if (!state.menus[0]){
+      //   state.menus[0] = menu
+      // }
+      // else {
         state.menus.push(menu)
-      }
+      // }
     },
     // 장바구니 끼니 선택
     SET_BASKET_MEAL: function(state, mealTime){
-      state.myBasket.mealTime = mealTime
+      state.mealTime = mealTime
     },
     SET_MENUS_UPDATE: function(state, menus){
       state.menus = menus

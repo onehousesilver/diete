@@ -3,14 +3,7 @@
     <div class="banner">
       <div class="banner-head">
         <div v-if="!MainText" class="default-text">
-          <div v-if="!isLogin">
-            <div class="my-text">diète</div>
-          </div>
-          <div v-else>
-            <span class="di" style="color: #2bc0af">di</span>
-            <span class="e" style="color: #25ab9b">è</span>
-            <span class="te" style="color: #219285">te</span>
-          </div>
+          <div class="my-text">diète</div>
           <div class="banner-sub-head">
             <span>diète에서 맞춤형 음식을 추천받아보세요</span>
           </div>
@@ -28,11 +21,11 @@
 
 <script>
 import TextScramble from "@/js/bannerani.js";
-// import { mapState } from 'vuex'
 export default {
   props: {
     MainText: String,
     SubText: String,
+    isHome: Boolean,
   },
   methods: {
     textAnimation() {
@@ -60,7 +53,7 @@ export default {
     },
   },
   mounted() {
-    if (!this.isLogin) {
+    if (this.isHome) {
       this.textAnimation();
     }
   },
