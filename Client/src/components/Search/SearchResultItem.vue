@@ -208,18 +208,24 @@ export default {
   max-width: 60vw;
   overflow-x: hidden;
 }
-.food-modal-header {
-  display: flex;
-  justify-content: space-between;
-}
 
 .food-modal-text {
   font-weight: 700;
   align-self: center;
 }
+.food-modal-name {
+  font-size: 1.6vw;
+}
+.food-modal-kcal {
+  font-size: 1.4vw;
+}
+.food-modal-g {
+  font-size: 1.2vw;
+}
 
 .modal-img {
-  width: 15vw;
+  width: 12vw;
+  height: 23vh;
   border-radius: 10px;
 }
 .modal-bottom-img {
@@ -231,40 +237,16 @@ export default {
   width: 30vw;
 }
 
-.food-modal-bottom-text {
-  font-size: 25px;
-  font-weight: 700;
-  text-align: left;
-  position: relative;
-  left: 10px;
-  margin-bottom: 10px;
-}
-.modal-bottom-img {
-  width: 200px;
-  height: 200px;
-  margin: 10px;
-  border-radius: 10px;
-}
-.modal-bottom-img:hover {
-  cursor: pointer;
-}
-
 .pocket-btn {
-  width: 170px;
-  height: 50px;
-  font-size: 18px;
-  position: relative;
+  width: 10vw;
+  height: 2vw;
+  font-size: 1vw;
   display: block;
-  border-radius: 7px;
+  border-radius: 0.5vw;
   left: 84%;
-  top: 20px;
+  top: 1vw;
 }
 
-.modal-img {
-  width: 12vw;
-  height: 23vh;
-  border-radius: 10px;
-}
 .food-modal-header {
   display: flex;
   justify-content: space-evenly;
@@ -278,16 +260,6 @@ export default {
 .food-modal-text {
   font-weight: 700;
   align-self: center;
-}
-
-.food-modal-name {
-  font-size: 1.6vw;
-}
-.food-modal-kcal {
-  font-size: 1.4vw;
-}
-.food-modal-g {
-  font-size: 1.2vw;
 }
 
 #chart {
@@ -379,9 +351,5 @@ export default {
   z-index: 1;
   color: #fff;
   font-size: 0.7vw;
-}
-/* 클래스 리스트 추가해서 수정 */
-.modal-bottom-img.clicked {
-  border: solid black 5px;
 }
 </style>

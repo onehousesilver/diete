@@ -204,6 +204,7 @@ export default {
 .btn-save {
   margin-top: 1vw;
   width: 11vw;
+  font-size: 0.8vw;
   border-radius: 0.4vw;
 }
 </style>
