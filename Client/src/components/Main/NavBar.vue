@@ -21,11 +21,26 @@
       </div>
       <div class="menu-items" v-else>
         <router-link :to="{ name: 'ChooseMeal' }">
-          <div>음식추천</div>
+          <div
+            @mouseover="isRecordMouseOver"
+            @mouseleave="isRecordshowMouseLeave"
+          >
+            <span class="material-icons" v-show="!isRecord"> restaurant </span>
+            <span class="nav-food-rec" v-show="isRecord"></span>
+          </div>
         </router-link>
-        <router-link :to="{ name: 'search', params: { onlySearch: true } }"><div>영양정보</div> </router-link>
-        <router-link :to="{ name: 'basket' }"><div>오늘한끼</div> </router-link>
-        <router-link :to="{ name: 'record' }"><div>나의기록</div> </router-link>
+        <router-link :to="{ name: 'search', params: { onlySearch: true } }">
+          <div @mouseover="isSearchMouseOver" @mouseleave="isSearchMouseLeave">
+            <span class="material-icons" v-show="!isSearch"> search </span>
+            <span class="nav-food-search" v-show="isSearch"></span>
+          </div>
+        </router-link>
+        <router-link :to="{ name: 'record' }">
+          <div @mouseover="isMyPageMouseOver" @mouseleave="isMyPageMouseLeave">
+            <span class="material-icons" v-show="!isMyPage"> portrait</span>
+            <span class="nav-food-mypage" v-show="isMyPage"></span>
+          </div>
+        </router-link>
         <button
           class="bttn-unite bttn-md bttn-success logout-btn"
           @click="goToLogout"
@@ -41,6 +56,13 @@
 import { mapActions } from "vuex";
 export default {
   name: "NavBar",
+  data() {
+    return {
+      isRecord: false,
+      isSearch: false,
+      isMyPage: false,
+    };
+  },
   methods: {
     ...mapActions(["removeUserToken"]),
     goToHome() {
@@ -52,6 +74,30 @@ export default {
     goToLogout() {
       this.$router.push({ name: "home" }).catch(() => {});
       this.removeUserToken();
+    },
+    isRecordMouseOver() {
+      this.isRecord = true;
+      const recordText = document.querySelector(".nav-food-rec");
+      recordText.textContent = "음식추천";
+    },
+    isRecordshowMouseLeave() {
+      this.isRecord = false;
+    },
+    isSearchMouseOver() {
+      this.isSearch = true;
+      const searchText = document.querySelector(".nav-food-search");
+      searchText.textContent = "음식검색";
+    },
+    isSearchMouseLeave() {
+      this.isSearch = false;
+    },
+    isMyPageMouseOver() {
+      this.isMyPage = true;
+      const myText = document.querySelector(".nav-food-mypage");
+      myText.textContent = "나의기록";
+    },
+    isMyPageMouseLeave() {
+      this.isMyPage = false;
     },
   },
   computed: {
@@ -127,5 +173,18 @@ a {
   width: 5vw;
   height: 100%;
   border-radius: 0.4vw;
+}
+.material-icons {
+  font-size: 1.5vw;
+  color: #333;
+  vertical-align: -webkit-baseline-middle;
+}
+
+.nav-food-rec,
+.nav-food-search,
+.nav-food-mypage {
+  font-size: 0.9vw;
+  color: #333;
+  vertical-align: -webkit-baseline-middle;
 }
 </style>
