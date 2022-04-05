@@ -6,7 +6,7 @@
           class="my-input"
           type="text"
           id="userID"
-          placeholder="영문자를 1자 이상 포함해 8자 이상 16자 미만으로 입력해주세요"
+          placeholder="영문자를 1자 이상 포함해 5자 이상 16자 미만으로 입력해주세요"
           v-model="formData.userId"
         />
         <label for="userID">아이디</label>
@@ -203,8 +203,8 @@ export default {
       // 중복체크 버튼 클릭 시 에러메시지 출력
       this.idInputFlag = true
       if(this.formData.userId){
-        // JS 정규표현식. ID가 영문자가 포함된 8~15자 여야 유효
-        const idRule = /^(?=.*[A-Za-z])[A-Za-z\d]{8,15}$/;
+        // JS 정규표현식. ID가 영문자가 포함된 5~15자 여야 유효
+        const idRule = /^(?=.*[A-Za-z])[A-Za-z\d]{5,15}$/;
         // const idRule = /^[A-Za-z\d]{8,15}$/;
         // 유효하지 않은 ID일때 에러메시지 상태변경
         if (!idRule.test(this.formData.userId)) {

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <BannerBar />
+    <BannerBar :isHome="true"/>
     <MainDescription />
   </div>
 </template>

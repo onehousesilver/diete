@@ -75,7 +75,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["mealTimeUpdate"]),
+    ...mapActions(["mealTimeUpdate", "menusUpdate"]),
     // 끼니 선택 메서드. 선택된 섹션의 style을 변경하고, 변수에 바인딩
     chooseMeal(e) {
       // 이미 선택된 섹션이 있을 때
@@ -94,7 +94,16 @@ export default {
     },
     nextStep() {
       if (this.selectedMeal != null) {
-        this.mealTimeUpdate(this.selectedMeal);
+        if(this.selectedMeal == 'breakfast'){
+          this.mealTimeUpdate(0)
+        }
+        else if(this.selectedMeal == 'lunch'){
+          this.mealTimeUpdate(1)
+        }
+        else {
+          this.mealTimeUpdate(2)
+        }
+        this.menusUpdate([])
         this.$router.push({ path: "/menu/recommendation" });
       } else {
         this.$swal.fire({

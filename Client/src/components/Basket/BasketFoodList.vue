@@ -110,7 +110,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["myMenuUpdate", "menusUpdate"]),
+    ...mapActions([
+      'menusUpdate'
+    ]),
     // 칼로리 위험도를 제공하기 위해 1회 당 500kcal이 넘는다면 위험, 300kcal이 넘는다면 경고, 300kcal 이하는 적합
     getColor(calories) {
       if (calories > 500) return "red";
@@ -122,9 +124,7 @@ export default {
       this.selected.forEach((food) => {
         this.sendData.menus.push({ foodId: food.id, amount: 1 });
       });
-      this.sendData.dateTime = `${this.today.getFullYear()}-0${
-        this.today.getMonth() + 1
-      }-${this.today.getDate()}`;
+      this.sendData.dateTime = `${this.today.getFullYear()}-${this.today.getMonth() + 1}-${this.today.getDate()}`;
       this.sendData.mealTime = this.$store.state.mealTime;
       this.sendData.username = this.userInfo.username;
       // console.log(this.sendData)
@@ -137,13 +137,39 @@ export default {
         },
       })
         .then((res) => {
-          this.$swal.fire({
-            icon: "success",
-            title: "식단에 저장되었습니다",
-            text: "나의기록 페이지로 이동합니다.",
-          });
-          this.$router.push({ name: "record" });
-          console.log(res);
+          // 이미 존재하는 식단일때 수정요청으로 재요청
+          if (res.data.menuid){
+            axios({
+              method: 'put',
+              url: `${process.env.VUE_APP_API_URL}/menu/basket/${res.data.menuid}/`,
+              data: this.sendData,
+              headers: {
+                Authorization : `JWT ${this.userToken}`
+              }
+            })
+              .then(() => {
+                // 전역 장바구니 초기화
+                this.menusUpdate([])
+                this.$swal.fire({
+                  icon: "success",
+                  title: "식단이 수정되었습니다",
+                  text: "나의기록 페이지로 이동합니다.",
+                });
+              })
+              .catch(err => {
+                console.log(err)
+              })
+          }
+          else{
+            this.$swal.fire({
+              icon: "success",
+              title: "식단에 저장되었습니다",
+              text: "나의기록 페이지로 이동합니다.",
+            });
+          }
+          // 전역 장바구니 초기화
+          this.menusUpdate([])
+          this.$router.push({ name:'record' })
         })
         .catch((err) => {
           this.$swal.fire({
@@ -206,5 +232,6 @@ export default {
   width: 11vw;
   font-size: 0.8vw;
   border-radius: 0.4vw;
+  font-size: 1vw;
 }
 </style>

@@ -30,12 +30,12 @@
         </button>
       </div>
     </div>
-    <SearchResultItem :modalState="modalState" :foodData="foodData" :onlySearch="onlySearch"/>
+    <FoodModal :modalState="modalState" :foodData="foodData" :onlySearch="onlySearch" @dataUpdate="dataUpdate"/>
   </div>
 </template>
 
 <script>
-import SearchResultItem from "@/components/Search/SearchResultItem.vue";
+import FoodModal from "@/components/Recommend/FoodModal.vue";
 import axios from "axios";
 export default {
   name: "SearchResult",
@@ -44,7 +44,7 @@ export default {
     onlySearch: Boolean,
   },
   components: {
-    SearchResultItem,
+    FoodModal,
   },
   data() {
     return {
@@ -96,6 +96,9 @@ export default {
           console.log(err);
         });
     },
+    dataUpdate(data){
+      this.foodData = data
+    }
   },
 
   computed: {
