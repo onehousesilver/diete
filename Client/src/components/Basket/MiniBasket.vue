@@ -112,24 +112,24 @@ export default {
     },
   },
   mounted() {
-    if (this.menus){
-      this.menus.forEach(menu => {
-        this.totalKcal += parseInt(menu.foodKcal)
+    if (this.menus) {
+      this.menus.forEach((menu) => {
+        this.totalKcal += parseInt(menu.foodKcal);
       });
     }
   },
   watch: {
     // 메뉴의 총 칼로리 합산
     menus() {
-      this.totalKcal = 0
-      if (this.menus){
-        this.menus.forEach(menu => {
-          this.totalKcal += parseInt(menu.foodKcal)
+      this.totalKcal = 0;
+      if (this.menus) {
+        this.menus.forEach((menu) => {
+          this.totalKcal += parseInt(menu.foodKcal);
         });
-    }
-    }
-  }
-}
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>

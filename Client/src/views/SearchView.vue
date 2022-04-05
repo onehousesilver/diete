@@ -63,6 +63,17 @@ export default {
       resultState: false, // 검색결과 T/F
       searchData: [], // 검색결과 Data
       modalState: false, // Modal On/Off State
+      foodData: {
+        foodName: "",
+        foodKcal: 0,
+        servingSize: 0,
+        image: "",
+        carbohydrate: 0,
+        protein: 0,
+        fat: 0,
+        sugar: 0,
+        fattyAcid: 0,
+      },
     };
   },
   methods: {
