@@ -13,6 +13,7 @@ from rest_framework import status
 from .models import Food, Menu, MenuToFood
 from .serializers import FoodSerializer, MenuSerializer, MenuToFoodSerializer, FoodRecommSerializer
 from image_adapter import ImageIncoder
+from django.db.models import Q
 
 from datetime import datetime
 import json
@@ -214,10 +215,16 @@ def decision_basket(request):
             "mealTime" : request.data["mealTime"]
         }
         menuserializer = MenuSerializer(data=menudata)
-
-        if Menu.objects.filter(userId_id = request.user.id).filter(dateTime = request.data["dateTime"]).exists() and Menu.objects.filter(dateTime = request.data["dateTime"]).filter(mealTime = request.data["mealTime"]).exists():
-            print("이미 있는 데이터입니다")
-            return Response({'error': 'menuToFood 테이블에 이미 있는 데이터'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # 이미 식단이 존재할때
+        # if Menu.objects.filter(userId_id = request.user.id).filter(dateTime = request.data["dateTime"]).exists() and Menu.objects.filter(dateTime = request.data["dateTime"]).filter(mealTime = request.data["mealTime"]).exists():
+        # 수정된코드(진석)
+        if Menu.objects.filter(Q(userId_id = request.user.id) & Q(dateTime=request.data["dateTime"]) & Q(mealTime=request.data["mealTime"])).exists():
+            # 존재하는 식단번호(Menu ID) response
+            existedMenu = Menu.objects.get(Q(dateTime=request.data["dateTime"]) & Q(mealTime=request.data["mealTime"]) & Q(userId_id=user.id))
+            # print("이미 있는 데이터입니다")
+            if menuserializer.is_valid(raise_exception=True):
+                return Response({'menuid': existedMenu.id}, status=status.HTTP_200_OK)
         else :
             print("처음 보는 데이터")
 
