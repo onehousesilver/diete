@@ -28,18 +28,22 @@ def recommend_foods(request, username):
     user_menus = Menu.objects.filter(userId=user.id).exclude(dateTime= "2000-01-01")
     meat = vegetable = seafood = spicy = oily = 0 
 
-    # dummydata를 제외하여 data가 없는 상황때문에 cnt를 기본 1
+    # dummydata를 제외하여 data가 없는 상황이 있을 수 있으므로 cnt를 기본 1로 설정
     cnt = 1
     for user_menu in user_menus:
         menuId = user_menu.id
         mtfs = MenuToFood.objects.filter(menuId=menuId)
         for mtf in mtfs:
-            meat += mtf.foodId.meat
-            vegetable += mtf.foodId.vegetable
-            seafood += mtf.foodId.seafood
-            spicy += mtf.foodId.spicy
-            oily += mtf.foodId.oily
-            cnt += 1
+            # 외식 음식(-1)은 제외
+            if mtf.foodId.meat == -1:
+                pass
+            else:
+                meat += mtf.foodId.meat
+                vegetable += mtf.foodId.vegetable
+                seafood += mtf.foodId.seafood
+                spicy += mtf.foodId.spicy
+                oily += mtf.foodId.oily
+                cnt += 1
 
     # 유저가 선호하는 식단의 지표
     prefer_user = {"meat": meat/cnt, "vegetable": vegetable/cnt, "seafood": seafood/cnt, "spicy": spicy/cnt, "oily": oily/cnt}
@@ -86,7 +90,6 @@ def recommend_foods(request, username):
 
     # 유저가 선호하는 식단의 지표 정렬
     more_prefer = sorted(prefer_user.items(), key = lambda item : item[1], reverse=True)
-    print(more_prefer)
     
     for k in range(3):
         food_cate, amount = more_prefer[k]
@@ -109,7 +112,7 @@ def recommend_foods(request, username):
         else: # oily
             foods = (Food.objects.filter(commercialFood="품목대표", oily = 3)
             | Food.objects.filter(commercialFood="품목대표", oily = 4))
-        # print("food : ", foods)
+
         food_list = []
         for food in foods.values():
             score = 0
@@ -161,7 +164,7 @@ def sub_foods(request, foodId):
     sub_menus = {}
     for mtf in mtfs:
         menu_id_list.append(mtf.menuId)
-    print(menu_id_list)
+    # print(menu_id_list)
     for menuId in menu_id_list:
         mtf_menu = MenuToFood.objects.filter(menuId = menuId)
         for mtf in mtf_menu:
@@ -261,7 +264,7 @@ def update_basket(request, menuId):
 
         basket = request.data
         menus = basket.get("menus")
-        print(menus)
+        # print(menus)
 
         # request data에 있는 값들을 다시 MenuToFood에 DB 저장
         for menu in menus:
