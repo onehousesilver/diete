@@ -45,13 +45,14 @@ const routes = [
     path: "/basket",
     name: "basket",
     component: () => import("@/views/BasketView.vue"),
-    meta: {requiresAuth: true, title: "diète - 오늘한끼"}
+    meta: {requiresAuth: true, title: "diète - 오늘한끼"},
+    props: true
   },
   {
     path: "/record",
     name: "record",
     component: () => import("@/views/RecordView.vue"),
-    meta: {requiresAuth: true, title: "diète - 식단분석"}
+    meta: {requiresAuth: true, title: "diète - 나의기록"}
   },
   {
     path: "/404",

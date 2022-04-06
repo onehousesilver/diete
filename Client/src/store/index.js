@@ -20,6 +20,7 @@ export default new Vuex.Store({
     userToken: null,
     // JWT.payload
     userInfo: null,
+    targetDate: new Date(),
   },
   getters: {
     isLogin(state) {
@@ -78,7 +79,10 @@ export default new Vuex.Store({
       state.userInfo.data.height = data.height;
       state.userInfo.data.weight = data.weight;
       state.userInfo.data.activity = data.activity;
-    }
+    },
+    SET_TARGETDATE_UPDATE: function(state, targetDate){
+      state.targetDate = targetDate
+    },
   },
   actions: {
     myMenuUpdate: function({ commit }, menu) {
@@ -101,6 +105,9 @@ export default new Vuex.Store({
     menusUpdate: function({ commit }, menus){
       // 변경된 메뉴 전체업데이트
       commit("SET_MENUS_UPDATE", menus)
+    },
+    targetDateUpdate: function({ commit }, targetDate){
+      commit("SET_TARGETDATE_UPDATE", targetDate)
     }
   },
   modules: {

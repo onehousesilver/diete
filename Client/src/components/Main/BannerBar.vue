@@ -5,7 +5,7 @@
         <div v-if="!MainText" class="default-text">
           <div class="my-text">diète</div>
           <div class="banner-sub-head">
-            <span>diète에서 맞춤형 음식을 추천받아보세요</span>
+            <!-- <span>diète에서 맞춤형 음식을 추천받아보세요</span> -->
           </div>
         </div>
         <div v-else class="present-text">

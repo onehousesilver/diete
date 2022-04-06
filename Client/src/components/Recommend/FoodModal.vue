@@ -42,11 +42,9 @@
                   :src="`data:image/png;base64,${subFood.img}`"
                   alt="음식예시사진"
                   class="modal-bottom-img"
-                  @click="mainMenuUpdate(subFood)"
                 />
                 <div 
                   class="modal-bottom-img-text"
-                  @click="mainMenuUpdate(subFood)"
                 >
                   {{ subFood.foodName }}
                 </div>
@@ -87,7 +85,7 @@ export default {
       subMenu: null,    // 추가메뉴
       // swiper
       swiperOptions: {
-        loop: true,
+        // loop: true,
         observer: true,
         observeParents: true,
         slidesPerView: 4,
@@ -193,18 +191,19 @@ export default {
     putInBasket(){
       // 선택한 음식이 이미 장바구니에 존재할 때
       if (this.$store.state.menus.length){
-        let alreadyIncludeState = this.$store.state.menus.every(food => food.id == this.foodData.id)
+        let alreadyIncludeState = this.$store.state.menus.every(food => food.id != this.foodData.id)
+        console.log(alreadyIncludeState)
         if (alreadyIncludeState){
-          this.$swal.fire({
-            icon: "error",
-            title: "이미 장바구니에 들어있어요.",
-          });
-        }
-        else {
           this.myMenuUpdate(this.foodData);
           this.$swal.fire({
             icon: "success",
             title: "장바구니에 추가되었습니다."
+          });
+        }
+        else {
+          this.$swal.fire({
+            icon: "error",
+            title: "이미 장바구니에 들어있어요.",
           });
         }
       }
