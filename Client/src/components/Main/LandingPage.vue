@@ -314,7 +314,7 @@ export default {
 }
 .middle-section2 .inner {
   position: relative;
-  height: 40vh;
+  height: 52vh;
   width: 60vw;
   margin: 0 auto;
   top: 4vw;
@@ -328,7 +328,7 @@ export default {
 
 .middle-section2 .text-group {
   position: absolute;
-  top: 2vw;
+  top: 4vw;
   left: 4vw;
 }
 
