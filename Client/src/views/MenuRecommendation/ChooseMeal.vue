@@ -72,10 +72,11 @@ export default {
   data() {
     return {
       selectedMeal: null, // 선택한 끼니
+      today: new Date(),
     };
   },
   methods: {
-    ...mapActions(["mealTimeUpdate", "menusUpdate"]),
+    ...mapActions(["mealTimeUpdate", "menusUpdate", "targetDateUpdate"]),
     // 끼니 선택 메서드. 선택된 섹션의 style을 변경하고, 변수에 바인딩
     chooseMeal(e) {
       // 이미 선택된 섹션이 있을 때
@@ -104,6 +105,7 @@ export default {
           this.mealTimeUpdate(2)
         }
         this.menusUpdate([])
+        this.targetDateUpdate(`${this.today.getFullYear()}-${this.today.getMonth() + 1}-${this.today.getDate()}`)
         this.$router.push({ path: "/menu/recommendation" });
       } else {
         this.$swal.fire({

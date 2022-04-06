@@ -11,12 +11,29 @@
       @change="onChangeToggle"
     />
     <div class="body">
-      <DayBarChart v-if="current" @goToDay="goToDay" />
-      <WeekBarChart v-else @goToWeek="goToWeek" />
-      <WeekMealTable v-if="!current" @goToWeek="goToWeek" />
-      <DayMealTable v-else @goToWeek="goToWeek" />
+      <DayBarChart 
+        v-show="current" 
+        @goToDay="goToDay" 
+
+      />
+      <WeekBarChart 
+        v-show="!current" @goToWeek="goToWeek" 
+
+      />
+      <WeekMealTable 
+        v-show="!current"
+        @goToWeek="goToWeek"
+        :weekData="weekData"
+        :startDay="monday"
+      />
+      <DayMealTable 
+        v-show="current" 
+        @goToWeek="goToWeek"
+        :targetDate="targetDate"
+        @dateChange="getMonday"
+        :dayData="dateData"
+      />
     </div>
-    <button @click="getDiet">asdf</button>
   </div>
 </template>
 
@@ -37,6 +54,12 @@ export default {
   data() {
     return {
       current: true,
+      today: new Date(+new Date() + 3240 * 10000).toISOString().substring(0,10),  // 오늘날짜
+      startDay: null, // search 기준일 YYYYMMDD
+      monday: null,   // search 기준일 YYYY-MM-DD
+      targetDate: new Date(+new Date() + 3240 * 10000).toISOString().substring(0,10), // 
+      dateData: [[{menus:[{foodName:'asd'}]}]], // 일간식단
+      weekData: null, // 주간식단
     };
   },
   methods: {
@@ -52,18 +75,76 @@ export default {
       this.current = false;
     },
     goToDay() {
+      this.getWeekDiet()
       this.current = true;
     },
-    getDiet() {
-      axios({
-        method: "get",
-        url: `${process.env.VUE_APP_API_URL}/record/menu/qwer1234/20220407/`,
-        // url: `${process.env.VUE_APP_API_URL}/record/qwer1234/`
-      }).then((res) => {
-        console.log(res);
-      });
+    getMonday(updateDate) {
+      // 오늘날짜 string(YYYY-mm-dd)
+      // let today = new Date(+new Date() + 3240 * 10000).toISOString().substring(0,10);
+      this.targetDate = updateDate
+      // 오늘날짜 date형식
+      let date = new Date(updateDate);
+      // 월요일구하기
+      let day = date.getDay();
+      let diff = date.getDate() - day + (day == 0 ? -6 : 1);
+
+      // YYYYMMDD형식으로 parsing
+      let monday = new Date(date.setDate(diff)).toISOString().substring(0,10)
+      this.monday = monday
+      this.startDay = monday.replaceAll('-', '')
     },
+    getWeekDiet(){
+      axios({
+        method:'get',
+        url: `${process.env.VUE_APP_API_URL}/record/menu/${this.userInfo.username}/${this.startDay}/`
+      })
+        .then(res => {
+          // 주간식단 update
+          this.weekData = res.data
+          // console.log(this.weekData)
+          // 일간식단 update
+          this.getDateDiet()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getDateDiet(){
+      this.dateData = this.weekData.filter(menu => {
+        return menu.dateTime == this.targetDate
+      })
+    },
+    weekChange(week) {
+      let newDate = '';
+      switch(week){
+        case 'current':
+          break
+        case 'last':
+          newDate = new Date(this.monday.setDate(this.monday.getDate()-7)).toISOString().substring(0,10)
+          break
+        case 'twolast':
+          newDate = new Date(this.monday.setDate(this.monday.getDate()-14)).toISOString().substring(0,10)
+          break
+        default:
+          break
+      }
+      console.log(newDate)
+    }
   },
+  mounted: async function() {
+    await this.getMonday(this.targetDate)
+    await this.getWeekDiet()
+  },
+  computed: {
+    userInfo() { return this.$store.getters.getUserInfo }
+  },
+  watch: {
+    // 기준일 변경시마다 주간, 일간 데이터 update
+    targetDate: async function(){
+      await this.getMonday(this.targetDate)
+      await this.getWeekDiet()
+    },
+  }
 };
 </script>
 

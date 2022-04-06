@@ -95,10 +95,12 @@ export default {
           } else {
             this.resultState = false;
             this.noResult = true;
+            this.loadingState = false;
           }
         })
         .catch((err) => {
           console.log(err);
+          this.loadingState = false;
         });
     },
     // 검색결과가 없다면 검색결과가 없습니다 표시

@@ -124,7 +124,8 @@ export default {
       this.selected.forEach((food) => {
         this.sendData.menus.push({ foodId: food.id, amount: 1 });
       });
-      this.sendData.dateTime = `${this.today.getFullYear()}-${this.today.getMonth() + 1}-${this.today.getDate()}`;
+      // this.sendData.dateTime = `${this.today.getFullYear()}-${this.today.getMonth() + 1}-${this.today.getDate()}`;
+      this.sendData.dateTime = this.$store.state.targetDate;
       this.sendData.mealTime = this.$store.state.mealTime;
       this.sendData.username = this.userInfo.username;
       // console.log(this.sendData)
@@ -148,8 +149,6 @@ export default {
               }
             })
               .then(() => {
-                // 전역 장바구니 초기화
-                this.menusUpdate([])
                 this.$swal.fire({
                   icon: "success",
                   title: "식단이 수정되었습니다",
@@ -168,8 +167,8 @@ export default {
               title: "식단에 저장되었습니다",
               text: "나의기록 페이지로 이동합니다.",
             });
-          this.menusUpdate([])
-          this.$router.push({ name:'record' })
+            this.menusUpdate([])
+            this.$router.push({ name:'record' })
           }
           // 전역 장바구니 초기화
         })

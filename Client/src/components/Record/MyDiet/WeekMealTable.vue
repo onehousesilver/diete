@@ -1,12 +1,11 @@
 <template>
   <div class="week-calendar">
     <!-- 수정버튼 -->
-    <select name="week-select" class="week-select">
-      <option class="week-item">4월 1주차</option>
-      <option class="week-item">4월 2주차</option>
-      <option class="week-item">4월 3주차</option>
-      <option class="week-item">4월 4주차</option>
-    </select>
+    <!-- <select name="week-select" class="week-select" v-model="targetWeek">
+      <option class="week-item" value="twolast">지지난주</option>
+      <option class="week-item" value="last">지난주</option>
+      <option class="week-item" value="current">이번주</option>
+    </select> -->
     <span class="material-icons settings" @click="editMealTable">
       settings
     </span>
@@ -18,98 +17,122 @@
       </div>
       <div class="monday">
         <div class="text animate__animated animate__tada">월</div>
-        <div class="meal-table-el">
+        <div 
+          v-for="(meal, idx) in monData"
+          :key="idx"
+          class="meal-table-el animate__animated animate__jello"
+        >
           <div class="meal-table-item">
-            <div>간장마늘쫑장아찌</div>
-            <div>고추장마늘쫑장아찌</div>
-            <div>아내의 식탁 스노윙찹스테이크</div>
-            <div>아내의 식탁 스노윙찹스테이크</div>
-            <div>아내의 식탁 스노윙찹스테이크</div>
-            <div>아내의 식탁 스노윙찹스테이크</div>
-            <div>아내의 식탁 스노윙찹스테이크</div>
-            <div>아내의 식탁 스노윙찹스테이크</div>
+            <div
+              v-for="(food, index) in meal.menus"
+              :key="index"
+            >
+                {{ food.foodName }}
+            </div>
           </div>
-        </div>
-        <div class="meal-table-el">
-          <span>밥</span>
-          <span>돈까스</span>
-          <span>샐러드</span>
-          <span>각종소스</span>
-          <span>콜라</span>
-        </div>
-        <div class="meal-table-el">
-          <span
-            >식단이 <br />
-            없어요!</span
-          >
-        </div>
+        </div> 
       </div>
       <div class="tuesday">
         <div class="text animate__animated animate__tada">화</div>
-        <div class="meal-table-el">
-          <span
-            >식단이 <br />
-            없어요!</span
-          >
-        </div>
-        <div class="meal-table-el">식단 1개</div>
-        <div class="meal-table-el">식단 1개</div>
+        <div 
+          v-for="(meal, idx) in tueData"
+          :key="idx"
+          class="meal-table-el animate__animated animate__jello"
+        >
+          <div class="meal-table-item">
+            <div
+              v-for="(food, index) in meal.menus"
+              :key="index"
+            >
+                {{ food.foodName }}
+            </div>
+          </div>
+        </div> 
       </div>
       <div class="wednesday">
         <div class="text animate__animated animate__tada">수</div>
-        <div class="meal-table-el">
-          <span
-            >식단이 <br />
-            없어요!</span
-          >
-        </div>
-        <div class="meal-table-el">식단 1개</div>
-        <div class="meal-table-el">식단 1개</div>
+        <div 
+          v-for="(meal, idx) in wedData"
+          :key="idx"
+          class="meal-table-el animate__animated animate__jello"
+        >
+          <div class="meal-table-item">
+            <div
+              v-for="(food, index) in meal.menus"
+              :key="index"
+            >
+                {{ food.foodName }}
+            </div>
+          </div>
+        </div> 
       </div>
       <div class="thursday">
         <div class="text animate__animated animate__tada">목</div>
-        <div class="meal-table-el">
-          <span
-            >식단이 <br />
-            없어요!</span
-          >
-        </div>
-        <div class="meal-table-el">식단 1개</div>
-        <div class="meal-table-el">식단 1개</div>
+        <div 
+          v-for="(meal, idx) in thuData"
+          :key="idx"
+          class="meal-table-el animate__animated animate__jello"
+        >
+          <div class="meal-table-item">
+            <div
+              v-for="(food, index) in meal.menus"
+              :key="index"
+            >
+                {{ food.foodName }}
+            </div>
+          </div>
+        </div> 
       </div>
       <div class="friday">
         <div class="text animate__animated animate__tada">금</div>
-        <div class="meal-table-el">
-          <span
-            >식단이 <br />
-            없어요!</span
-          >
-        </div>
-        <div class="meal-table-el">식단 1개</div>
-        <div class="meal-table-el">식단 1개</div>
+        <div 
+          v-for="(meal, idx) in friData"
+          :key="idx"
+          class="meal-table-el animate__animated animate__jello"
+        >
+          <div class="meal-table-item">
+            <div
+              v-for="(food, index) in meal.menus"
+              :key="index"
+            >
+                {{ food.foodName }}
+            </div>
+          </div>
+        </div> 
       </div>
       <div class="saturday">
         <div class="text animate__animated animate__tada">토</div>
-        <div class="meal-table-el">
-          <span
-            >식단이 <br />
-            없어요!</span
-          >
-        </div>
-        <div class="meal-table-el">식단 1개</div>
-        <div class="meal-table-el">식단 1개</div>
+        <div 
+          v-for="(meal, idx) in satData"
+          :key="idx"
+          class="meal-table-el animate__animated animate__jello"
+        >
+          <div class="meal-table-item">
+            <div
+              v-for="(food, index) in meal.menus"
+              :key="index"
+            >
+                {{ food.foodName }}
+            </div>
+          </div>
+        </div> 
       </div>
       <div class="sunday">
         <div class="text animate__animated animate__tada">일</div>
-        <div class="meal-table-el">
-          <span>식빵</span>
-          <span>버터</span>
-          <span>크림스프</span>
-          <span>딸기잼</span>
-          <span>우유</span>
-        </div>
-        <div class="meal-table-el">식단 1개</div>
-        <div class="meal-table-el">식단 1개</div>
+        <div 
+          v-for="(meal, idx) in sunData"
+          :key="idx"
+          class="meal-table-el animate__animated animate__jello"
+        >
+          <div class="meal-table-item">
+            <div
+              v-for="(food, index) in meal.menus"
+              :key="index"
+            >
+                {{ food.foodName }}
+            </div>
+          </div>
+        </div> 
       </div>
     </div>
   </div>
@@ -118,9 +141,23 @@
 <script>
 export default {
   name: "WeekMealTable",
+  props: {
+    weekData: Array,
+    startDay: String,
+  },
   data() {
     return {
       editFlag: false,
+      monday: new Date('2022-04-06'),
+      targetWeek: 'current',
+      defaultData: [{mealTime: 0,menus: [{foodName:'작성된 식단이 없어요!'}]},{mealTime: 1,menus: [{foodName:'작성된 식단이 없어요!'}]},{mealTime: 2,menus: [{foodName:'작성된 식단이 없어요!'}]}],
+      monData: [],
+      tueData: [],
+      wedData: [],
+      thuData: [],
+      friData: [],
+      satData: [],
+      sunData: [],
     };
   },
   methods: {
@@ -149,6 +186,36 @@ export default {
   mounted() {
     this.animationTada();
   },
+  watch: {
+    weekData() {
+      this.monData = [];
+      this.tueData = [];
+      this.wedData = [];
+      this.thuData = [];
+      this.friData = [];
+      this.satData = [];
+      this.sunData = [];
+      for (let i = 0; i < 3; i++) {
+        this.monData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.monday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.monday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
+        this.tueData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.tueday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.tueday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
+        this.wedData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.wedday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.wedday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
+        this.thuData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.thuday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.thuday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
+        this.friData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.friday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.friday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
+        this.satData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.satday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.satday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
+        this.sunData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.sunday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.sunday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
+      }
+    },
+    startDay() {
+      this.monday = new Date(this.startDay)
+      this.tueday = new Date(this.monday.setDate(this.monday.getDate()+1)).toISOString().substring(0,10)
+      this.wedday = new Date(this.monday.setDate(this.monday.getDate()+1)).toISOString().substring(0,10)
+      this.thuday = new Date(this.monday.setDate(this.monday.getDate()+1)).toISOString().substring(0,10)
+      this.friday = new Date(this.monday.setDate(this.monday.getDate()+1)).toISOString().substring(0,10)
+      this.satday = new Date(this.monday.setDate(this.monday.getDate()+1)).toISOString().substring(0,10)
+      this.sunday = new Date(this.monday.setDate(this.monday.getDate()+1)).toISOString().substring(0,10)
+      this.monday = new Date(this.startDay).toISOString().substring(0,10)
+    },
+  }
 };
 </script>
 
@@ -244,7 +311,7 @@ export default {
 .settings {
   position: relative;
   font-size: 1.4vw;
-  left: 32vw;
+  left: 45vw;
   top: -4vw;
 }
 .settings:hover {

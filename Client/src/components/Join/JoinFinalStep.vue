@@ -6,7 +6,7 @@
 
     <div class="card-choice">
       <!-- 채소위주 식단 -->
-      <section id="vegetable" class="hvr-glow" @click="clickEvent">
+      <section id="vegetable" class="hvr-glow" @click="clickEvent('vegetable')">
         <div class="text-set">
           <div class="main-text">
             <span class="card-main-text" style="color: #25ab2e">채소위주</span
@@ -23,7 +23,7 @@
       </section>
 
       <!-- 고기위주 식단 -->
-      <section id="meat" class="hvr-glow" @click="clickEvent">
+      <section id="meat" class="hvr-glow" @click="clickEvent('meat')">
         <div class="text-set">
           <div class="main-text">
             <span class="card-main-text" style="color: #7f4b3a">고기위주</span
@@ -41,7 +41,7 @@
       </section>
 
       <!-- 일반식단 -->
-      <section id="general" class="hvr-glow" @click="clickEvent">
+      <section id="general" class="hvr-glow" @click="clickEvent('general')">
         <div class="text-set">
           <div class="main-text">
             <span class="card-main-text" style="color: #4978a3">일반식단</span
@@ -87,7 +87,6 @@ export default {
           title: "회원가입이 완료되었습니다.",
           text: "로그인 페이지로 이동합니다.",
         });
-        this.$emit("completedForm", this.likeMenu);
       } else {
         this.$swal.fire({
           icon: "error",
@@ -97,7 +96,7 @@ export default {
       }
       switch(this.clickCard){
         case 'vegetable':
-          this.emitData = '야채';
+          this.emitData = '채소';
           break;
         case 'meat':
           this.emitData = '고기';
@@ -112,16 +111,17 @@ export default {
       this.$emit("completedForm", this.emitData);
     },
     // 선택한 상태에서 다른 거 눌렀을 때 해제
-    clickEvent(e) {
+    clickEvent(meal) {
       // 이미 선택된 섹션이 있을 때
       if (this.clickCard) {
         // 기존에 선택된 섹션 선택 해제(클래스 제거)
         $(`#${this.clickCard}`).removeClass("clicked");
       }
       // 부모요소에 id가 지정되어 있다면(버튼을 클릭했을 때) 부모요소의 id, 없다면(버튼 이외의 섹션을 클릭했을 때) 자기 자신의 id 저장
-      this.clickCard = e.target.offsetParent.id
-        ? e.target.offsetParent.id
-        : e.target.id;
+      // this.clickCard = e.target.offsetParent.id
+      //   ? e.target.offsetParent.id
+      //   : e.target.id;
+      this.clickCard = meal
       // 섹션 선택(클래스 추가)
       $(`#${this.clickCard}`).addClass("clicked");
     },

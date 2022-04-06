@@ -71,7 +71,7 @@ export default {
     },
     // 회원가입 완료 (api요청)
     sendFormData(emitData) {
-      this.userData.preference = emitData // 추후에 추가
+      this.userData.preference = emitData
       axios({
         method: 'post',
         url: `${process.env.VUE_APP_API_URL}/user/join/`,
@@ -79,12 +79,15 @@ export default {
       })
         .then(res => {
           console.log(res)
+          this.$router.push({ name: 'login' }).catch(() => {})
         })
         .catch(err => {
           console.log(err)
         })
-      this.$router.push({ name: 'login' }).catch(() => {})
     }
+  },
+  mounted() {
+    // window.location.reload();
   }
 
 }
