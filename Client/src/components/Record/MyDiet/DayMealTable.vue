@@ -23,12 +23,12 @@
             아침
           </div>
           <!-- 만약 데이터가 있으면 보여주고, 없으면 찾으러가기 버튼 활성화-->
-          <div
-            class="meal-table-el animate__animated animate__zoomIn"
-            @click="test(morningData[0].menus, 0)"
-          >
-            <div v-for="(food, idx) in morningData[0].menus" :key="idx">
-              {{ food.foodName }}
+          <div class="meal-table-el animate__animated animate__zoomIn" @click="updateMenu(morningData[0].menus, 0)">
+            <div 
+              v-for="(food, idx) in morningData[0].menus"
+              :key="idx"
+            >
+              {{ food.foodName }} 
             </div>
             <!-- <button
               class="bttn-unite bttn-md bttn-success goToRecommend-btn"
@@ -44,12 +44,12 @@
           >
             점심
           </div>
-          <div
-            class="meal-table-el animate__animated animate__zoomIn"
-            @click="test(lunchData[0].menus, 0)"
-          >
-            <div v-for="(food, idx) in lunchData[0].menus" :key="idx">
-              {{ food.foodName }}
+          <div class="meal-table-el animate__animated animate__zoomIn" @click="updateMenu(lunchData[0].menus, 1)">
+            <div 
+              v-for="(food, idx) in lunchData[0].menus"
+              :key="idx"
+            >
+              {{ food.foodName }} 
             </div>
             <!-- 권장칼로리와 비교해서 색으로 위험여부 보여주기 -->
             <!-- <span class="color-change">{{ sumFoodKcal }} kcal</span> -->
@@ -61,12 +61,12 @@
           >
             저녁
           </div>
-          <div
-            class="meal-table-el animate__animated animate__zoomIn"
-            @click="test(dinnerData[0].menus, 0)"
-          >
-            <div v-for="(food, idx) in dinnerData[0].menus" :key="idx">
-              {{ food.foodName }}
+          <div class="meal-table-el animate__animated animate__zoomIn" @click="updateMenu(dinnerData[0].menus, 2)">
+            <div 
+              v-for="(food, idx) in dinnerData[0].menus"
+              :key="idx"
+            >
+              {{ food.foodName }} 
             </div>
             <!-- <span class="color-change">{{ sumFoodKcal }} kcal</span> -->
           </div>
@@ -115,13 +115,14 @@ export default {
     goPocket() {
       this.$router.push({ name: "menu" });
     },
-    test(menus, mealTime) {
-      if (this.editFlag) {
-        this.mealTimeUpdate(mealTime);
-        if (menus[0].foodName == "작성된 식단이 없어요!") {
-          this.menusUpdate([]);
-        } else {
-          this.menusUpdate(menus);
+    updateMenu(menus, mealTime) {
+      if(this.editFlag){
+        this.mealTimeUpdate(mealTime)
+        if(menus[0].foodName=="작성된 식단이 없어요!"){
+          this.menusUpdate([])
+        }
+        else{
+          this.menusUpdate(menus)
         }
         this.targetDateUpdate(this.userTargetDate);
         this.$router.push({

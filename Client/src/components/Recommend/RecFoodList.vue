@@ -80,8 +80,8 @@ export default {
         method: "get",
         url: `${process.env.VUE_APP_API_URL}/menu/`,
       })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          
         })
         .catch((err) => {
           console.log(err);

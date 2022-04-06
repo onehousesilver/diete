@@ -5,7 +5,9 @@
         :recordData="recordData"
         :chartState="chartState"
       />
-      <AnlysisDonutsChart />
+      <AnalysisDonutsChart 
+        :avgAnalysis="avgAnalysis"
+      />
     </div>
     <div class="text-box">
       <!-- <h1>탄수화물 섭취량이 많습니다!</h1>
@@ -16,18 +18,21 @@
 
 <script>
 import AnalysisBarChart from "./MyAnalysis/AnalysisBarChart.vue";
-import AnlysisDonutsChart from "./MyAnalysis/AnlysisDonutsChart.vue";
+import AnalysisDonutsChart from "./MyAnalysis/AnalysisDonutsChart.vue";
 import axios from 'axios';
 export default {
   name: "MyAnalysis",
   components: {
-    AnlysisDonutsChart,
+    AnalysisDonutsChart,
     AnalysisBarChart,
   },
   data() {
     return {
       recordData: null,
       chartState: false,
+      avgAnalysis: null,
+      startDay: null,
+      targetDate: new Date(+new Date() + 3240 * 10000).toISOString().substring(0,10), // 
     };
   },
   methods:{
@@ -37,14 +42,42 @@ export default {
         url: `${process.env.VUE_APP_API_URL}/record/${this.userInfo.username}/`
       })
         .then(res => {
-          console.log(res)
           this.recordData = res.data;
           this.chartState = !this.chartState;
         })
-    }
+    },
+    
+    getWeekAvg(){
+      axios({
+        method: 'get',
+        url: `${process.env.VUE_APP_API_URL}/record/${this.userInfo.username}/${this.startDay}/`
+      })
+        .then(res => {
+          this.avgAnalysis = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getMonday() {
+      // 오늘날짜 string(YYYY-mm-dd)
+      // let today = new Date(+new Date() + 3240 * 10000).toISOString().substring(0,10);
+
+      // 오늘날짜 date형식
+      let date = new Date(this.targetDate);
+      // 월요일구하기
+      let day = date.getDay();
+      let diff = date.getDate() - day + (day == 0 ? -6 : 1);
+
+      // YYYYMMDD형식으로 parsing
+      let monday = new Date(date.setDate(diff)).toISOString().substring(0,10)
+      this.startDay = monday.replaceAll('-', '')
+    },
   },
-  mounted() {
+  mounted: async function() {
     this.getRecordData()
+    await this.getMonday(this.targetDate)
+    await this.getWeekAvg()
   },
   computed: {
     userInfo() { return this.$store.getters.getUserInfo }

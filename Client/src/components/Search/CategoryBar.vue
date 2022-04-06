@@ -55,7 +55,6 @@ export default {
         ? e.target.offsetParent.id
         : e.target.id;
       // 클래스 추가
-      console.log(this.clickCategory)
       $(`#${this.clickCategory}`).addClass("category-item--current");
       this.$emit('changeCategory', this.clickCategory)
     },

@@ -124,11 +124,9 @@ export default {
       this.selected.forEach((food) => {
         this.sendData.menus.push({ foodId: food.id, amount: 1 });
       });
-      // this.sendData.dateTime = `${this.today.getFullYear()}-${this.today.getMonth() + 1}-${this.today.getDate()}`;
       this.sendData.dateTime = this.$store.state.targetDate;
       this.sendData.mealTime = this.$store.state.mealTime;
       this.sendData.username = this.userInfo.username;
-      // console.log(this.sendData)
       axios({
         method: "post",
         url: `${process.env.VUE_APP_API_URL}/menu/basket/`,

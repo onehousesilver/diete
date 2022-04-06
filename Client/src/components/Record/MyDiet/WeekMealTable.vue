@@ -6,9 +6,6 @@
       <option class="week-item" value="last">지난주</option>
       <option class="week-item" value="current">이번주</option>
     </select> -->
-    <span class="material-icons settings" @click="editMealTable">
-      settings
-    </span>
     <div class="my-card">
       <div class="meal-time">
         <div>아침</div>

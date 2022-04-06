@@ -60,7 +60,6 @@ export default {
       })
         .then((res) => {
           this.recommendedData = res.data;
-          console.log(res.data);
         })
         .catch((err) => {
           console.log(err);

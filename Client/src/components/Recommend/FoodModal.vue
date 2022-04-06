@@ -174,14 +174,12 @@ export default {
     },
     // 아쉽지만
     mainMenuUpdate(subMenu){
-      console.log(subMenu)
       axios({
         method: 'get',
         url: `${process.env.VUE_APP_API_URL}/menu/${subMenu.foodId}/`
       })
         .then(res => {
           this.$emit('dataUpdate', res.data)
-          console.log(res.data)
         })
         .catch(err => {
           console.log(err)
