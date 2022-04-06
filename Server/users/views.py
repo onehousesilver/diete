@@ -68,7 +68,7 @@ def join(request):
             menudata = { 
             "userId" : user.id,
             "dateTime" : "2000-01-01",
-            "mealTime" : 1
+            "mealTime" : 0
             }
             
             menuSerializer = MenuSerializer(data=menudata)
@@ -78,7 +78,62 @@ def join(request):
             else:
                 return Response({'error': 'menu 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
             
-            menus = [6967, 6879, 7026, 7048, 7208, 7290, 7007, 6884, 7023, 7047, 7222, 5, 6967, 6886, 6925, 7073, 7190, 7116]
+            menus = [6967, 6879, 7026, 7048, 7208, 7290]
+            print(menus)
+            for menu in menus:
+                basketdata = {
+                    "menuId" : menuTempId,
+                    "foodId" : menu,
+                    "amount" : 1,
+                }
+                mtfSerializer = MenuToFoodSerializer(data=basketdata)
+                if mtfSerializer.is_valid(raise_exception=True):
+                    mtfSerializer.save()
+                else:
+                    return Response({'error': 'menutofood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+                
+            menudata = { 
+            "userId" : user.id,
+            "dateTime" : "2000-01-01",
+            "mealTime" : 1
+            }
+             
+            menuSerializer = MenuSerializer(data=menudata)
+            if menuSerializer.is_valid(raise_exception=True) :
+                menuSerializer.save()
+                menuTempId = menuSerializer.data["id"]
+            else:
+                return Response({'error': 'menu 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            menus = [7007, 6884, 7023, 7047, 7222, 5]
+            print(menus)
+            for menu in menus:
+                basketdata = {
+                    "menuId" : menuTempId,
+                    "foodId" : menu,
+                    "amount" : 1,
+                }
+                mtfSerializer = MenuToFoodSerializer(data=basketdata)
+                if mtfSerializer.is_valid(raise_exception=True):
+                    mtfSerializer.save()
+                else:
+                    return Response({'error': 'menutofood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+                
+            menudata = { 
+            "userId" : user.id,
+            "dateTime" : "2000-01-01",
+            "mealTime" : 2
+            }
+            
+            menuSerializer = MenuSerializer(data=menudata)
+            if menuSerializer.is_valid(raise_exception=True) :
+                menuSerializer.save()
+                menuTempId = menuSerializer.data["id"]
+            else:
+                return Response({'error': 'menu 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            menus = [6967, 6886, 6925, 7073, 7190, 7116]
+            print(menus)
             for menu in menus:
                 basketdata = {
                     "menuId" : menuTempId,
@@ -96,7 +151,7 @@ def join(request):
             menudata = { 
             "userId" : user.id,
             "dateTime" : "2000-01-01",
-            "mealTime" : 1
+            "mealTime" : 0
             }
             
             menuSerializer = MenuSerializer(data=menudata)
@@ -106,7 +161,7 @@ def join(request):
             else:
                 return Response({'error': 'menu 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
             
-            menus = [137, 7, 7055, 7216, 261, 200, 51, 6967, 203, 4256, 6866, 7029, 179, 7020, 242, 7030, 6859, 7231, 7028, 7044]
+            menus = [137, 7, 7055, 7216, 261]
             for menu in menus:
                 basketdata = {
                     "menuId" : menuTempId,
@@ -118,6 +173,62 @@ def join(request):
                     mtfSerializer.save()
                 else:
                     return Response({'error': 'menutofood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+           
+            menudata = { 
+            "userId" : user.id,
+            "dateTime" : "2000-01-01",
+            "mealTime" : 1
+            }
+            
+            menuSerializer = MenuSerializer(data=menudata)
+            if menuSerializer.is_valid(raise_exception=True) :
+                menuSerializer.save()
+                menuTempId = menuSerializer.data["id"]
+            else:
+                return Response({'error': 'menu 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            menus = [6967, 9, 203, 4256, 6866, 261]
+            print(menus)
+            for menu in menus:
+                basketdata = {
+                    "menuId" : menuTempId,
+                    "foodId" : menu,
+                    "amount" : 1,
+                }
+                mtfSerializer = MenuToFoodSerializer(data=basketdata)
+                if mtfSerializer.is_valid(raise_exception=True):
+                    mtfSerializer.save()
+                else:
+                    return Response({'error': 'menutofood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+            menudata = { 
+            "userId" : user.id,
+            "dateTime" : "2000-01-01",
+            "mealTime" : 2
+            }
+            
+            menuSerializer = MenuSerializer(data=menudata)
+            if menuSerializer.is_valid(raise_exception=True) :
+                menuSerializer.save()
+                menuTempId = menuSerializer.data["id"]
+            else:
+                return Response({'error': 'menu 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            menus = [ 7020, 242, 7030, 6859, 4256, 6866]
+            print(menus)
+            for menu in menus:
+                basketdata = {
+                    "menuId" : menuTempId,
+                    "foodId" : menu,
+                    "amount" : 1,
+                }
+                mtfSerializer = MenuToFoodSerializer(data=basketdata)
+                if mtfSerializer.is_valid(raise_exception=True):
+                    mtfSerializer.save()
+                else:
+                    return Response({'error': 'menutofood 테이블 삽입 에러'}, status=status.HTTP_400_BAD_REQUEST)
+            
             
         # 일반 식단을 골랐을 경우
         elif preference == '일반':
