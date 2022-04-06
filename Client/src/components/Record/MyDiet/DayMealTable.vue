@@ -7,11 +7,10 @@
         <!-- <span class="material-icons navigate-before"> navigate_before </span> -->
         <!-- 오늘 날짜 -->
         <span id="today">
-          <input type="date" v-model="userTargetDate">
+          <input type="date" v-model="userTargetDate" />
         </span>
         <!-- 다음날로 넘어가는 버튼 -->
         <!-- <span class="material-icons navigate-next"> navigate_next </span> -->
-
 
         <!-- 수정버튼 -->
         <span class="material-icons settings" @click="editMealTable">
@@ -24,12 +23,12 @@
             아침
           </div>
           <!-- 만약 데이터가 있으면 보여주고, 없으면 찾으러가기 버튼 활성화-->
-          <div class="meal-table-el animate__animated animate__zoomIn" @click="test(morningData[0].menus, 0)">
-            <div 
-              v-for="(food, idx) in morningData[0].menus"
-              :key="idx"
-            >
-              {{ food.foodName }} 
+          <div
+            class="meal-table-el animate__animated animate__zoomIn"
+            @click="test(morningData[0].menus, 0)"
+          >
+            <div v-for="(food, idx) in morningData[0].menus" :key="idx">
+              {{ food.foodName }}
             </div>
             <!-- <button
               class="bttn-unite bttn-md bttn-success goToRecommend-btn"
@@ -45,12 +44,12 @@
           >
             점심
           </div>
-          <div class="meal-table-el animate__animated animate__zoomIn">
-            <div 
-              v-for="(food, idx) in lunchData[0].menus"
-              :key="idx"
-            >
-              {{ food.foodName }} 
+          <div
+            class="meal-table-el animate__animated animate__zoomIn"
+            @click="test(lunchData[0].menus, 0)"
+          >
+            <div v-for="(food, idx) in lunchData[0].menus" :key="idx">
+              {{ food.foodName }}
             </div>
             <!-- 권장칼로리와 비교해서 색으로 위험여부 보여주기 -->
             <!-- <span class="color-change">{{ sumFoodKcal }} kcal</span> -->
@@ -62,12 +61,12 @@
           >
             저녁
           </div>
-          <div class="meal-table-el animate__animated animate__zoomIn">
-            <div 
-              v-for="(food, idx) in dinnerData[0].menus"
-              :key="idx"
-            >
-              {{ food.foodName }} 
+          <div
+            class="meal-table-el animate__animated animate__zoomIn"
+            @click="test(dinnerData[0].menus, 0)"
+          >
+            <div v-for="(food, idx) in dinnerData[0].menus" :key="idx">
+              {{ food.foodName }}
             </div>
             <!-- <span class="color-change">{{ sumFoodKcal }} kcal</span> -->
           </div>
@@ -98,11 +97,13 @@ export default {
       editFlag: false,
       show: true,
       sumFoodKcal: 1000,
-      userTargetDate: new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0],    // 사용자가 선택한 날짜
+      userTargetDate: new Date(+new Date() + 3240 * 10000)
+        .toISOString()
+        .split("T")[0], // 사용자가 선택한 날짜
       todayStr: "",
-      morningData: [{menus: '식단이 없어요!'}],
-      lunchData: [{menus: '식단이 없어요!'}],
-      dinnerData: [{menus: '식단이 없어요!'}],
+      morningData: [{ menus: "식단이 없어요!" }],
+      lunchData: [{ menus: "식단이 없어요!" }],
+      dinnerData: [{ menus: "식단이 없어요!" }],
     };
   },
   props: {
@@ -110,25 +111,23 @@ export default {
     dayData: Array,
   },
   methods: {
-    ...mapActions([
-      "menusUpdate",
-      "mealTimeUpdate",
-      "targetDateUpdate",
-    ]),
+    ...mapActions(["menusUpdate", "mealTimeUpdate", "targetDateUpdate"]),
     goPocket() {
       this.$router.push({ name: "menu" });
     },
     test(menus, mealTime) {
-      if(this.editFlag){
-        this.mealTimeUpdate(mealTime)
-        if(menus[0].foodName=="작성된 식단이 없어요!"){
-          this.menusUpdate([])
+      if (this.editFlag) {
+        this.mealTimeUpdate(mealTime);
+        if (menus[0].foodName == "작성된 식단이 없어요!") {
+          this.menusUpdate([]);
+        } else {
+          this.menusUpdate(menus);
         }
-        else{
-          this.menusUpdate(menus)
-        }
-        this.targetDateUpdate(this.userTargetDate)
-        this.$router.push({ name: 'basket', params: { updateDate: this.userTargetDate }})
+        this.targetDateUpdate(this.userTargetDate);
+        this.$router.push({
+          name: "basket",
+          params: { updateDate: this.userTargetDate },
+        });
       }
     },
     editMealTable() {
@@ -145,16 +144,24 @@ export default {
         }
       }
     },
-
   },
   watch: {
     userTargetDate() {
-      this.$emit('dateChange', this.userTargetDate)
+      this.$emit("dateChange", this.userTargetDate);
     },
-    dayData(){
-      this.morningData = this.dayData.filter(menu => menu.mealTime == '0').length > 0 ? this.dayData.filter(menu => menu.mealTime == '0') : [{menus: [{foodName:'작성된 식단이 없어요!'}]}]
-      this.lunchData = this.dayData.filter(menu => menu.mealTime == '1').length > 0 ? this.dayData.filter(menu => menu.mealTime == '1') : [{menus: [{foodName:'작성된 식단이 없어요!'}]}]
-      this.dinnerData = this.dayData.filter(menu => menu.mealTime == '2').length > 0 ? this.dayData.filter(menu => menu.mealTime == '2') : [{menus: [{foodName:'작성된 식단이 없어요!'}]}]
+    dayData() {
+      this.morningData =
+        this.dayData.filter((menu) => menu.mealTime == "0").length > 0
+          ? this.dayData.filter((menu) => menu.mealTime == "0")
+          : [{ menus: [{ foodName: "작성된 식단이 없어요!" }] }];
+      this.lunchData =
+        this.dayData.filter((menu) => menu.mealTime == "1").length > 0
+          ? this.dayData.filter((menu) => menu.mealTime == "1")
+          : [{ menus: [{ foodName: "작성된 식단이 없어요!" }] }];
+      this.dinnerData =
+        this.dayData.filter((menu) => menu.mealTime == "2").length > 0
+          ? this.dayData.filter((menu) => menu.mealTime == "2")
+          : [{ menus: [{ foodName: "작성된 식단이 없어요!" }] }];
     },
   },
   mounted() {
