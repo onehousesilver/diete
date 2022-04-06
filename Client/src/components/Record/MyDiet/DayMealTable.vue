@@ -216,8 +216,8 @@ export default {
 .settings {
   position: relative;
   font-size: 1.4vw;
-  left: 12.6vw;
-  bottom: 2.18vw;
+  left: 2.6vw;
+  bottom: -0.2vw;
 }
 
 @keyframes vibration {

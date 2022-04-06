@@ -3,8 +3,6 @@
     <div id="chart">
       <ApexChart
         type="bar"
-        width="800"
-        height="450"
         :options="chartOptions"
         :series="series"
       ></ApexChart>
@@ -87,13 +85,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #chart {
-  width: 45vw;
+  width: 40vw;
 }
 .week-chart {
   display: flex;
   align-self: center;
   text-align: -webkit-center;
+  right: 0.5vw;
+  position: relative;
 }
 </style>

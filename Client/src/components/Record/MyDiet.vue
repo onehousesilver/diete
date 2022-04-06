@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import DayBarChart from "./MyDiet/DayBarChart.vue";
 import DayMealTable from "./MyDiet/DayMealTable.vue";
 import WeekBarChart from "./MyDiet/WeekBarChart.vue";
@@ -54,26 +54,27 @@ export default {
     goToDay() {
       this.current = true;
     },
-    getDiet(){
+    getDiet() {
       axios({
-        method:'get',
-        url: `${process.env.VUE_APP_API_URL}/record/menu/qwer1234/20220407/`
+        method: "get",
+        url: `${process.env.VUE_APP_API_URL}/record/menu/qwer1234/20220407/`,
         // url: `${process.env.VUE_APP_API_URL}/record/qwer1234/`
-      })
-        .then(res => {
-          console.log(res)
-        })
-    }
+      }).then((res) => {
+        console.log(res);
+      });
+    },
   },
 };
 </script>
 
 <style>
 .toggle-btn {
-  left: 84vw;
+  left: 8.5vw;
+  bottom: 1.5vw;
 }
 .body {
   display: flex;
+  height: 24vw;
   justify-content: center;
 }
 
@@ -81,6 +82,6 @@ export default {
   display: none;
 }
 /* @media screen and (max-width: 1770px){
-  
+
 } */
 </style>

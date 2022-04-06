@@ -3,8 +3,6 @@
     <div id="chart">
       <ApexChart
         type="bar"
-        width="800"
-        height="450"
         :options="chartOptions"
         :series="series"
       ></ApexChart>
@@ -38,6 +36,7 @@ export default {
       chartOptions: {
         chart: {
           type: "bar",
+          width: "10vw",
           stacked: true,
         },
         plotOptions: {
@@ -88,11 +87,14 @@ export default {
 
 <style scoped>
 #chart {
-  width: 45vw;
+  width: 40vw;
   align-self: center;
   text-align: -webkit-center;
 }
 .day-chart {
   display: flex;
+  height: 24vw;
+  position: relative;
+  right: 3vw;
 }
 </style>

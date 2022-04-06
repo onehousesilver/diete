@@ -139,5 +139,7 @@ export default {
 </script>
 
 <style>
-
+#chart {
+  width: 45vw;
+}
 </style>
