@@ -19,9 +19,16 @@
       <div class="monday">
         <div class="text animate__animated animate__tada">월</div>
         <div class="meal-table-el">
-          <span>밥</span>
-          <span>카레</span>
-          <span>배추김치</span>
+          <div class="meal-table-item">
+            <div>간장마늘쫑장아찌</div>
+            <div>고추장마늘쫑장아찌</div>
+            <div>아내의 식탁 스노윙찹스테이크</div>
+            <div>아내의 식탁 스노윙찹스테이크</div>
+            <div>아내의 식탁 스노윙찹스테이크</div>
+            <div>아내의 식탁 스노윙찹스테이크</div>
+            <div>아내의 식탁 스노윙찹스테이크</div>
+            <div>아내의 식탁 스노윙찹스테이크</div>
+          </div>
         </div>
         <div class="meal-table-el">
           <span>밥</span>
@@ -147,13 +154,13 @@ export default {
 
 <style scoped>
 .week-calendar {
-  width: 40vw;
+  width: 45vw;
   height: 100%;
   border-radius: 1vw;
 }
 .meal-table-el {
-  width: calc(30vw / 7);
-  height: 6vw;
+  width: calc(40vw / 7);
+  height: 7.5vw;
   border: 0.125rem solid #25ab9b;
   margin: 0.2vw;
   border-radius: 1vw;
@@ -164,8 +171,22 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  position: relative;
   top: 1.5vw;
+  font-size: 0.7vw;
+}
+.meal-table-item {
+  width: 4vw;
+  margin: 0.5vw;
+  overflow-y: auto;
+}
+.meal-table-item div {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.meal-table-item::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }
 .week-select {
   width: 6vw;
@@ -175,8 +196,8 @@ export default {
   border-radius: 0.5vw;
   position: relative;
   font-size: 0.9vw;
-  left: 5.5vw;
-  top: -1.4vw;
+  left: 40vw;
+  top: -4.4vw;
 }
 
 .meal-table-el.clicked {
@@ -195,6 +216,9 @@ export default {
   align-content: center;
   position: relative;
   top: -0.3vw;
+  right: 2vw;
+  width: 50vw;
+  height: 18vw;
 }
 .meal-time {
   display: flex;
@@ -207,6 +231,9 @@ export default {
   position: relative;
   top: 2vw;
 }
+.meal-time div {
+  width: 2vw;
+}
 .text {
   font-size: 1vw;
   font-weight: 700;
@@ -215,10 +242,10 @@ export default {
   text-align: center;
 }
 .settings {
-  position: absolute;
+  position: relative;
   font-size: 1.4vw;
-  left: 88.95%;
-  bottom: 56.7%
+  left: 32vw;
+  top: -4vw;
 }
 .settings:hover {
   cursor: pointer;
