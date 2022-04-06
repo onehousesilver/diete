@@ -32,6 +32,7 @@ export default {
     return {
       current: true,
       editState: false,
+      alertState: false,
     };
   },
   methods: {
@@ -40,11 +41,34 @@ export default {
     },
     goMyAnalysis() {
       this.current = false;
+      if (this.alertState == false) {
+        this.$swal.fire({
+          title: "나의 식단을 분석해보세요!",
+          text: "나의 식단을 한국보건산업진흥원에서 제공하는 영양소와 비교해보세요!",
+          imageUrl: require("../assets/alert_mypage_analysis.gif"),
+          imageWidth: 800,
+          imageHeight: 400,
+          width: 850,
+          imageAlt: "basket gif",
+        });
+        this.alertState = true;
+      }
     },
     // 프로필 수정모드 On/Off
     editMode() {
       this.editState = !this.editState;
     },
+  },
+  mounted() {
+    this.$swal.fire({
+      title: "나의 식단을 확인하고 수정해보세요!",
+      text: "일별, 주별로 식단을 확인하고 그래프를 클릭해서 원하는 영양정보만 확인해보세요!",
+      imageUrl: require("../assets/alert_mypage_check.gif"),
+      imageWidth: 800,
+      imageHeight: 400,
+      width: 850,
+      imageAlt: "basket gif",
+    });
   },
 };
 </script>
