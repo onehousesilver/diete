@@ -9,7 +9,6 @@
         :options="chartOptions"
         :series="series"
       ></ApexChart>
-      <button @click="test">cccc</button>
       
     </div>
   </div>

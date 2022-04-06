@@ -14,11 +14,12 @@
       <DayBarChart 
         v-show="current" 
         @goToDay="goToDay" 
-
+        :dayData="dateAnalysis"
       />
       <WeekBarChart 
         v-show="!current" @goToWeek="goToWeek" 
-
+        :weekData="weekAnalysis"
+        :startDay="monday"
       />
       <WeekMealTable 
         v-show="!current"
@@ -60,6 +61,8 @@ export default {
       targetDate: new Date(+new Date() + 3240 * 10000).toISOString().substring(0,10), // 
       dateData: [[{menus:[{foodName:'asd'}]}]], // 일간식단
       weekData: null, // 주간식단
+      dateAnalysis: null,
+      weekAnalysis: null,
     };
   },
   methods: {
@@ -104,6 +107,8 @@ export default {
           // console.log(this.weekData)
           // 일간식단 update
           this.getDateDiet()
+          // 주간그래프 update
+          this.getWeekAnalysis()
         })
         .catch(err => {
           console.log(err)
@@ -114,22 +119,24 @@ export default {
         return menu.dateTime == this.targetDate
       })
     },
-    weekChange(week) {
-      let newDate = '';
-      switch(week){
-        case 'current':
-          break
-        case 'last':
-          newDate = new Date(this.monday.setDate(this.monday.getDate()-7)).toISOString().substring(0,10)
-          break
-        case 'twolast':
-          newDate = new Date(this.monday.setDate(this.monday.getDate()-14)).toISOString().substring(0,10)
-          break
-        default:
-          break
-      }
-      console.log(newDate)
-    }
+    getWeekAnalysis(){
+      axios({
+        method: 'get',
+        url: `${process.env.VUE_APP_API_URL}/record/nutrients/${this.userInfo.username}/${this.startDay}/`
+      })
+        .then(res => {
+          this.weekAnalysis = res.data
+          this.dateAnalysis = this.weekAnalysis.filter(data => {
+            return data.dateTime == this.targetDate
+          })
+          // console.log(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+          this.weekAnalysis = []
+          this.dateAnalysis = []
+        })
+    },
   },
   mounted: async function() {
     await this.getMonday(this.targetDate)
