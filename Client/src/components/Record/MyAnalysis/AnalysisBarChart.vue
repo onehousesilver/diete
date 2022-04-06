@@ -1,10 +1,9 @@
 <template>
-  <div>
+  <div class="analysisBarChart">
     <div id="chart">
       <ApexChart
+        ref="analysisChart"
         type="line"
-        height="400"
-        width="800"
         :options="chartOptions"
         :series="series"
       ></ApexChart>
@@ -15,18 +14,48 @@
 <script>
 export default {
   name: "BarChart",
+  props: {
+    recordData: Array,
+    chartState: Boolean,
+  },
   data() {
     return {
       series: [
         {
-          name: "Website Blog",
+          name: "총 열량(kcal)",
           type: "column",
-          data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160],
+          data: [],
+          // data: [23, 42, 35, 27, 43, 22, 17],
         },
         {
-          name: "Social Media",
+          name: "총 당류(g)",
           type: "line",
-          data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16],
+          data: [],
+          // data: [23, 42, 35, 27, 43, 22, 17],
+        },
+        {
+          name: "탄수화물(g)",
+          type: "line",
+          data: [],
+          // data: [23, 42, 35, 27, 43, 22, 17],
+        },
+        {
+          name: "단백질(g)",
+          type: "line",
+          data: [],
+          // data: [23, 42, 35, 27, 43, 22, 17],
+        },
+        {
+          name: "지방(g)",
+          type: "line",
+          data: [],
+          // data: [23, 42, 35, 27, 43, 22, 17],
+        },
+        {
+          name: "총 포화지방산(g)",
+          type: "line",
+          data: [],
+          // data: [23, 42, 35, 27, 43, 22, 17],
         },
       ],
       chartOptions: {
@@ -38,46 +67,75 @@ export default {
           width: [0, 4],
         },
         title: {
-          text: "Traffic Sources",
+          text: "일별 전체 영양소 조회",
         },
         dataLabels: {
           enabled: true,
-          enabledOnSeries: [1],
+          enabledOnSeries: [0],
         },
-        labels: [
-          "01 Jan 2001",
-          "02 Jan 2001",
-          "03 Jan 2001",
-          "04 Jan 2001",
-          "05 Jan 2001",
-          "06 Jan 2001",
-          "07 Jan 2001",
-          "08 Jan 2001",
-          "09 Jan 2001",
-          "10 Jan 2001",
-          "11 Jan 2001",
-          "12 Jan 2001",
-        ],
+        labels: [],
         xaxis: {
           type: "datetime",
         },
         yaxis: [
           {
             title: {
-              text: "Website Blog",
+              text: "",
             },
           },
           {
             opposite: true,
             title: {
-              text: "Social Media",
+              text: "",
             },
           },
         ],
       },
+      dumpData1: [],
+      dumpData2: [],
+      dumpData3: [],
+      dumpData4: [],
+      dumpData5: [],
+      dumpData6: [],
     };
+  },
+  methods: {
+    test() {},
+    setInit() {
+      this.recordData.forEach((day) => {
+        this.chartOptions.labels.push(day.dateTime);
+        this.series[0].data.push(day.total_kcal);
+        this.series[1].data.push(day.total_sugar);
+        this.series[2].data.push(day.total_carbo);
+        this.series[3].data.push(day.total_protein);
+        this.series[4].data.push(day.total_fat);
+        this.series[5].data.push(day.total_fatty);
+        this.$refs.analysisChart.chart.update();
+        // console.log(this.chartOptions.labels)
+      });
+    },
+  },
+  watch: {
+    recordData() {
+      // this.setInit();
+    },
+    chartState() {
+      this.setInit();
+    },
+  },
+  mounted() {
+    // console.log(this.$refs.myChart);
+    // console.log('mounted')
   },
 };
 </script>
 
-<style scoped></style>
+<style>
+#chart {
+  width: 40vw;
+}
+.analysisBarChart {
+  width: 50vw;
+}
+
+</style>

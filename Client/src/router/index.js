@@ -38,19 +38,21 @@ const routes = [
     path: "/search",
     name: "search",
     component: () => import("@/views/SearchView.vue"),
-    meta: {requiresAuth: true, title: "diète - 음식검색"}
+    meta: {requiresAuth: true, title: "diète - 음식검색"},
+    props: true
   },
   {
     path: "/basket",
     name: "basket",
     component: () => import("@/views/BasketView.vue"),
-    meta: {requiresAuth: true, title: "diète - 오늘한끼"}
+    meta: {requiresAuth: true, title: "diète - 오늘한끼"},
+    props: true
   },
   {
     path: "/record",
     name: "record",
     component: () => import("@/views/RecordView.vue"),
-    meta: {requiresAuth: true, title: "diète - 식단분석"}
+    meta: {requiresAuth: true, title: "diète - 나의기록"}
   },
   {
     path: "/404",
@@ -84,6 +86,7 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
+// page title
 router.afterEach((to) => {
   const title = to.meta.title === undefined ? 'diète' : to.meta.title;
   Vue.nextTick(() => {

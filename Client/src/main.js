@@ -21,18 +21,26 @@ import moment from "moment";
 moment.locale("ko");
 Vue.use(vueMoment, { moment });
 
-//modal
+// SweetModal
 import SweetModal from "sweet-modal-vue/src/plugin.js";
 Vue.use(SweetModal);
 
-// vue-awesome-swiper
+// VueAwesomeSwiper
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 Vue.use(VueAwesomeSwiper)
 
-// animate
+// animation
 import "animate.css";
 import "hover.css";
+
+//vuetify
 import vuetify from './plugins/vuetify'
+
+//VueSweetalert2
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+Vue.use(VueSweetalert2);
 
 new Vue({
   router,

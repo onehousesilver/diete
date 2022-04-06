@@ -1,20 +1,26 @@
 <template>
   <div>
-    <BannerBar MainText="오늘의 한끼" SubText="SubText"/>
+    <BannerBar MainText="오늘의 한끼" SubText="diète에서 맛있는 식단을 만들어보세요"/>
     <div class="basket-container">
-      <FoodList />
+      <BasketFoodList />
     </div>
   </div>
 </template>
 
 <script>
 import BannerBar from '@/components/Main/BannerBar.vue'
-import FoodList from '@/components/Basket/FoodList.vue'
+import BasketFoodList from '@/components/Basket/BasketFoodList.vue'
 export default {
   name: 'BasketView',
   components: {
     BannerBar,
-    FoodList
+    BasketFoodList
+  },
+  data() {
+    return {
+    }
+  },
+  methods: {
   }
 }
 </script>

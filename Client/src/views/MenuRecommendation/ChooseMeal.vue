@@ -1,14 +1,18 @@
 <template>
   <div>
     <!-- Banner -->
-    <BannerBar MainText="음식추천" SubText="SubText" />
-    <h1>추천받을 끼니를 선택해 주세요</h1>
+    <BannerBar
+      MainText="음식추천"
+      SubText="diète에서 맛있는 음식을 추천받아보세요"
+    />
+    <h1>언제 드실 음식이신가요?</h1>
     <div class="choose-container">
       <section id="breakfast" @click="chooseMeal">
         <h2>아침</h2>
         <img
           :src="require('@/assets/menu_rec/breakfast_img.svg')"
           alt="예시이미지-아침"
+          class="breakfast-img"
         />
         <button
           id="bre-btn"
@@ -23,6 +27,7 @@
         <img
           :src="require('@/assets/menu_rec/lunch_img.svg')"
           alt="예시이미지-점심"
+          class="lunch-img"
         />
         <button
           id="lun-btn"
@@ -37,6 +42,7 @@
         <img
           :src="require('@/assets/menu_rec/dinner_img.svg')"
           alt="예시이미지-저녁"
+          class="dinner-img"
         />
         <button
           id="din-btn"
@@ -56,6 +62,7 @@
 <script>
 import BannerBar from "@/components/Main/BannerBar.vue";
 import $ from "jquery";
+import { mapActions } from "vuex";
 
 export default {
   name: "ChooseMeal",
@@ -65,9 +72,11 @@ export default {
   data() {
     return {
       selectedMeal: null, // 선택한 끼니
+      today: new Date(),
     };
   },
   methods: {
+    ...mapActions(["mealTimeUpdate", "menusUpdate", "targetDateUpdate"]),
     // 끼니 선택 메서드. 선택된 섹션의 style을 변경하고, 변수에 바인딩
     chooseMeal(e) {
       // 이미 선택된 섹션이 있을 때
@@ -85,7 +94,26 @@ export default {
       $(`#${this.selectedMeal}-btn`).addClass("select");
     },
     nextStep() {
-      this.$router.push({ path: "/menu/recommendation" });
+      if (this.selectedMeal != null) {
+        if(this.selectedMeal == 'breakfast'){
+          this.mealTimeUpdate(0)
+        }
+        else if(this.selectedMeal == 'lunch'){
+          this.mealTimeUpdate(1)
+        }
+        else {
+          this.mealTimeUpdate(2)
+        }
+        this.menusUpdate([])
+        this.targetDateUpdate(`${this.today.getFullYear()}-${this.today.getMonth() + 1}-${this.today.getDate()}`)
+        this.$router.push({ path: "/menu/recommendation" });
+      } else {
+        this.$swal.fire({
+          icon: "error",
+          title: "끼니를 선택해주세요!",
+          text: "언제 드실 음식이신가요?",
+        });
+      }
     },
   },
 };
@@ -101,6 +129,7 @@ export default {
   height: 5vh;
   border-radius: 0.625rem;
   animation: none;
+  font-size: 1vw;
 }
 .bttn-unite.bttn-success:before {
   background: #25ab9b;
@@ -144,10 +173,12 @@ h1 {
   box-shadow: 4px 4px 4px #ccc;
 }
 .choose-container h2 {
+  margin-top: 3vh;
   text-align: center;
   font-size: 1.5vw;
 }
-.choose-container section img {
+.breakfast-img,
+.lunch-img {
   display: block;
   width: 18vw;
   height: 30vh;
@@ -155,11 +186,14 @@ h1 {
   left: 50%;
   transform: translateX(-50%);
 }
-/* .choose-container section:hover{
-   -webkit-animation:vibrate .2s ease-in-out 0s infinite;
-   -moz-animation:vibrate .2s ease-in-out 0s infinite;
-   animation:vibrate .2s ease-in-out 0s infinite;
-} */
+.dinner-img {
+  display: block;
+  width: 12vw;
+  height: 30vh;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
 @keyframes vibrate {
   0% {
     -webkit-transform: rotate(1deg);

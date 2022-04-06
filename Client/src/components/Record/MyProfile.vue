@@ -57,9 +57,7 @@
                 <span class="my-info-tit">키</span><br />
                 <strong v-if="!edit">{{ userForm.userHeight }} cm</strong>
                 <strong v-else
-                  ><input
-                    type="number"
-                    v-model="userForm.userHeight"
+                  ><input type="number" v-model="userForm.userHeight"
                 /></strong>
               </li>
               <li class="my-info">
@@ -67,9 +65,7 @@
                 <span class="my-info-tit">몸무게</span><br />
                 <strong v-if="!edit">{{ userForm.userWeight }} kg</strong>
                 <strong v-else
-                  ><input
-                    type="number"
-                    v-model="userForm.userWeight"
+                  ><input type="number" v-model="userForm.userWeight"
                 /></strong>
               </li>
               <li class="my-info">
@@ -111,8 +107,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { mapActions } from 'vuex'
+import axios from "axios";
+import { mapActions } from "vuex";
 
 export default {
   name: "MyProfile",
@@ -124,9 +120,7 @@ export default {
         userHeight: null,
         userWeight: null,
         userKcal: null,
-        // 0 남자 1 여자
         userGender: null,
-        // 0 적음 1보통 2많음
         userActivity: null,
       },
       edit: false,
@@ -134,9 +128,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      'updateUserInfo'
-    ]),
+    ...mapActions(["updateUserInfo"]),
     setToken: function () {
       const token = localStorage.getItem("userToken");
       const config = {
@@ -153,27 +145,27 @@ export default {
     // 프로필 편집 버튼
     editProfile() {
       this.edit = !this.edit;
-      this.$emit('editMode')
-      if(!this.edit) {
+      this.$emit("editMode");
+      if (!this.edit) {
         axios({
-          method: 'put',
+          method: "put",
           url: `${process.env.VUE_APP_API_URL}/user/update/`,
           data: {
-            'height': this.userForm.userHeight,
-            'weight': this.userForm.userWeight,
-            'activity': this.userForm.userActivity
+            height: this.userForm.userHeight,
+            weight: this.userForm.userWeight,
+            activity: this.userForm.userActivity,
           },
-          headers: this.setToken()
+          headers: this.setToken(),
         })
-          .then(res => {
+          .then((res) => {
             // kcal state 변경
-            this.updateUserInfo(res.data)
+            this.updateUserInfo(res.data);
             // 컴포넌트내의 data 변경
-            this.userForm.userKcal = res.data.kcal
+            this.userForm.userKcal = res.data.kcal;
           })
-          .catch(err => {
-            console.log(err)
-          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     },
     // 활동량에 대한 정보 보여주기
@@ -182,24 +174,26 @@ export default {
     },
   },
   computed: {
-    userInfo() { return this.$store.getters.getUserInfo}
+    userInfo() {
+      return this.$store.getters.getUserInfo;
+    },
   },
-  mounted(){
+  mounted() {
     this.userForm.userId = this.userInfo.data.username;
     this.userForm.userName = this.userInfo.data.name;
     this.userForm.userHeight = this.userInfo.data.height;
     this.userForm.userWeight = this.userInfo.data.weight;
     this.userForm.userKcal = this.userInfo.data.kcal;
     this.userForm.userGender = this.userInfo.data.gender;
-    this.userForm.userActivity =  this.userInfo.data.activity;
-  }
+    this.userForm.userActivity = this.userInfo.data.activity;
+  },
 };
 </script>
 
 <style scoped>
 input {
   outline: none;
-  font-family: 'MinSans-Regular';
+  font-family: "MinSans-Regular";
 }
 #wrap {
   box-sizing: border-box;
@@ -214,25 +208,24 @@ li {
 }
 .my-summary-wrap {
   background: none;
-  overflow: hidden;
   box-sizing: border-box;
   padding: 0.625rem 10%;
+  height: 7vw;
 }
 .profile-wrap {
   float: left;
-  width: 34%;
+  width: 15vw;
   box-sizing: border-box;
   position: relative;
-  padding-left: 6.25rem;
-  min-height: 5.25rem;
+  padding-left: 4vw;
 }
 .profile-thumb-wrap {
   box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
-  width: 7.5rem;
-  height: 7.5rem;
+  width: 6.4vw;
+  height: 6.4vw;
 }
 .thumb-profile {
   box-sizing: border-box;
@@ -243,17 +236,16 @@ li {
 .profile-info-wrap {
   box-sizing: border-box;
   color: #a1a4a8;
-  font-size: 0.875rem;
-  padding-top: 1.5rem;
-  padding-left: 3.75rem;
-  font-size: 1.125rem;
+  padding-top: 1.1vw;
+  padding-left: 3.1vw;
+  font-size: 1.1vw;
 }
 .profile-info-wrap:hover {
   text-decoration: none;
 }
 .profile-name {
   color: #3d4248;
-  font-size: 24px;
+  font-size: 1.1vw;
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -261,26 +253,13 @@ li {
   word-break: break-all;
   box-sizing: border-box;
 }
-.btn-profile-thumb {
-  width: 6.438rem;
-  height: 1.75rem;
-  font-size: 0.75rem;
-  line-height: 1.625rem;
-  letter-spacing: -0.038rem;
-  box-sizing: border-box;
-  display: block;
-  margin-top: 0.375rem;
-  color: #b7b7b7;
-  border: 0.063rem solid #dfdfdf;
-  text-align: center;
-}
 
 label {
   cursor: pointer;
 }
 .my-info-wrap {
   float: right;
-  width: 65%;
+  width: 52vw;
   box-sizing: border-box;
 }
 .my-info-list {
@@ -288,25 +267,26 @@ label {
 }
 .my-info {
   float: left;
-  width: 19%;
+  width: 10vw;
   margin: 0;
-  padding: 0.438rem 0;
+  padding: 0.37vw 0;
   background: #ffffff;
   border-right: 0.063rem solid #eaeaea;
   text-align: center;
 }
 
 .help {
-  font-size: 1.125rem;
+  font-size: 0.95vw;
   vertical-align: top;
 }
 .user-activity-img {
   position: absolute;
-  box-shadow: 2px 2px 10px rgb(173, 173, 173);
-  border-radius: 0.625rem;
-  top: 12.813rem;
-  right: 3.625rem;
+  box-shadow: 2px 2px 10px rgb(173 173 173);
+  border-radius: 0.5vw;
   background-color: #fff;
+  left: 81.5vw;
+  top: 8.8vw;
+  z-index: 4;
 }
 
 .help:hover {
@@ -315,21 +295,15 @@ label {
 
 .my-info-tit {
   height: auto;
-  font-size: 0.875rem;
-  letter-spacing: -0.019rem;
+  font-size: 0.7vw;
   display: block;
   color: #909397;
   box-sizing: border-box;
 }
-.my-info-txt {
-  margin: 0.125rem 0 0;
-  font-size: 1.25rem;
-  letter-spacing: -0.031rem;
-  color: #2f3338;
-}
+
 .my-info:nth-child(2n) {
   margin: 0 1% 1% 0;
-  width: 19%;
+  width: 10vw;
   padding: 0.438rem 0;
   background: #ffffff;
   border-right: 1px solid #eaeaea;
@@ -348,20 +322,21 @@ label {
   border-radius: 0;
 }
 .bttn-unite.bttn-md {
-  font-size: 0.875rem;
+  top: 0.5vw;
+  font-size: 0.8vw;
 }
 input {
   border: solid 2px #25ab9b;
-  width: 9.375rem;
-  height: 1.25rem;
+  width: 7vw;
+  height: 1vw;
   border-radius: 0.313rem;
   text-align: center;
 }
 select {
   border: solid 2px #25ab9b;
-  width: 9.375rem;
-  height: 1.563rem;
-  font-size: 0.875rem;
+  width: 7.5vw;
+  height: 1.2vw;
+  font-size: 0.75vw;
   text-align: center;
   border-radius: 0.313rem;
 }

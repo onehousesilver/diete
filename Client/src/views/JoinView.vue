@@ -66,25 +66,27 @@ export default {
       this.userData.height = formData.height
       this.userData.weight = formData.weight
       this.userData.activity = formData.activity
-      this.userData.gender = formData.gender
+      this.userData.gender = parseInt(formData.gender)
+      
     },
     // 회원가입 완료 (api요청)
     sendFormData(emitData) {
-      console.log(emitData)
-      // this.userData.preference = emitData.likeMenu // 추후에 추가
+      this.userData.preference = emitData
       axios({
         method: 'post',
         url: `${process.env.VUE_APP_API_URL}/user/join/`,
         data: this.userData
       })
-        .then(res => {
-          console.log(res)
+        .then(() => {
+          this.$router.push({ name: 'login' }).catch(() => {})
         })
         .catch(err => {
           console.log(err)
         })
-      this.$router.push({ name: 'login' }).catch(() => {})
     }
+  },
+  mounted() {
+    // window.location.reload();
   }
 
 }
