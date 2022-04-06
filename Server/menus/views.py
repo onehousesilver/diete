@@ -81,7 +81,7 @@ def recommend_foods(request, username):
     result = {}
     main_rec = []
     for f in range(len(food_list)):
-        if f == 10:
+        if f == 12:
             result["all"] = {"preference" : 0, "data" : main_rec}
             break
         # food = Food.objects.filter(id = food_list[f][0])
@@ -129,7 +129,7 @@ def recommend_foods(request, username):
         # 값에 따라 정렬
         food_list.sort(key=lambda x: float(x[1]))
         main_rec = []
-        for i in range(10):
+        for i in range(12):
             food = get_object_or_404(Food, id = food_list[i][0])
             foodserializer = FoodRecommSerializer(food, read_only=True)
             main_rec.append(foodserializer.data)
