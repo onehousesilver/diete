@@ -121,6 +121,7 @@ export default {
     },
     // DB에 식단 저장
     saveMyMenus() {
+      if (this.selected.length > 0){
       this.selected.forEach((food) => {
         this.sendData.menus.push({ foodId: food.id, amount: 1 });
       });
@@ -151,9 +152,11 @@ export default {
                   icon: "success",
                   title: "식단이 수정되었습니다",
                   text: "나의기록 페이지로 이동합니다.",
-                });
-                this.menusUpdate([])
-                this.$router.push({ name:'record' })
+                })
+                  .then(() => {
+                    this.menusUpdate([])
+                    this.$router.push({ name:'record' })
+                  })
               })
               .catch(err => {
                 console.log(err)
@@ -164,9 +167,10 @@ export default {
               icon: "success",
               title: "식단에 저장되었습니다",
               text: "나의기록 페이지로 이동합니다.",
-            });
-            this.menusUpdate([])
-            this.$router.push({ name:'record' })
+            }).then(()=> {
+              this.menusUpdate([])
+              this.$router.push({ name:'record' })
+            })
           }
           // 전역 장바구니 초기화
         })
@@ -178,6 +182,14 @@ export default {
           });
           console.log(err);
         });
+      }
+      else {
+        this.$swal.fire({
+            icon: "error",
+            title: "식단에 저장하지 못했습니다",
+            text: "식단에 저장할 음식을 선택해주세요.",
+          });
+      }
     },
     // 삭제버튼 클릭시
     deleteItem(item) {

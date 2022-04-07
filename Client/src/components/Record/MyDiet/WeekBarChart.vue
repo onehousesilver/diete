@@ -122,7 +122,6 @@ export default {
         let total_fatty = 0
         if(weekAnalyData[i].length > 0){
           weekAnalyData[i].forEach(data => {
-            total_carbo += data.total_carbo
             total_kcal += data.total_kcal
             total_carbo += data.total_carbo
             total_protein += data.total_protein
