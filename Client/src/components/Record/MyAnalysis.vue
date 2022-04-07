@@ -3,7 +3,6 @@
     <div class="charts">
       <AnalysisBarChart 
         :recordData="recordData"
-        :chartState="chartState"
       />
       <AnalysisDonutsChart 
         :avgAnalysis="avgAnalysis"
@@ -29,7 +28,6 @@ export default {
   data() {
     return {
       recordData: null,
-      chartState: false,
       avgAnalysis: null,
       startDay: null,
       targetDate: new Date(+new Date() + 3240 * 10000).toISOString().substring(0,10), // 
@@ -43,7 +41,10 @@ export default {
       })
         .then(res => {
           this.recordData = res.data;
-          this.chartState = !this.chartState;
+          this.recordData.sort((a, b) => {
+            // 날짜 오름차순으로 정렬
+            return new Date(a.dateTime) - new Date(b.dateTime)
+          })
         })
     },
     

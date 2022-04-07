@@ -286,9 +286,6 @@ export default {
   align-self: center;
 }
 
-#chart {
-  width: 25vw;
-}
 .food-modal-bottom {
   padding: 0.78vw;
   position: relative;
