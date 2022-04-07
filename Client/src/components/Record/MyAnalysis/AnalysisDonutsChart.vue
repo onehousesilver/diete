@@ -19,7 +19,7 @@
         >(차트에 마우스를 올려보세요!)</span
       >
     </div>
-    <div id="chart">
+    <div id="radialchart">
       <ApexChart
         ref="radialchart"
         type="radialBar"
@@ -90,7 +90,7 @@ export default {
       this.series.push(
         Math.ceil(
           (parseFloat(this.avgAnalysis.aver_kcal) /
-            parseFloat(this.userInfo.data.kcal) /
+            parseFloat(this.userInfo.data.kcal) *
             3) *
             100
         )
@@ -101,7 +101,7 @@ export default {
       this.series.push(
         Math.ceil(
           (parseFloat(this.avgAnalysis.aver_protein) /
-            parseFloat(this.userInfo.data.weight) /
+            parseFloat(this.userInfo.data.weight) *
             3) *
             100
         )
@@ -128,7 +128,7 @@ export default {
 </script>
 
 <style scoped>
-#chart {
+#radialchart {
   width: 30vw;
 }
 .raial-chart {

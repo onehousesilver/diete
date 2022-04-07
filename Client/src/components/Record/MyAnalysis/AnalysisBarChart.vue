@@ -1,6 +1,6 @@
 <template>
   <div class="analysisBarChart">
-    <div id="chart">
+    <div id="analysischart">
       <ApexChart
         ref="analysisChart"
         type="line"
@@ -64,7 +64,8 @@ export default {
           type: "line",
         },
         stroke: {
-          width: [0, 4],
+          curve: 'straight',
+          width: [3, 3, 3, 3, 3, 3]
         },
         title: {
           text: "일별 전체 영양소 조회",
@@ -91,35 +92,25 @@ export default {
           },
         ],
       },
-      dumpData1: [],
-      dumpData2: [],
-      dumpData3: [],
-      dumpData4: [],
-      dumpData5: [],
-      dumpData6: [],
     };
   },
   methods: {
-    test() {},
     setInit() {
       this.recordData.forEach((day) => {
         this.chartOptions.labels.push(day.dateTime);
-        this.series[0].data.push(day.total_kcal);
-        this.series[1].data.push(day.total_sugar);
-        this.series[2].data.push(day.total_carbo);
-        this.series[3].data.push(day.total_protein);
-        this.series[4].data.push(day.total_fat);
-        this.series[5].data.push(day.total_fatty);
-        this.$refs.analysisChart.chart.update();
+        this.series[0].data.push(day.total_kcal ? day.total_kcal : "0");
+        this.series[1].data.push(day.total_sugar ? day.total_sugar : "0");
+        this.series[2].data.push(day.total_carbo ? day.total_carbo : "0");
+        this.series[3].data.push(day.total_protein ? day.total_protein : "0");
+        this.series[4].data.push(day.total_fat ? day.total_fat : "0");
+        this.series[5].data.push(day.total_fatty ? day.total_fatty : "0");
         // console.log(this.chartOptions.labels)
       });
+      this.$refs.analysisChart.chart.update();
     },
   },
   watch: {
     recordData() {
-      // this.setInit();
-    },
-    chartState() {
       this.setInit();
     },
   },
@@ -131,7 +122,7 @@ export default {
 </script>
 
 <style>
-#chart {
+#analysischart {
   width: 40vw;
 }
 .analysisBarChart {

@@ -82,7 +82,6 @@ export default {
     this.loadingText = `${this.userInfo.data.name}님에게 추천할 음식을 요리하고있어요`;
     let loading = setInterval(() => {
       this.loadingText += ".";
-      console.log(this.loadingText);
     }, 1300);
     setTimeout(() => {
       this.loadingState = false;

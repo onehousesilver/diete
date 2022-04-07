@@ -84,7 +84,8 @@ export default {
       this.$router.push({ name: "login" }).catch(() => {});
     },
     goToLogout() {
-      this.$router.push({ name: "home" }).catch(() => {});
+      this.$router.push({ name: "home" }).catch(() => {})
+      window.location.reload()
       this.removeUserToken();
     },
     // hover 시에 아이콘 > 글자 토글

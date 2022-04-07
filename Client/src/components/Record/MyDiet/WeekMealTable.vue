@@ -193,13 +193,13 @@ export default {
       this.satData = [];
       this.sunData = [];
       for (let i = 0; i < 3; i++) {
-        this.monData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.monday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.monday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
-        this.tueData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.tueday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.tueday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
-        this.wedData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.wedday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.wedday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
-        this.thuData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.thuday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.thuday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
-        this.friData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.friday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.friday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
-        this.satData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.satday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.satday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
-        this.sunData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.sunday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.sunday}`))}) : {mealTime: `${i}`,menus: [{foodName:'빈 식단'}]})
+        this.monData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.monday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.monday}`))}) : {mealTime: `${i}`,menus: [{foodName:'X'}]})
+        this.tueData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.tueday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.tueday}`))}) : {mealTime: `${i}`,menus: [{foodName:'X'}]})
+        this.wedData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.wedday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.wedday}`))}) : {mealTime: `${i}`,menus: [{foodName:'X'}]})
+        this.thuData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.thuday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.thuday}`))}) : {mealTime: `${i}`,menus: [{foodName:'X'}]})
+        this.friData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.friday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.friday}`))}) : {mealTime: `${i}`,menus: [{foodName:'X'}]})
+        this.satData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.satday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.satday}`))}) : {mealTime: `${i}`,menus: [{foodName:'X'}]})
+        this.sunData.push(this.weekData.find(meal =>  { return (meal.mealTime==`${i}`)&&(meal.dateTime==`${this.sunday}`)})? this.weekData.find(meal =>  { return((meal.mealTime==`${i}`)&&(meal.dateTime==`${this.sunday}`))}) : {mealTime: `${i}`,menus: [{foodName:'X'}]})
       }
     },
     startDay() {
