@@ -73,7 +73,9 @@ python manage.py runserver
 
 ### 🧩 ERD
 
-![img](https://lh4.googleusercontent.com/pKdUJw09lcHF7Q7UQ7b5pjrxpfoBv2-fewzu20KecNGy7pD4NRUXDqVX9ATDZ0y1aDj0ttVSlYYoXSD30tKC_6n-epTDYxdIL8MFpjmYl5MLkl_ObpGtSQmcPtWic26Y63bbYjjJwPk5)
+![ERD1](README.assets/ERD1.png)
+
+![ERD2](README.assets/ERD2.png)
 
 ### 🖼 와이어프레임
 
